@@ -41,10 +41,13 @@ public class ObjectRouteBuilder extends RouteBuilder {
                 .to("jms:queue:queue.dep.fcdep.hcsp")
                 .when(simple("${header.JMSX_SRCMSGFLAG} == 'xfnew.object'"))
                 .to("jms:queue:queue.dep.fcdep.xfnew")
+                .when(simple("${header.JMSX_SRCMSGFLAG} == 'qdzzjs.object'"))
+                .to("jms:queue:queue.dep.fcdep.qdzzjs")
                 .when(simple("${header.JMSX_SRCMSGFLAG} == 'haierfip.object'"))
                 .to("jms:queue:queue.dep.fcdep.haierfip")
                 .when(simple("${header.JMSX_SRCMSGFLAG} == 'fcdep.object'"))
                 .to("jms:queue:queue.dep.out.fcdep.object")
+
                 .otherwise()
                         // TODO Process £º transform object to xml
                 .to("jms:queue:queue.dep.text.out");

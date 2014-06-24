@@ -39,7 +39,7 @@ public class CoreRouteBuilder extends RouteBuilder {
         from("jms:queue:queue.dep.core.sbs.out").to("jms:queue:queue.dep.core.out");
 
         // unionpay
-        from("jms:queue:queue.dep.core.unionpay.in?concurrentConsumers=10")
+        from("jms:queue:queue.dep.core.unionpay.in?concurrentConsumers=20")
                 .process(new Core100Processor())
                 .to("jms:queue:queue.dep.core.unionpay.out");
         from("jms:queue:queue.dep.core.unionpay.out").to("jms:queue:queue.dep.core.out");
