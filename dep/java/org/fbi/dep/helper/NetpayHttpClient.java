@@ -6,6 +6,7 @@ import org.apache.commons.httpclient.params.HttpConnectionManagerParams;
 import org.apache.commons.httpclient.params.HttpMethodParams;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
+import org.fbi.dep.util.PropertyManager;
 import org.fbi.endpoint.netpay.util.DigestMD5;
 import org.fbi.endpoint.netpay.util.MsgUtil;
 
@@ -18,41 +19,41 @@ public class NetpayHttpClient {
 
     private Log logger = LogFactory.getLog(this.getClass());
 
-    static final String MerID = "";
-    static final String MerKeyPath = "D:\\fcdep\\netpay\\MerPrk.key";
-    static final String PubKeyPath = "D:\\fcdep\\netpay\\PgPubk.key";
-    static final String FilePath = "D:\\fcdep\\batchfile\\";
+    static final String MER_ID = PropertyManager.getProperty("chinapay_haierfc_merid");
+    static final String QUERY_URL=PropertyManager.getProperty("chinapay_server_http_batch_query_url");
+    static final String CUT_URL=PropertyManager.getProperty("chinapay_server_http_batch_cut_url");
+    static final String MER_KEY_PATH = PropertyManager.getProperty("chinapay_crypt_path_merprk");
+    static final String PUB_KEY_PATH = PropertyManager.getProperty("chinapay_crypt_path_pgpubk");
+    static final String BATCH_FILE_PATH = PropertyManager.getProperty("chinapay_path_batchfile");
 
-    public String[] doPost(String url, String fileName) {
+    public String[] doPost(String url, String fileName, String fileContent) {
 
         // 文件上传准备
         HttpClient httpClient = null;
         PostMethod postMethod = null;
         BufferedReader reader = null;
         InputStream resInputStream = null;
-        File file = new File(FilePath + fileName);
+        File file = new File(BATCH_FILE_PATH + fileName);
         try {
             httpClient = new HttpClient();
             httpClient.getParams().setParameter(
                     HttpMethodParams.HTTP_CONTENT_CHARSET, "UTF-8");
             postMethod = new PostMethod(url);
 
-            byte[] fileContentBytes = null;
+            byte[] fileContentBase64Bytes = null;
             try {
-                fileContentBytes = MsgUtil.getBytes(file);
+                fileContentBase64Bytes = MsgUtil.getBytes(file);
             } catch (Exception e) {
-                logger.error("文件读取错误，File: " + FilePath + fileName, e);
+                logger.error("文件读取错误，File: " + BATCH_FILE_PATH + fileName, e);
                 httpClient.getHttpConnectionManager().closeIdleConnections(0);
                 throw new RuntimeException(e);
             }
-            String fileContent = new String(fileContentBytes, "UTF-8");
+            String fileContentBase64 = new String(fileContentBase64Bytes, "UTF-8");
 
             // 对需要上传的字段签名
-            String chkValue = DigestMD5.MD5Sign(MerID, fileName, fileContentBytes, MerKeyPath);
+            String chkValue = DigestMD5.MD5Sign(MER_ID, fileName, fileContent.getBytes("UTF-8"), MER_KEY_PATH);
             logger.info("签名内容:" + chkValue);
 
-            httpClient.getParams().setParameter(
-                    HttpMethodParams.HTTP_CONTENT_CHARSET, "UTF-8");
             // 获得管理参数
             HttpConnectionManagerParams managerParams = httpClient
                     .getHttpConnectionManager().getParams();
@@ -63,9 +64,9 @@ public class NetpayHttpClient {
             postMethod.setRequestHeader("Connection", "close");
             postMethod.getParams().setParameter(HttpMethodParams.RETRY_HANDLER,
                     new DefaultHttpMethodRetryHandler(1, false));
-            NameValuePair[] requestBody = {new NameValuePair("merId", MerID),
+            NameValuePair[] requestBody = {new NameValuePair("merId", MER_ID),
                     new NameValuePair("fileName", fileName),
-                    new NameValuePair("fileContent", fileContent),
+                    new NameValuePair("fileContent", fileContentBase64),
                     new NameValuePair("chkValue", chkValue)};
 
             postMethod.setRequestBody(requestBody);
@@ -100,7 +101,7 @@ public class NetpayHttpClient {
             logger.info("ResponseCode=" + responseCode + " Message=" + message + " CheckValue=" + resChkValue);
 
             // 对收到的ChinaPay应答传回的域段进行验签
-            boolean res = DigestMD5.MD5Verify(tiakong.getBytes("UTF-8"), resChkValue, PubKeyPath);
+            boolean res = DigestMD5.MD5Verify(tiakong.getBytes("UTF-8"), resChkValue, PUB_KEY_PATH);
 
 
             if (responseCode.equals("20FM")) {
@@ -124,4 +125,5 @@ public class NetpayHttpClient {
         }
         return null;
     }
+
 }
