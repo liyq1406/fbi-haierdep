@@ -22,12 +22,18 @@ public class ChinapayTxnHandler {
     private Log logger = LogFactory.getLog(this.getClass());
 
     public static final String BATCH_FILE_PATH = PropertyManager.getProperty("chinapay_path_batchfile");
-    public static final String MER_ID = PropertyManager.getProperty("chinapay_haierfc_merid");
-    static final String MER_KEY_PATH = PropertyManager.getProperty("chinapay_crypt_path_merprk");
-    static final String PUB_KEY_PATH = PropertyManager.getProperty("chinapay_crypt_path_pgpubk");
 
+    public static final String BATCH_MER_ID = PropertyManager.getProperty("chinapay_haierfc_batch_merid");
+    static final String BATCH_MER_KEY_PATH = PropertyManager.getProperty("chinapay_crypt_path_batch_merprk");
+    static final String BATCH_PUB_KEY_PATH = PropertyManager.getProperty("chinapay_crypt_path_batch_pgpubk");
     static final String BATCH_FILE_QUERY_URL = PropertyManager.getProperty("chinapay_server_http_batch_query_url");
     static final String BATCH_FILE_UPLOAD_URL = PropertyManager.getProperty("chinapay_server_http_batch_cut_url");
+
+    public static final String SINGLE_MER_ID = PropertyManager.getProperty("chinapay_haierfc_single_merid");
+    static final String SINGLE_MER_KEY_PATH = PropertyManager.getProperty("chinapay_crypt_path_single_merprk");
+    static final String SINGLE_PUB_KEY_PATH = PropertyManager.getProperty("chinapay_crypt_path_single_pgpubk");
+    static final String SINGLE_QUERY_URL = PropertyManager.getProperty("chinapay_server_http_single_query_url");
+    static final String SINGLE_CUT_URL = PropertyManager.getProperty("chinapay_server_http_single_cut_url");
 
     // 上传批量文件
     public Map<String, String>  uploadBatchFile(String fileName, String fileContent) throws Exception {
@@ -71,10 +77,10 @@ public class ChinapayTxnHandler {
     // 生成批量上传文件交易HTTP表单参数 signMsg为验签字段，一般为文件内容
     private List<NameValuePair> genBatchCutCryptParams(String fileName, String fileContent) throws Exception {
         // 对需要上传的字段签名
-        String chkValue = DigestMD5.MD5Sign(MER_ID, fileName, fileContent.getBytes("UTF-8"), MER_KEY_PATH);
+        String chkValue = DigestMD5.MD5Sign(BATCH_MER_ID, fileName, fileContent.getBytes("UTF-8"), BATCH_MER_KEY_PATH);
         String fileContentBase64 = readFileToBase64(fileName);
         List<NameValuePair> nvps = new ArrayList<NameValuePair>();
-        nvps.add(new BasicNameValuePair("merId", MER_ID));
+        nvps.add(new BasicNameValuePair("merId", BATCH_MER_ID));
         nvps.add(new BasicNameValuePair("fileName", fileName));
         nvps.add(new BasicNameValuePair("fileContent", fileContentBase64));
         nvps.add(new BasicNameValuePair("chkValue", chkValue));
@@ -84,9 +90,9 @@ public class ChinapayTxnHandler {
     // 生成批量查询HTTP表单参数 signMsg为验签字段
     private List<NameValuePair> genBatchQryCryptParams(String fileName, String signMsg) throws Exception {
         // 对需要上传的字段签名
-        String chkValue = DigestMD5.MD5Sign(MER_ID, signMsg.getBytes("UTF-8"), MER_KEY_PATH);
+        String chkValue = DigestMD5.MD5Sign(BATCH_MER_ID, signMsg.getBytes("UTF-8"), BATCH_MER_KEY_PATH);
         List<NameValuePair> nvps = new ArrayList<NameValuePair>();
-        nvps.add(new BasicNameValuePair("merId", MER_ID));
+        nvps.add(new BasicNameValuePair("merId", BATCH_MER_ID));
         nvps.add(new BasicNameValuePair("fileName", fileName));
         nvps.add(new BasicNameValuePair("chkValue", chkValue));
         return nvps;
@@ -98,7 +104,7 @@ public class ChinapayTxnHandler {
         int mingIndex = responseBody.lastIndexOf("=");
         String mingParam = responseBody.substring(0, mingIndex + 1);
         String resChkValue = responseBody.substring(mingIndex + 1);
-        boolean res = DigestMD5.MD5Verify(mingParam.getBytes("UTF-8"), resChkValue, PUB_KEY_PATH);
+        boolean res = DigestMD5.MD5Verify(mingParam.getBytes("UTF-8"), resChkValue, BATCH_PUB_KEY_PATH);
         if (!res) {
             logger.error("返回报文签名数据不匹配！[responsebody]---" + responseBody);
             throw new RuntimeException("返回报文签名数据不匹配！");
