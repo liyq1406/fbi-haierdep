@@ -19,7 +19,7 @@ import java.util.List;
 /**
  * HTTP¿Í»§¶Ë
  */
-public class ChinapayHttpClient {
+public class ChinapayShHttpClient {
 
     private Log logger = LogFactory.getLog(this.getClass());
 
@@ -29,7 +29,7 @@ public class ChinapayHttpClient {
     private int connTimeOut = 40 * 1000;
     private int soTimeOut = 120 * 1000;
 
-    public ChinapayHttpClient(String serverUrl) {
+    public ChinapayShHttpClient(String serverUrl) {
         this.serverUrl = serverUrl;
         try {
             httpclient = new DefaultHttpClient();

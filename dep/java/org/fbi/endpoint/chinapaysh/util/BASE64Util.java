@@ -1,4 +1,4 @@
-package org.fbi.endpoint.netpay.util;
+package org.fbi.endpoint.chinapaysh.util;
 
 public class BASE64Util {
 	private static final char[] pem_array = { 'A', 'B', 'C', 'D', 'E', 'F',

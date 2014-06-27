@@ -1,4 +1,4 @@
-package org.fbi.endpoint.netpay.util;
+package org.fbi.endpoint.chinapaysh.util;
 
 import chinapay.PrivateKey;
 import chinapay.SecureLink;

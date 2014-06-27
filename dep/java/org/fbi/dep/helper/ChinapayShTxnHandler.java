@@ -5,8 +5,8 @@ import org.apache.commons.logging.LogFactory;
 import org.apache.http.NameValuePair;
 import org.apache.http.message.BasicNameValuePair;
 import org.fbi.dep.util.PropertyManager;
-import org.fbi.endpoint.netpay.util.DigestMD5;
-import org.fbi.endpoint.netpay.util.MsgUtil;
+import org.fbi.endpoint.chinapaysh.util.DigestMD5;
+import org.fbi.endpoint.chinapaysh.util.MsgUtil;
 
 import java.io.File;
 import java.util.ArrayList;
@@ -17,23 +17,23 @@ import java.util.Map;
 /**
  * 上海银联加解密辅助类
  */
-public class ChinapayTxnHandler {
+public class ChinapayShTxnHandler {
 
     private Log logger = LogFactory.getLog(this.getClass());
 
-    public static final String BATCH_FILE_PATH = PropertyManager.getProperty("chinapay_path_batchfile");
+    public static final String BATCH_FILE_PATH = PropertyManager.getProperty("chinapaysh_path_batchfile");
 
-    public static final String BATCH_MER_ID = PropertyManager.getProperty("chinapay_haierfc_batch_merid");
-    static final String BATCH_MER_KEY_PATH = PropertyManager.getProperty("chinapay_crypt_path_batch_merprk");
-    static final String BATCH_PUB_KEY_PATH = PropertyManager.getProperty("chinapay_crypt_path_batch_pgpubk");
-    static final String BATCH_FILE_QUERY_URL = PropertyManager.getProperty("chinapay_server_http_batch_query_url");
-    static final String BATCH_FILE_UPLOAD_URL = PropertyManager.getProperty("chinapay_server_http_batch_cut_url");
+    public static final String BATCH_MER_ID = PropertyManager.getProperty("chinapaysh_haierfc_batch_merid");
+    static final String BATCH_MER_KEY_PATH = PropertyManager.getProperty("chinapaysh_crypt_path_batch_merprk");
+    static final String BATCH_PUB_KEY_PATH = PropertyManager.getProperty("chinapaysh_crypt_path_batch_pgpubk");
+    static final String BATCH_FILE_QUERY_URL = PropertyManager.getProperty("chinapaysh_server_http_batch_query_url");
+    static final String BATCH_FILE_UPLOAD_URL = PropertyManager.getProperty("chinapaysh_server_http_batch_cut_url");
 
-    public static final String SINGLE_MER_ID = PropertyManager.getProperty("chinapay_haierfc_single_merid");
-    static final String SINGLE_MER_KEY_PATH = PropertyManager.getProperty("chinapay_crypt_path_single_merprk");
-    static final String SINGLE_PUB_KEY_PATH = PropertyManager.getProperty("chinapay_crypt_path_single_pgpubk");
-    static final String SINGLE_QUERY_URL = PropertyManager.getProperty("chinapay_server_http_single_query_url");
-    static final String SINGLE_CUT_URL = PropertyManager.getProperty("chinapay_server_http_single_cut_url");
+    public static final String SINGLE_MER_ID = PropertyManager.getProperty("chinapaysh_haierfc_single_merid");
+    static final String SINGLE_MER_KEY_PATH = PropertyManager.getProperty("chinapaysh_crypt_path_single_merprk");
+    static final String SINGLE_PUB_KEY_PATH = PropertyManager.getProperty("chinapaysh_crypt_path_single_pgpubk");
+    static final String SINGLE_QUERY_URL = PropertyManager.getProperty("chinapaysh_server_http_single_query_url");
+    static final String SINGLE_CUT_URL = PropertyManager.getProperty("chinapaysh_server_http_single_cut_url");
 
     // 上传批量文件
     public Map<String, String>  uploadBatchFile(String fileName, String fileContent) throws Exception {
@@ -41,7 +41,7 @@ public class ChinapayTxnHandler {
         // 生成参数
         List<NameValuePair> nvps = genBatchCutCryptParams(fileName, fileContent);
         // 发起请求，获取响应报文
-        String responseBody = new ChinapayHttpClient(BATCH_FILE_UPLOAD_URL).doPost("UTF-8", nvps);
+        String responseBody = new ChinapayShHttpClient(BATCH_FILE_UPLOAD_URL).doPost("UTF-8", nvps);
         // 拆分应答报文数据
         // 对收到的ChinaPay应答传回的域段进行验签
         if (attest(responseBody)) {
@@ -57,7 +57,7 @@ public class ChinapayTxnHandler {
         // 生成参数
         List<NameValuePair> nvps = genBatchQryCryptParams(fileName, signMsg);
         // 发起请求，获取响应报文
-        String responseBody = new ChinapayHttpClient(BATCH_FILE_QUERY_URL).doPost("UTF-8", nvps);
+        String responseBody = new ChinapayShHttpClient(BATCH_FILE_QUERY_URL).doPost("UTF-8", nvps);
         // 拆分应答报文数据
         // 对收到的ChinaPay应答传回的域段进行验签
         if (attest(responseBody)) {

@@ -1,4 +1,4 @@
-package org.fbi.endpoint.netpay.util;
+package org.fbi.endpoint.chinapaysh.util;
 
 import java.io.ByteArrayOutputStream;
 import java.io.File;

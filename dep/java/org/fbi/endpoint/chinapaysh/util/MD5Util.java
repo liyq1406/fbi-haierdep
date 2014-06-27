@@ -1,4 +1,4 @@
-package org.fbi.endpoint.netpay.util;
+package org.fbi.endpoint.chinapaysh.util;
 
 import chinapay.DesRsa;
 import java.io.IOException;
