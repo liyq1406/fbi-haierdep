@@ -13,6 +13,7 @@ import org.fbi.endpoint.chinapaysh.util.DigestMD5;
 import org.fbi.endpoint.chinapaysh.util.MsgUtil;
 
 import java.io.File;
+import java.io.UnsupportedEncodingException;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -32,8 +33,10 @@ public class ChinapayShTxnHandler {
     public static final String BATCH_PUB_KEY_PATH = PropertyManager.getProperty("chinapaysh_crypt_path_batch_pgpubk");
     public static final String BATCH_FILE_QUERY_URL = PropertyManager.getProperty("chinapaysh_server_http_batch_query_url");
     public static final String BATCH_FILE_UPLOAD_URL = PropertyManager.getProperty("chinapaysh_server_http_batch_cut_url");
+    public static final String BATCH_FILE_DOWNLOAD_URL = PropertyManager.getProperty("chinapaysh_server_http_batch_download_url");
 
     public static final String SINGLE_MER_ID = PropertyManager.getProperty("chinapaysh_haierfc_single_merid");
+    public static final String SINGLE_KEY_MER_ID = PropertyManager.getProperty("chinapaysh_haierfc_single_key_merid");
     public static final String SINGLE_MER_KEY_PATH = PropertyManager.getProperty("chinapaysh_crypt_path_single_merprk");
     public static final String SINGLE_PUB_KEY_PATH = PropertyManager.getProperty("chinapaysh_crypt_path_single_pgpubk");
     public static final String SINGLE_QUERY_URL = PropertyManager.getProperty("chinapaysh_server_http_single_query_url");
@@ -55,9 +58,26 @@ public class ChinapayShTxnHandler {
         return null;
     }
 
-    // 查询批量文件上传处理结果
-    public Map<String, String> qryBatchFileStatus(String fileName, String signMsg) throws Exception {
+    // 下载回盘文件
+    public Map<String, String> downloadNoticeFile(String orFileName, String fileName) throws Exception {
 
+        // 生成参数
+        List<NameValuePair> nvps = genDownloadCryptParams(orFileName, fileName);
+        // 发起请求，获取响应报文
+        String responseBody = new ChinapayShHttpClient(BATCH_FILE_DOWNLOAD_URL).doPost("UTF-8", nvps);
+        // 拆分应答报文数据
+        // 对收到的ChinaPay应答传回的域段进行验签
+        if (attestBatchTxnMsg(responseBody)) {
+            // 获取返回参数组
+            return getResponseValues(responseBody);
+        }
+        return null;
+    }
+
+    // 查询批量文件上传处理结果
+    public Map<String, String> qryBatchFileStatus(String fileName) throws Exception {
+
+        String signMsg = BATCH_MER_ID + fileName;
         // 生成参数
         List<NameValuePair> nvps = genBatchQryCryptParams(fileName, signMsg);
         // 发起请求，获取响应报文
@@ -73,6 +93,28 @@ public class ChinapayShTxnHandler {
 
     // 单笔代扣
     public Map<String, String> singleCut(String signMsg, List<NameValuePair> nvps) throws Exception {
+
+        nvps.add(new BasicNameValuePair("chkValue", signToChkValue(signMsg)));
+        String responseBody = new ChinapayShHttpClient(SINGLE_CUT_URL).doPost("GBK", nvps);
+        if (attestSingleTxnMsg(responseBody)) {
+            return getResponseValues(responseBody);
+        }
+        return null;
+    }
+
+    // 单笔查询
+    public Map<String, String> singleQry(String signMsg, List<NameValuePair> nvps) throws Exception {
+
+        nvps.add(new BasicNameValuePair("chkValue", signToChkValue(signMsg)));
+        String responseBody = new ChinapayShHttpClient(SINGLE_QUERY_URL).doPost("GBK", nvps);
+        if (attestSingleTxnMsg(responseBody)) {
+            return getResponseValues(responseBody);
+        }
+        return null;
+    }
+
+    // 单笔代扣签名
+    private String signToChkValue(String signMsg) {
         String base64Msg = new String(Base64.encode(signMsg.toString().getBytes()));
         PrivateKey key = new PrivateKey();
         boolean keyFlag = key.buildKey(SINGLE_MER_ID, 0, ChinapayShTxnHandler.SINGLE_MER_KEY_PATH);
@@ -82,12 +124,7 @@ public class ChinapayShTxnHandler {
         }
         SecureLink secureLink = new SecureLink(key);
         String chkValue = secureLink.Sign(base64Msg);
-        nvps.add(new BasicNameValuePair("chkValue", chkValue));
-        String responseBody = new ChinapayShHttpClient(SINGLE_CUT_URL).doPost("GBK", nvps);
-        if (attestSingleTxnMsg(responseBody)) {
-            return getResponseValues(responseBody);
-        }
-        return null;
+        return chkValue;
     }
 
     // 读取文件、Base64编码、压缩
@@ -95,6 +132,19 @@ public class ChinapayShTxnHandler {
         File file = new File(BATCH_FILE_PATH + fileName);
         byte[] fileContentBase64Bytes = MsgUtil.getBytes(file);
         return new String(fileContentBase64Bytes, "UTF-8");
+    }
+
+    // 生成回盘文件下载交易HTTP表单参数
+    private List<NameValuePair> genDownloadCryptParams(String orFileName, String fileName) throws Exception {
+        String signMsg = BATCH_MER_ID + orFileName + fileName;
+        // 对需要上传的字段签名
+        String chkValue = DigestMD5.MD5Sign(BATCH_MER_ID, signMsg.getBytes("UTF-8"), BATCH_MER_KEY_PATH);
+        List<NameValuePair> nvps = new ArrayList<NameValuePair>();
+        nvps.add(new BasicNameValuePair("merId", BATCH_MER_ID));
+        nvps.add(new BasicNameValuePair("fileName", fileName));
+        nvps.add(new BasicNameValuePair("orFileName", orFileName));
+        nvps.add(new BasicNameValuePair("chkValue", chkValue));
+        return nvps;
     }
 
     // 生成批量上传文件交易HTTP表单参数 signMsg为验签字段，一般为文件内容
@@ -140,17 +190,19 @@ public class ChinapayShTxnHandler {
         String mingParam = responseBody.substring(0, mingIndex + 1);
         String resChkValue = responseBody.substring(mingIndex + 1);
 
+        logger.info(mingParam);
+        logger.info(resChkValue);
         chinapay.PrivateKey key = new chinapay.PrivateKey();
-        boolean buildFlag = key.buildKey(SINGLE_MER_ID, 0, SINGLE_PUB_KEY_PATH);
+        boolean buildFlag = key.buildKey(SINGLE_KEY_MER_ID, 0, SINGLE_PUB_KEY_PATH);
         if (buildFlag == false) {
-            System.out.println("build key error!");
+            logger.error("build key error!");
             return false;
         }
         chinapay.SecureLink secureLink = new chinapay.SecureLink(key);
         boolean chkFlag = secureLink.verifyAuthToken(mingParam, resChkValue);
         if (!chkFlag) {
-            logger.error("返回报文签名数据不匹配！[responsebody]---" + responseBody);
-            throw new RuntimeException("返回报文签名数据不匹配！");
+            logger.error("单笔代扣返回报文签名数据不匹配！[responsebody]" + responseBody);
+            throw new RuntimeException("单笔代扣返回报文签名数据不匹配！");
         } else return true;
     }
 
