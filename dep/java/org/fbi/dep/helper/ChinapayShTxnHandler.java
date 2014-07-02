@@ -8,12 +8,10 @@ import org.apache.commons.logging.LogFactory;
 import org.apache.http.NameValuePair;
 import org.apache.http.message.BasicNameValuePair;
 import org.fbi.dep.util.PropertyManager;
-import org.fbi.endpoint.chinapaysh.txn.Sincut;
 import org.fbi.endpoint.chinapaysh.util.DigestMD5;
 import org.fbi.endpoint.chinapaysh.util.MsgUtil;
 
 import java.io.File;
-import java.io.UnsupportedEncodingException;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -51,11 +49,8 @@ public class ChinapayShTxnHandler {
         String responseBody = new ChinapayShHttpClient(BATCH_FILE_UPLOAD_URL).doPost("UTF-8", nvps);
         // 拆分应答报文数据
         // 对收到的ChinaPay应答传回的域段进行验签
-        if (attestBatchTxnMsg(responseBody)) {
-            // 获取返回参数组
-            return getResponseValues(responseBody);
-        }
-        return null;
+        attestBatchTxnMsg(responseBody);
+        return getResponseValues(responseBody);
     }
 
     // 下载回盘文件
@@ -66,12 +61,18 @@ public class ChinapayShTxnHandler {
         // 发起请求，获取响应报文
         String responseBody = new ChinapayShHttpClient(BATCH_FILE_DOWNLOAD_URL).doPost("UTF-8", nvps);
         // 拆分应答报文数据
-        // 对收到的ChinaPay应答传回的域段进行验签
-        if (attestBatchTxnMsg(responseBody)) {
-            // 获取返回参数组
-            return getResponseValues(responseBody);
+        Map<String, String> resValues = getResponseValues(responseBody);
+        String params[] = responseBody.split("&");
+        if (params.length == 5) {
+            String encodeFileData = params[3].substring(params[3].indexOf("=") + 1);
+            String fileData = new String(MsgUtil.decodeInflate(encodeFileData.getBytes()), "UTF-8");
+            boolean chkFlag = DigestMD5.MD5Verify(fileData.getBytes("UTF-8"), resValues.get("chkValue"), BATCH_PUB_KEY_PATH);
+            if (!chkFlag) {
+                logger.error("返回报文签名数据不匹配！[responsebody]---" + responseBody);
+            }
+            resValues.put("fileData", fileData);
         }
-        return null;
+        return resValues;
     }
 
     // 查询批量文件上传处理结果
@@ -84,11 +85,8 @@ public class ChinapayShTxnHandler {
         String responseBody = new ChinapayShHttpClient(BATCH_FILE_QUERY_URL).doPost("UTF-8", nvps);
         // 拆分应答报文数据
         // 对收到的ChinaPay应答传回的域段进行验签
-        if (attestBatchTxnMsg(responseBody)) {
-            // 获取返回参数组
-            return getResponseValues(responseBody);
-        }
-        return null;
+        attestBatchTxnMsg(responseBody);
+        return getResponseValues(responseBody);
     }
 
     // 单笔代扣
@@ -107,10 +105,8 @@ public class ChinapayShTxnHandler {
 
         nvps.add(new BasicNameValuePair("chkValue", signToChkValue(signMsg)));
         String responseBody = new ChinapayShHttpClient(SINGLE_QUERY_URL).doPost("GBK", nvps);
-        if (attestSingleTxnMsg(responseBody)) {
-            return getResponseValues(responseBody);
-        }
-        return null;
+        attestSingleTxnMsg(responseBody);
+        return getResponseValues(responseBody);
     }
 
     // 单笔代扣签名
@@ -190,8 +186,6 @@ public class ChinapayShTxnHandler {
         String mingParam = responseBody.substring(0, mingIndex + 1);
         String resChkValue = responseBody.substring(mingIndex + 1);
 
-        logger.info(mingParam);
-        logger.info(resChkValue);
         chinapay.PrivateKey key = new chinapay.PrivateKey();
         boolean buildFlag = key.buildKey(SINGLE_KEY_MER_ID, 0, SINGLE_PUB_KEY_PATH);
         if (buildFlag == false) {
@@ -199,7 +193,7 @@ public class ChinapayShTxnHandler {
             return false;
         }
         chinapay.SecureLink secureLink = new chinapay.SecureLink(key);
-        boolean chkFlag = secureLink.verifyAuthToken(mingParam, resChkValue);
+        boolean chkFlag = secureLink.verifyAuthToken(new String(Base64.encode(mingParam.getBytes())), resChkValue);
         if (!chkFlag) {
             logger.error("单笔代扣返回报文签名数据不匹配！[responsebody]" + responseBody);
             throw new RuntimeException("单笔代扣返回报文签名数据不匹配！");
@@ -212,7 +206,8 @@ public class ChinapayShTxnHandler {
         Map<String, String> resPairs = new HashMap<String, String>();
         for (String str : pairs) {
             String[] aPair = str.split("=");
-            resPairs.put(aPair[0], aPair[1]);
+            resPairs.put(aPair[0].trim().replace("\r", "").replace("\n", ""),
+                    aPair[1].trim().replace("\r", "").replace("\n", ""));
         }
         return resPairs;
     }
