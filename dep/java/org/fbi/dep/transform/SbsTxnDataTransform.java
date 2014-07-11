@@ -51,6 +51,7 @@ public class SbsTxnDataTransform {
         paramList.add(tia.BODY.DCTYPE);
         paramList.add(tia.BODY.RECACT);
         paramList.add(tia.BODY.RECNAM);
+        paramList.add("907452000016");
         paramList.add("海尔集团财务有限责任公司");
         paramList.add(tia.BODY.IBKACT);
         paramList.add(tia.BODY.IBKNUM);
@@ -128,7 +129,7 @@ public class SbsTxnDataTransform {
     }
 
     private static byte[] convert(String txnCode, String termID, List<String> tiaList) {
-        String header = "TPEI" + txnCode + "  010       " + "MT01                       ";
+        String header = "TPEI" + txnCode + "  010       " + termID + "MT01                       ";
         byte[] tiaBuf = new byte[32000];
         byte[] bytes = header.getBytes();
         System.arraycopy(bytes, 0, tiaBuf, 0, bytes.length);

@@ -18,7 +18,7 @@ import java.io.Serializable;
 @XStreamAlias("ROOT")
 public class ToaXml9009101 extends ToaXml {
     public ToaXmlInfo INFO = new ToaXmlInfo();
-    public Body BODY;
+    public Body BODY = new Body();
 
     public static class Body implements Serializable {
         public String TXNAMT;
