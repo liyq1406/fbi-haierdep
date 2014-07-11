@@ -57,9 +57,9 @@ public class Bootstrap {
         RouteBuilder appRouteBuilder = new AppRouteBuilder();
         RouteBuilder objectRouteBuilder = new ObjectRouteBuilder();
         RouteBuilder clientRouteBuilder = new ClientRouteBuilder();
-        RouteBuilder mbpRouteBuilder = new AcntNoticeSktRouteBuilder();
-        RouteBuilder upSktRouteBuilder = new PayoutDirectSktRouteBuilder(UNIONPAY_SOCKET_PORT);
-        RouteBuilder upSbsRouteBuilder = new PayoutIndirectSktRouteBuilder(UNIONPAY_SBS_SOCKET_PORT);
+        RouteBuilder mbpRouteBuilder = new MbpDztzRouteBuilder();
+//        RouteBuilder upSktRouteBuilder = new PayoutDirectSktRouteBuilder(UNIONPAY_SOCKET_PORT);
+//        RouteBuilder upSbsRouteBuilder = new PayoutIndirectSktRouteBuilder(UNIONPAY_SBS_SOCKET_PORT);
         RouteBuilder sbsSktRouteBuilder = new SbsSktRouteBuilder(SBS_SOCKET_PORT);
         try {
             logger.info("CamelContext开始添加路由...");
@@ -68,8 +68,8 @@ public class Bootstrap {
             context.addRoutes(objectRouteBuilder);
             context.addRoutes(clientRouteBuilder);
             context.addRoutes(mbpRouteBuilder);
-            context.addRoutes(upSktRouteBuilder);
-            context.addRoutes(upSbsRouteBuilder);
+//            context.addRoutes(upSktRouteBuilder);
+//            context.addRoutes(upSbsRouteBuilder);
             context.addRoutes(sbsSktRouteBuilder);
             logger.info("CamelContext开始启动...");
             context.start();

@@ -1,6 +1,7 @@
 package org.fbi.dep.transform;
 
 import org.apache.commons.lang.StringUtils;
+import org.fbi.dep.model.txn.TiaXml9009101;
 import org.fbi.dep.util.StringPad;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -24,23 +25,38 @@ public class SbsTxnDataTransform {
 
     private static Logger logger = LoggerFactory.getLogger(SbsTxnDataTransform.class);
 
-    private static byte[] convert(String txnCode, List<String> tiaList) {
-        String header = "TPEI" + txnCode + "  010       MT01MT01                       ";
-        byte[] tiaBuf = new byte[32000];
-        byte[] bytes = header.getBytes();
-        System.arraycopy(bytes, 0, tiaBuf, 0, bytes.length);
-        try {
-            setBufferValues(tiaList, tiaBuf);
-        } catch (UnsupportedEncodingException e) {
-            logger.error("Unsupported  Encoding", e);
-        }
-        return tiaBuf;
-    }
 
-    public static byte[] convertToTxnaa41(String sn, String outActno, String inActno, String amt, String remark) {
+
+    public static byte[] convertToTxnAa41(String sn, String outActno, String inActno, String amt, String remark) {
         if(StringUtils.isEmpty(remark)) remark = "资金交换平台";
         List<String> tiaList = assembleTaa41Param(sn, outActno, inActno, new BigDecimal(amt), remark);
-        return convert("aa41", tiaList);
+        return convert("aa41", "MT01", tiaList);
+    }
+
+    public static byte[] convertToTxnN080(TiaXml9009101 tia, String termId) {
+        return convert("n080", termId, assembleTn080Param(tia));
+    }
+
+    private static List<String> assembleTn080Param(TiaXml9009101 tia) {
+        List<String> paramList = new ArrayList<String>();
+        paramList.add(StringUtils.rightPad(tia.INFO.REQ_SN, 18, ' '));
+        paramList.add(StringUtils.rightPad(tia.BODY.BANKSN, 16, ' '));
+        paramList.add(tia.BODY.BNKDAT);
+        paramList.add(tia.BODY.BNKTIM);
+        paramList.add(tia.BODY.PBKNUM);
+        paramList.add(tia.BODY.PBKNAM);
+        paramList.add(tia.BODY.PAYACT);
+        paramList.add(tia.BODY.PAYNAM);
+        paramList.add(tia.BODY.TXNAMT);
+        paramList.add(tia.BODY.DCTYPE);
+        paramList.add(tia.BODY.RECACT);
+        paramList.add(tia.BODY.RECNAM);
+        paramList.add("海尔集团财务有限责任公司");
+        paramList.add(tia.BODY.IBKACT);
+        paramList.add(tia.BODY.IBKNUM);
+        paramList.add(tia.BODY.IBKNAM);
+        paramList.add(tia.BODY.RETAUX);
+        return paramList;
     }
 
     private static List<String> assembleTaa41Param(String sn, String fromAcct, String toAcct, BigDecimal txnAmt, String remark) {
@@ -109,6 +125,19 @@ public class SbsTxnDataTransform {
         txnparamList.add(" ");
 
         return txnparamList;
+    }
+
+    private static byte[] convert(String txnCode, String termID, List<String> tiaList) {
+        String header = "TPEI" + txnCode + "  010       " + "MT01                       ";
+        byte[] tiaBuf = new byte[32000];
+        byte[] bytes = header.getBytes();
+        System.arraycopy(bytes, 0, tiaBuf, 0, bytes.length);
+        try {
+            setBufferValues(tiaList, tiaBuf);
+        } catch (UnsupportedEncodingException e) {
+            logger.error("Unsupported  Encoding", e);
+        }
+        return tiaBuf;
     }
 
     private static void setBufferValues(List list, byte[] bb) throws UnsupportedEncodingException {

@@ -16,10 +16,10 @@ public abstract class AbstractTiaBytesTransform {
     protected static boolean DEP_IS_RUNNING_DEBUG = !"0".equals(PropertyManager.getProperty("dep.running.debug"));
     private static Logger logger = LoggerFactory.getLogger(AbstractTiaBytesTransform.class);
 
-    public byte[] run(String xml) {
+    public byte[] run(String xml, String userid) {
         byte[] rtnmsg = null;
         try {
-            rtnmsg = transform(xml);
+            rtnmsg = transform(xml, userid);
 //            logger.info(rtnmsg);
         } catch (Exception e) {
             logger.error(TxnRtnCode.MSG_ANALYSIS_ILLEGAL.toRtnMsg(), e);
@@ -27,5 +27,6 @@ public abstract class AbstractTiaBytesTransform {
         }
         return rtnmsg;
     }
-    abstract byte[] transform(String xml);
+
+    abstract byte[] transform(String xml, String userid);
 }
