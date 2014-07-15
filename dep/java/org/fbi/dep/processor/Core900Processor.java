@@ -8,11 +8,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 /**
- * Created by IntelliJ IDEA.
- * User: zhangxiaobo
- * Date: 12-2-13
- * Time: 下午8:46
- * To change this template use File | Settings | File Templates.
+ * SBS交易处理
  */
 public class Core900Processor implements Processor {
 

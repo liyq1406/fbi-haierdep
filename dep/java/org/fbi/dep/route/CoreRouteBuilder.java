@@ -45,13 +45,13 @@ public class CoreRouteBuilder extends RouteBuilder {
         from("jms:queue:queue.dep.core.unionpay.out").to("jms:queue:queue.dep.core.out");
 
         // ccbvips
-        from("jms:queue:queue.dep.core.ccbvips.in")
+        from("jms:queue:queue.dep.core.ccbvips.in?concurrentConsumers=20")
                 .process(new Core200Processor())
                 .to("jms:queue:queue.dep.core.ccbvips.out");
         from("jms:queue:queue.dep.core.ccbvips.out").to("jms:queue:queue.dep.core.out");
 
         // eai
-        from("jms:queue:queue.dep.core.eai.in").doTry()
+        from("jms:queue:queue.dep.core.eai.in?concurrentConsumers=20").doTry()
                 .process(new Core300Processor())
                 .to("jms:queue:queue.dep.core.eai.out").doCatch(RuntimeCamelException.class);
         from("jms:queue:queue.dep.core.eai.out").to("jms:queue:queue.dep.core.out");
