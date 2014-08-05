@@ -49,7 +49,7 @@ public class JmsBytesClient {
             if (rtnMessage == null) {
                 session.close();
                 connection.close();
-                throw new RuntimeException("MQ消息接收超时！");
+                throw new RuntimeException("7001|MQ消息接收超时！");
             } else {
                 session.close();
                 connection.close();

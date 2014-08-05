@@ -1,6 +1,7 @@
 package org.fbi.dep.transform;
 
 import org.apache.commons.lang.StringUtils;
+import org.fbi.dep.model.txn.TiaXml9009060;
 import org.fbi.dep.model.txn.TiaXml9009101;
 import org.fbi.dep.util.StringPad;
 import org.slf4j.Logger;
@@ -27,20 +28,35 @@ public class SbsTxnDataTransform {
 
 
 
-    public static byte[] convertToTxnAa41(String sn, String outActno, String inActno, String amt, String remark) {
+    public static byte[] convertToTxnAa41(String sn, String outActno, String inActno, String amt, String termId, String remark) {
         if(StringUtils.isEmpty(remark)) remark = "资金交换平台";
         List<String> tiaList = assembleTaa41Param(sn, outActno, inActno, new BigDecimal(amt), remark);
-        return convert("aa41", "MT01", tiaList);
+        return convert("aa41", termId, tiaList);
     }
 
     public static byte[] convertToTxnN080(TiaXml9009101 tia, String termId) {
         return convert("n080", termId, assembleTn080Param(tia));
     }
 
+    public static byte[] convertToTxn8855(TiaXml9009060 tia, String termId) {
+        return convert("8855", termId, assembleT8855Param(tia));
+    }
+
+    private static List<String> assembleT8855Param(TiaXml9009060 tia) {
+        List<String> paramList = new ArrayList<String>();
+        paramList.add(tia.BODY.CUSKID);
+        paramList.add(tia.BODY.PASTYP);
+        paramList.add(tia.BODY.PASSNO);
+        paramList.add(tia.BODY.ACTTYP);
+        paramList.add(tia.BODY.BEGNUM);
+        return paramList;
+    }
+
+
     private static List<String> assembleTn080Param(TiaXml9009101 tia) {
         List<String> paramList = new ArrayList<String>();
-        paramList.add(StringUtils.rightPad(tia.INFO.REQ_SN, 18, ' '));
-        paramList.add(StringUtils.rightPad(tia.BODY.BANKSN, 16, ' '));
+        paramList.add(StringUtils.rightPad(tia.BODY.BANKSN, 18, ' '));
+        paramList.add(StringUtils.rightPad(tia.INFO.REQ_SN, 16, ' '));
         paramList.add(tia.BODY.BNKDAT);
         paramList.add(tia.BODY.BNKTIM);
         paramList.add(tia.BODY.PBKNUM);

@@ -69,6 +69,7 @@ public class SbsSktRouteBuilder extends RouteBuilder {
                                      // 验证失败 返回验证失败信息
                                      if (!md5.equalsIgnoreCase(mac)) {
                                          logger.info("MAC校验失败[服务端]MD5:" + md5 + "[客户端]MAC:" + mac);
+                                         throw new RuntimeException(TxnRtnCode.MSG_VERIFY_MAC_ILLEGAL.toRtnMsg());
                                      } else {
                                          logger.info("MAC校验成功");
                                      }
@@ -109,8 +110,10 @@ public class SbsSktRouteBuilder extends RouteBuilder {
                                          String exmsg = e.getMessage();
                                          logger.error("交易异常", e);
                                          AbstractTiaToToa tiaToToa = (AbstractTiaToToa) Class.forName("org.fbi.dep.transform.Tia" + txnCode + "ToToa").newInstance();
-                                         if (exmsg == null || !exmsg.contains("|")) {
+                                         if (exmsg == null) {
                                              exmsg = TxnRtnCode.SERVER_EXCEPTION.getCode() + "|" + TxnRtnCode.SERVER_EXCEPTION.getTitle();
+                                         } else if (!exmsg.contains("|")){
+                                             exmsg = TxnRtnCode.SERVER_EXCEPTION.getCode() + "|" + exmsg;
                                          }
                                          String errmsg[] = exmsg.split("\\|");
                                          String rtnmsg = tiaToToa.run(rtnMsgData, errmsg[0], errmsg[1]);

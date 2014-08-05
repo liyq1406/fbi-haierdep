@@ -4,10 +4,7 @@ import org.apache.camel.Exchange;
 import org.apache.camel.Message;
 import org.apache.camel.Processor;
 import org.fbi.dep.model.base.TOA;
-import org.fbi.dep.transform.TOA1001001Transform;
-import org.fbi.dep.transform.TOA1001002Transform;
-import org.fbi.dep.transform.TOA1002001Transform;
-import org.fbi.dep.transform.TOA1003001Transform;
+import org.fbi.dep.transform.*;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -37,6 +34,10 @@ public class TOA100Processor implements Processor {
         switch (Integer.parseInt(txnCode)) {
             case 100001:
             case 100004:
+                String reqTxnCode = exchange.getOut().getHeader("REQ_TXN_CODE", String.class);
+                if("1001003".equals(reqTxnCode)) {
+                    toa = new TOA1001003Transform().transform(datagram, txnCode);
+                } else
                 toa = new TOA1001001Transform().transform(datagram, txnCode);
                 break;
             case 100005:

@@ -203,7 +203,7 @@ public class CtgManager {
      * 处理查询交易多包返回的情况
      * 注意：请求包中的起始笔数栏位应放在最后一个。
      */
-    public void processMultiResponsePkg(SBSRequest request, SBSResponse4MultiRecord response) {
+    public void processMultiResponsePkg(byte[] tiaBytes, SBSRequest request, SBSResponse4MultiRecord response) {
         ECIRequest eciRequestObject = null;
         javaGatewayObject = null;
 

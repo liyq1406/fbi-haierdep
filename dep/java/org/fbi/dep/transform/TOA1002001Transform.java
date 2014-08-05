@@ -24,7 +24,7 @@ public class TOA1002001Transform extends AbstractToaTransform {
         TOA1002001 toa1002001 = new TOA1002001();
         toa1002001.header.RETURN_CODE = toa.INFO.RET_CODE;      //报文头返回码
         toa1002001.header.RETURN_MSG = toa.INFO.ERR_MSG;      //报文头返回码
-        toa1002001 = new TOA1002001();
+//        toa1002001 = new TOA1002001();
         toa1002001.header.REQ_SN = toa.INFO.REQ_SN;
         toa1002001.header.TX_CODE = toa.INFO.TRX_CODE;
 

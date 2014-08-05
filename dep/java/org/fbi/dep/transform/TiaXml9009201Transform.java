@@ -1,5 +1,6 @@
 package org.fbi.dep.transform;
 
+import org.apache.commons.lang.StringUtils;
 import org.fbi.dep.model.txn.TiaXml9009201;
 import org.fbi.dep.util.PropertyManager;
 import org.slf4j.Logger;
@@ -29,12 +30,18 @@ public class TiaXml9009201Transform extends AbstractTiaBytesTransform {
     byte[] transform(String xml, String userid) {
         TiaXml9009201 tia = (TiaXml9009201) (new TiaXml9009201().getTia(xml));
         byte[] bytes = null;
+        String termID = PropertyManager.getProperty("sbs.termid." + userid);
+        if (StringUtils.isEmpty(termID)) {
+            termID = "MT01";
+        }
         if ("F".equalsIgnoreCase(tia.BODY.SFFLAG.trim())) {
             bytes = SbsTxnDataTransform.convertToTxnAa41(tia.INFO.REQ_SN,
-                    SBS_ACT_ELEC_EXCHANGE_EXPOSE, SBS_ACT_DEPOSIT_CENT_BANK, tia.BODY.TXNAMT, tia.BODY.REMARK);
+                    SBS_ACT_ELEC_EXCHANGE_EXPOSE, SBS_ACT_DEPOSIT_CENT_BANK,
+                    tia.BODY.TXNAMT, termID, tia.BODY.REMARK);
         } else if ("S".equalsIgnoreCase(tia.BODY.SFFLAG.trim())) {
             bytes = SbsTxnDataTransform.convertToTxnAa41(tia.INFO.REQ_SN,
-                    SBS_ACT_DEPOSIT_CENT_BANK, SBS_ACT_ELEC_EXCHANGE_EXPOSE, tia.BODY.TXNAMT, tia.BODY.REMARK);
+                    SBS_ACT_DEPOSIT_CENT_BANK, SBS_ACT_ELEC_EXCHANGE_EXPOSE,
+                    tia.BODY.TXNAMT, termID, tia.BODY.REMARK);
         } else {
             throw new RuntimeException("二代支付手续费入账收付标志错:" + tia.BODY.SFFLAG);
         }
