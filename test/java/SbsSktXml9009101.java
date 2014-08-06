@@ -11,7 +11,7 @@ public class SbsSktXml9009101 {
                     "<ROOT>" +
                     "<INFO>" +
                     "<TXN_CODE>9009101</TXN_CODE>" +
-                    "<REQ_SN>SCF0000324292321</REQ_SN>" +
+                    "<REQ_SN>SCF000092321</REQ_SN>" +
                     "</INFO>" +
                     "<BODY>" +
                     "<BANKSN>SN9010101010</BANKSN>" +

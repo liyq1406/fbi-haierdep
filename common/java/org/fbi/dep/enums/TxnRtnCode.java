@@ -41,6 +41,7 @@ public enum TxnRtnCode implements EnumApp {
 
     TXN_ACT_CHECK_ERR("4000", "付款账号不允许转出"),
     TXN_SYSID_CHECK_ERR("4001", "系统ID错,不允许交易"),
+    TXN_CHECK_ERR("4099", "交易数据未通过闸口校验"),
 
     SERVER_EXCEPTION("9000", "服务器异常");
 

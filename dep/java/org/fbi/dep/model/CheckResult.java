@@ -8,25 +8,25 @@ package org.fbi.dep.model;
  * To change this template use File | Settings | File Templates.
  */
 public class CheckResult {
-    private String appid;
+    private String userid;
     private String txnCode;
-    private String resultCode = "";
+    private String resultCode = "0000";
     private String resultMsg;
 
     public CheckResult() {
     }
 
-    public CheckResult(String appid, String txnCode) {
-        this.appid = appid;
+    public CheckResult(String userid, String txnCode) {
+        this.userid = userid;
         this.txnCode = txnCode;
     }
 
-    public String getAppid() {
-        return appid;
+    public String getUserid() {
+        return userid;
     }
 
-    public void setAppid(String appid) {
-        this.appid = appid;
+    public void setUserid(String userid) {
+        this.userid = userid;
     }
 
     public String getTxnCode() {

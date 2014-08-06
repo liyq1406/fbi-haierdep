@@ -1,0 +1,14 @@
+<List>
+    <WhiteActno>
+        <actno>801000026103021001</actno>
+        <userid>VOMAPP001</userid>
+        <txnNo>9009001</txnNo>
+        <inOut>0</inOut>
+    </WhiteActno>
+    <WhiteActno>
+        <actno>801000026113021001</actno>
+        <userid>QDJSAPP001</userid>
+        <txnNo>9009001</txnNo>
+        <inOut>0</inOut>
+    </WhiteActno>
+</List>
