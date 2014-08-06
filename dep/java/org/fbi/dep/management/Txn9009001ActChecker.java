@@ -13,7 +13,7 @@ import java.util.List;
 /**
  * 9009001 SBS内转账号白名单检查
  */
-public class Txn9009001ActChecker extends Txn900Checker {
+public class Txn9009001ActChecker implements TxnChecker {
 
     private static Logger logger = LoggerFactory.getLogger(Txn9009001ActChecker.class);
 

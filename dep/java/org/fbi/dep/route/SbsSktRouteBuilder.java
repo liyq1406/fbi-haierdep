@@ -7,7 +7,6 @@ import org.apache.commons.lang.StringUtils;
 import org.fbi.dep.component.jms.JmsBytesClient;
 import org.fbi.dep.enums.TxnRtnCode;
 import org.fbi.dep.helper.MD5Helper;
-import org.fbi.dep.management.Txn900Checker;
 import org.fbi.dep.management.TxnChecker;
 import org.fbi.dep.management.TxnUseridChecker;
 import org.fbi.dep.model.CheckResult;
@@ -81,7 +80,7 @@ public class SbsSktRouteBuilder extends RouteBuilder {
                                      CheckResult checkResult = new CheckResult(userid, txnCode);
                                      if (!StringUtils.isEmpty(checkerClass)) {
                                          logger.info(txnCode + "交易启动闸口：" + checkerClass);
-                                         Txn900Checker checker = (Txn900Checker) Class.forName(checkerClass).newInstance();
+                                         TxnChecker checker = (TxnChecker) Class.forName(checkerClass).newInstance();
                                          checker.check(userid, txnCode, msgData, checkResult);
                                          logger.info(txnCode + "交易闸口检查结果：" + ("0000".equals(checkResult.getResultCode()) ? "通过" : checkResult.getResultMsg()));
                                          if (!"0000".equals(checkResult.getResultCode())) {
