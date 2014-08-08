@@ -1,6 +1,7 @@
 package org.fbi.dep.transform;
 
 import org.apache.commons.beanutils.BeanUtils;
+import org.fbi.dep.helper.FbiBeanUtils;
 import org.fbi.dep.model.base.TIA;
 import org.fbi.dep.model.txn.TIA1001003;
 import org.fbi.dep.model.txn.TIA1002001;
@@ -57,7 +58,8 @@ public class TIA1001003Transform extends AbstractTiaTransform {
         for(TIA1001003.Body.BodyDetail bodyDetail : tia1001003.body.TRANS_DETAILS) {
             T100001Tia.Body.BodyDetail detail = new T100001Tia.Body.BodyDetail();
             try {
-                BeanUtils.copyProperties(detail, bodyDetail);
+//                BeanUtils.copyProperties(detail, bodyDetail);
+                FbiBeanUtils.copyProperties(bodyDetail, detail);
                /* detail.BANK_CODE = bodyDetail.BANK_CODE;
                 detail.ACCOUNT_TYPE = bodyDetail.ACCOUNT_TYPE;
                 detail.ACCOUNT_NO = bodyDetail.ACCOUNT_NO;
