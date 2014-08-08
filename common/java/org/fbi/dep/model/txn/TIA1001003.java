@@ -32,7 +32,7 @@ public class TIA1001003 extends TIA {
     }
 
     public static class Body extends TIABody {
-        public BodyHeader TRANS_SUM;
+        public BodyHeader TRANS_SUM = new BodyHeader();
         public List<BodyDetail> TRANS_DETAILS = new ArrayList<BodyDetail>();
 
         public static class BodyHeader implements Serializable {
