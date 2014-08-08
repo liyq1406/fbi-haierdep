@@ -34,27 +34,26 @@ public class TOA1003003Transform extends AbstractToaTransform {
     private TOA1003003 get200001RtnBean(String message) {
 
         T200001Toa toa = T200001Toa.getToa(message);
-        TOA1003003 toa1003003 =  new TOA1003003();
+        TOA1003003 toa1003003 = new TOA1003003();
         toa1003003.header.REQ_SN = toa.INFO.REQ_SN;
         toa1003003.header.TX_CODE = toa.INFO.TRX_CODE;
         toa1003003.body.QUERY_SN = toa.BODY.QUERY_TRANS.QUERY_SN;
         toa1003003.body.REMARK = toa.BODY.QUERY_TRANS.QUERY_REMARK;
         // 处理完成
         if ("0000".equals(toa.INFO.RET_CODE)) {
+            toa1003003.header.RETURN_CODE = toa.INFO.RET_CODE;
+            toa1003003.header.RETURN_MSG = toa.INFO.ERR_MSG;
             // 交易成功
-            T200001Toa.Body.BodyDetail detail = toa.BODY.RET_DETAILS.get(0);
-            if ("0000".equals(detail.RET_CODE)) {
-                toa1003003.header.RETURN_CODE = TxnStatus.TXN_SUCCESS.getCode();
-                toa1003003.header.RETURN_MSG = TxnStatus.TXN_SUCCESS.getTitle();
-                toa1003003.body.QUERY_SN = toa.BODY.QUERY_TRANS.QUERY_SN;
-//                toa1003003.body.ACCOUNT_NO = detail.ACCOUNT;
-//                toa1003003.body.ACCOUNT_NAME = detail.ACCOUNT_NAME;
-//                toa1003003.body.AMOUNT = new BigDecimal(detail.AMOUNT).divide(new BigDecimal(100));
-                // 交易失败
-            } else {
-                toa1003003.header.RETURN_CODE = TxnStatus.TXN_FAILED.getCode();
-                toa1003003.header.RETURN_MSG = "[" + detail.RET_CODE + "]" + detail.ERR_MSG;
+            for (T200001Toa.Body.BodyDetail detail : toa.BODY.RET_DETAILS) {
+                TOA1003003.Body.BodyDetail record = new TOA1003003.Body.BodyDetail();
+                record.SN = detail.SN;
+                record.RET_CODE = TxnStatus.TXN_SUCCESS.getCode();
+                record.ERR_MSG = TxnStatus.TXN_SUCCESS.getTitle();
+                record.ACCOUNT_NO = detail.ACCOUNT;
+                record.ACCOUNT_NAME = detail.ACCOUNT_NAME;
+                record.AMOUNT = new BigDecimal(detail.AMOUNT).divide(new BigDecimal(100));
             }
+
             // 交易失败
         } else if (RESULT_FAILED_RTNCODES.contains(toa.INFO.RET_CODE)) {
             toa1003003.header.RETURN_CODE = TxnStatus.TXN_FAILED.getCode();
@@ -62,8 +61,7 @@ public class TOA1003003Transform extends AbstractToaTransform {
             // 结果不明
         } else {
             toa1003003.header.RETURN_CODE = TxnStatus.TXN_QRY_PEND.getCode();
-            toa1003003.header.RETURN_MSG = "[" + toa.INFO.RET_CODE + "]" + toa.INFO.ERR_MSG + "。"
-                    + TxnStatus.TXN_QRY_PEND.getTitle();
+            toa1003003.header.RETURN_MSG = "[" + toa.INFO.RET_CODE + "]" + toa.INFO.ERR_MSG;
         }
         /*else if (RESULT_UNKNOWN_RTNCODES.contains(toa.INFO.RET_CODE)) {
             toa1003001.header.RETURN_CODE = TxnStatus.TXN_QRY_PEND.getCode();
