@@ -30,9 +30,9 @@ public class Txn9009001ActChecker implements TxnChecker {
         if (actno == null) {
             res.setResultCode(TxnRtnCode.TXN_CHECK_ERR.getCode());
             res.setResultMsg(TxnRtnCode.TXN_CHECK_ERR.getTitle());
-            logger.info("ActnoWhitelistChecker 校验未通过：[Actno]" + tia.BODY.OUT_ACTNO + "[userid]" + userid);
+            logger.info("Txn9009001ActChecker 校验未通过：[Actno]" + tia.BODY.OUT_ACTNO + "[userid]" + userid);
         } else {
-            logger.info("ActnoWhitelistChecker 校验通过");
+            logger.info("Txn9009001ActChecker 校验通过");
         }
     }
 
@@ -60,10 +60,8 @@ public class Txn9009001ActChecker implements TxnChecker {
 
     private List<Act9009001List.ActInfo> getActnoWhitelist(String fileName) {
         String xml = readFile(fileName);
-        logger.info("ActnoWhitelist: " + xml);
         Act9009001List actnoWhiteList = new Act9009001List();
         actnoWhiteList = actnoWhiteList.toBean(xml);
-        logger.info("ActnoWhitelist账号数：" + actnoWhiteList.ActInfo.size());
         return actnoWhiteList.ActInfo;
     }
 

@@ -31,10 +31,11 @@ public class TOA100Processor implements Processor {
 
         String txnCode = (String) inMessage.getHeader("JMSX_TXCODE");
         TOA toa = null;
+        String reqTxnCode = null;
         switch (Integer.parseInt(txnCode)) {
             case 100001:
             case 100004:
-                String reqTxnCode = exchange.getOut().getHeader("REQ_TXN_CODE", String.class);
+                reqTxnCode = exchange.getOut().getHeader("REQ_TXN_CODE", String.class);
                 if("1001003".equals(reqTxnCode)) {
                     toa = new TOA1001003Transform().transform(datagram, txnCode);
                 } else
@@ -47,6 +48,10 @@ public class TOA100Processor implements Processor {
                 toa = new TOA1002001Transform().transform(datagram, txnCode);
                 break;
             case 200001:
+                reqTxnCode = exchange.getOut().getHeader("REQ_TXN_CODE", String.class);
+                if("1003003".equals(reqTxnCode)) {
+                    toa = new TOA1003003Transform().transform(datagram, txnCode);
+                } else
                 toa = new TOA1003001Transform().transform(datagram, txnCode);
                 break;
             default:

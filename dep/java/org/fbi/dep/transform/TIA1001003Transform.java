@@ -58,7 +58,7 @@ public class TIA1001003Transform extends AbstractTiaTransform {
             T100001Tia.Body.BodyDetail detail = new T100001Tia.Body.BodyDetail();
             try {
                 BeanUtils.copyProperties(detail, bodyDetail);
-                detail.BANK_CODE = bodyDetail.BANK_CODE;
+               /* detail.BANK_CODE = bodyDetail.BANK_CODE;
                 detail.ACCOUNT_TYPE = bodyDetail.ACCOUNT_TYPE;
                 detail.ACCOUNT_NO = bodyDetail.ACCOUNT_NO;
                 detail.ACCOUNT_NAME = bodyDetail.ACCOUNT_NAME;
@@ -66,7 +66,7 @@ public class TIA1001003Transform extends AbstractTiaTransform {
                 detail.PROVINCE = bodyDetail.PROVINCE;
                 detail.CITY = bodyDetail.CITY;
                 detail.REMARK = bodyDetail.REMARK;
-                detail.RESERVE1 = bodyDetail.RESERVE1;
+                detail.RESERVE1 = bodyDetail.RESERVE1;*/
                 logger.info(detail.ACCOUNT_NAME+detail.ACCOUNT_NO);
                 detail.AMOUNT = String.valueOf(new BigDecimal(bodyDetail.AMOUNT).multiply(new BigDecimal("100")).longValue());
             } catch (Exception e) {

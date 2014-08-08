@@ -28,6 +28,7 @@ public class TIA100Processor implements Processor {
         // TODO ADD
         if (msgBody instanceof TIA1003001) {
             TIA1003001 tia1003001 = (TIA1003001) msgBody;
+            exchange.getOut().setHeader("REQ_TXN_CODE", "1003001");
             datagram = new TIA1003001Transform().transform(tia1003001);
         } else if (msgBody instanceof TIA1001001) {
             TIA1001001 tia1001001 = (TIA1001001) msgBody;
@@ -42,6 +43,10 @@ public class TIA100Processor implements Processor {
         } else if(msgBody instanceof TIA1002001) {
             TIA1002001 tia1002001 = (TIA1002001) msgBody;
             datagram = new TIA1002001Transform().transform(tia1002001);
+        } else if(msgBody instanceof TIA1003003) {
+            TIA1003003 tia1003003 = (TIA1003003) msgBody;
+            exchange.getOut().setHeader("REQ_TXN_CODE", "1003003");
+            datagram = new TIA1003003Transform().transform(tia1003003);
         }
         exchange.getOut().setBody(datagram);
 
