@@ -39,21 +39,21 @@ public class TOA1003003Transform extends AbstractToaTransform {
         toa1003003.header.TX_CODE = "1003003";
         toa1003003.body.QUERY_SN = toa.BODY.QUERY_TRANS.QUERY_SN;
         toa1003003.body.REMARK = toa.BODY.QUERY_TRANS.QUERY_REMARK;
-        // 处理完成
-        if ("0000".equals(toa.INFO.RET_CODE)) {
-            toa1003003.header.RETURN_CODE = toa.INFO.RET_CODE;
-            toa1003003.header.RETURN_MSG = toa.INFO.ERR_MSG;
-            // 交易成功
+        toa1003003.header.RETURN_CODE = toa.INFO.RET_CODE;
+        toa1003003.header.RETURN_MSG = toa.INFO.ERR_MSG;
+        if (toa.BODY != null) {
             for (T200001Toa.Body.BodyDetail detail : toa.BODY.RET_DETAILS) {
                 TOA1003003.Body.BodyDetail record = new TOA1003003.Body.BodyDetail();
                 record.SN = detail.SN;
-                record.RET_CODE = TxnStatus.TXN_SUCCESS.getCode();
-                record.ERR_MSG = TxnStatus.TXN_SUCCESS.getTitle();
+                record.RET_CODE = detail.RET_CODE;
+                record.ERR_MSG = detail.ERR_MSG;
                 record.ACCOUNT_NO = detail.ACCOUNT;
                 record.ACCOUNT_NAME = detail.ACCOUNT_NAME;
                 record.AMOUNT = new BigDecimal(detail.AMOUNT).divide(new BigDecimal(100));
+                toa1003003.body.RET_DETAILS.add(record);
             }
-
+        }
+/*
             // 交易失败
         } else if (RESULT_FAILED_RTNCODES.contains(toa.INFO.RET_CODE)) {
             toa1003003.header.RETURN_CODE = TxnStatus.TXN_FAILED.getCode();
@@ -62,7 +62,7 @@ public class TOA1003003Transform extends AbstractToaTransform {
         } else {
             toa1003003.header.RETURN_CODE = TxnStatus.TXN_QRY_PEND.getCode();
             toa1003003.header.RETURN_MSG = "[" + toa.INFO.RET_CODE + "]" + toa.INFO.ERR_MSG;
-        }
+        }*/
         /*else if (RESULT_UNKNOWN_RTNCODES.contains(toa.INFO.RET_CODE)) {
             toa1003001.header.RETURN_CODE = TxnStatus.TXN_QRY_PEND.getCode();
             toa1003001.header.RETURN_MSG = "[" + toa.INFO.RET_CODE + "]" + toa.INFO.ERR_MSG + "。"

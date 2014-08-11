@@ -39,7 +39,6 @@ public class TOA100Processor implements Processor {
                     toa = new TOA1001003Transform().transform(datagram, txnCode);
                 } else
                 toa = new TOA1001001Transform().transform(datagram, txnCode);
-                logger.info("·µ»Øbean£º" + toa.toString());
                 break;
             case 100005:
                 toa = new TOA1001002Transform().transform(datagram, txnCode);

@@ -56,7 +56,6 @@ public class TIA1001003Transform extends AbstractTiaTransform {
         tia.BODY.TRANS_DETAILS = new ArrayList<T100001Tia.Body.BodyDetail>();
 
         for (TIA1001003.Body.BodyDetail bodyDetail : tia1001003.body.TRANS_DETAILS) {
-            logger.info(bodyDetail.ACCOUNT_NAME + bodyDetail.ACCOUNT_NO);
             T100001Tia.Body.BodyDetail detail = new T100001Tia.Body.BodyDetail();
             try {
                 detail.SN = bodyDetail.SN;
