@@ -33,17 +33,16 @@ public class Core100Processor implements Processor {
         String serverUrl = PropertyManager.getProperty("unionpay_server_url");
         String datagram = inMessage.getBody(String.class);
 
-        logger.info("Core100Processor JMSCorrelationID: " + inMessage.getHeader("JMSCorrelationID"));
         logger.info("银联业务处理报文：" + datagram);
 
         String xmlStr = UnionpayCryptHelper.signMsg(datagram, bizID.toUpperCase());
         String rtnDatagram = new DepHttpClient().doPost(serverUrl, xmlStr, PropertyManager.getProperty("unionpay_http_charset_name"));
-        logger.info("银联返回报文：" + rtnDatagram);
 
         exchange.getOut().setHeader("JMSCorrelationID", inMessage.getHeader("JMSCorrelationID"));
         exchange.getOut().setHeader("JMSX_APPID", appID);
         exchange.getOut().setHeader("JMSX_TXCODE", getSubstrBetweenStrs(rtnDatagram, "<TRX_CODE>", "</TRX_CODE>"));
         exchange.getOut().setHeader("JMSX_CHANNELID", inMessage.getHeader("JMSX_CHANNELID"));
+        exchange.getOut().setHeader("REQ_TXN_CODE", inMessage.getHeader("REQ_TXN_CODE"));
         exchange.getOut().setHeader("JMSX_SRCMSGFLAG", inMessage.getHeader("JMSX_SRCMSGFLAG"));
         exchange.getOut().setBody(rtnDatagram);
 

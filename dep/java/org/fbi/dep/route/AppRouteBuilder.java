@@ -36,11 +36,11 @@ public class AppRouteBuilder extends RouteBuilder {
 
                 } else {
                     exchange.getOut().setHeader("JMSCorrelationID", correlationID);
-                    logger.info("AppRouteBuilder JMSCorrelationID : " + correlationID);
                 }
                 exchange.getOut().setHeader("JMSX_CHANNELID", exchange.getIn().getHeader("JMSX_CHANNELID"));
                 exchange.getOut().setHeader("JMSX_APPID", exchange.getIn().getHeader("JMSX_APPID"));
                 exchange.getOut().setHeader("JMSX_BIZID", exchange.getIn().getHeader("JMSX_BIZID"));
+                exchange.getOut().setHeader("REQ_TXN_CODE", exchange.getIn().getHeader("REQ_TXN_CODE"));
                 exchange.getOut().setHeader("JMSX_SRCMSGFLAG", exchange.getIn().getHeader("JMSX_SRCMSGFLAG"));
                 exchange.getOut().setBody(exchange.getIn().getBody());
             }

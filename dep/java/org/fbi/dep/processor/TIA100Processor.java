@@ -56,7 +56,6 @@ public class TIA100Processor implements Processor {
             logger.info("TIA JMSCorrelationID : " + exchange.getIn().getMessageId());
         } else {
             exchange.getOut().setHeader("JMSCorrelationID", correlationID);
-            logger.info("TIA JMSCorrelationID : " + correlationID);
         }
 
         exchange.getOut().setHeader("JMSX_APPID", exchange.getIn().getHeader("JMSX_APPID"));

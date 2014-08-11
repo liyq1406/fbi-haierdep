@@ -55,25 +55,35 @@ public class TIA1001003Transform extends AbstractTiaTransform {
         tia.BODY.TRANS_SUM.TOTAL_ITEM = tia1001003.body.TRANS_SUM.TOTAL_ITEM;
         tia.BODY.TRANS_DETAILS = new ArrayList<T100001Tia.Body.BodyDetail>();
 
-        for(TIA1001003.Body.BodyDetail bodyDetail : tia1001003.body.TRANS_DETAILS) {
+        for (TIA1001003.Body.BodyDetail bodyDetail : tia1001003.body.TRANS_DETAILS) {
+            logger.info(bodyDetail.ACCOUNT_NAME + bodyDetail.ACCOUNT_NO);
             T100001Tia.Body.BodyDetail detail = new T100001Tia.Body.BodyDetail();
             try {
-//                BeanUtils.copyProperties(detail, bodyDetail);
-                FbiBeanUtils.copyProperties(bodyDetail, detail);
-               /* detail.BANK_CODE = bodyDetail.BANK_CODE;
+                detail.SN = bodyDetail.SN;
+                detail.E_USER_CODE = bodyDetail.E_USER_CODE;
                 detail.ACCOUNT_TYPE = bodyDetail.ACCOUNT_TYPE;
                 detail.ACCOUNT_NO = bodyDetail.ACCOUNT_NO;
                 detail.ACCOUNT_NAME = bodyDetail.ACCOUNT_NAME;
-                detail.ACCOUNT_PROP = bodyDetail.ACCOUNT_PROP;
                 detail.PROVINCE = bodyDetail.PROVINCE;
                 detail.CITY = bodyDetail.CITY;
+                detail.BANK_NAME = bodyDetail.BANK_NAME;
+                detail.BANK_CODE = bodyDetail.BANK_CODE;
+                detail.ACCOUNT_PROP = bodyDetail.ACCOUNT_PROP;
+                detail.CURRENCY = bodyDetail.CURRENCY;
+                detail.PROTOCOL = bodyDetail.PROTOCOL;
+                detail.PROTOCOL_USERID = bodyDetail.PROTOCOL_USERID;
+                detail.ID_TYPE = bodyDetail.ID_TYPE;
+                detail.ID = bodyDetail.ID;
+                detail.TEL = bodyDetail.TEL;
+                detail.RECKON_ACCOUNT = bodyDetail.RECKON_ACCOUNT;
+                detail.CUST_USERID = bodyDetail.CUST_USERID;
                 detail.REMARK = bodyDetail.REMARK;
-                detail.RESERVE1 = bodyDetail.RESERVE1;*/
-                logger.info(detail.ACCOUNT_NAME+detail.ACCOUNT_NO);
+                detail.RESERVE1 = bodyDetail.RESERVE1;
+                detail.RESERVE2 = bodyDetail.RESERVE2;
                 detail.AMOUNT = String.valueOf(new BigDecimal(bodyDetail.AMOUNT).multiply(new BigDecimal("100")).longValue());
             } catch (Exception e) {
-                logger.error("BeanUtils.copyProperties ¸³Öµ´íÎó¡£", e);
-                throw new RuntimeException("BeanUtils.copyProperties ¸³Öµ´íÎó¡£");
+                logger.error("FbiBeanUtils.copyProperties ¸³Öµ´íÎó¡£", e);
+                throw new RuntimeException("FbiBeanUtils.copyProperties ¸³Öµ´íÎó¡£");
             }
             tia.BODY.TRANS_DETAILS.add(detail);
         }

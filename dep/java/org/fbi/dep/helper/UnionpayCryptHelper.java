@@ -18,10 +18,7 @@ public class UnionpayCryptHelper {
      * @since gnete-ora 0.0.0.1
      */
     public static String signMsg(String strData, String bizID) {
-        logger.info("Êý¾ÝÇ©Ãû BIZID:" + bizID);
         String strRnt = "";
-
-        //TODO
         String pathPfx = PropertyManager.getProperty("unionpay_crypt_pathPfx_" + bizID);
 
         Crypt crypt = new Crypt();

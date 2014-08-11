@@ -24,7 +24,6 @@ public class TOA100Processor implements Processor {
         Message inMessage = exchange.getIn();
         exchange.getOut().setHeader("JMSCorrelationID", inMessage.getHeader("JMSCorrelationID"));
 
-        logger.info("TOA Processor JMSCorrelationID : " + inMessage.getHeader("JMSCorrelationID"));
         exchange.getOut().setHeader("JMSX_APPID", inMessage.getHeader("JMSX_APPID"));
         exchange.getOut().setHeader("JMSX_SRCMSGFLAG", inMessage.getHeader("JMSX_SRCMSGFLAG"));
         String datagram = (String) inMessage.getBody();
@@ -35,11 +34,12 @@ public class TOA100Processor implements Processor {
         switch (Integer.parseInt(txnCode)) {
             case 100001:
             case 100004:
-                reqTxnCode = exchange.getOut().getHeader("REQ_TXN_CODE", String.class);
+                reqTxnCode = inMessage.getHeader("REQ_TXN_CODE", String.class);
                 if("1001003".equals(reqTxnCode)) {
                     toa = new TOA1001003Transform().transform(datagram, txnCode);
                 } else
                 toa = new TOA1001001Transform().transform(datagram, txnCode);
+                logger.info("·µ»Øbean£º" + toa.toString());
                 break;
             case 100005:
                 toa = new TOA1001002Transform().transform(datagram, txnCode);
@@ -48,7 +48,7 @@ public class TOA100Processor implements Processor {
                 toa = new TOA1002001Transform().transform(datagram, txnCode);
                 break;
             case 200001:
-                reqTxnCode = exchange.getOut().getHeader("REQ_TXN_CODE", String.class);
+                reqTxnCode = inMessage.getHeader("REQ_TXN_CODE", String.class);
                 if("1003003".equals(reqTxnCode)) {
                     toa = new TOA1003003Transform().transform(datagram, txnCode);
                 } else

@@ -36,7 +36,7 @@ public class TOA1003003Transform extends AbstractToaTransform {
         T200001Toa toa = T200001Toa.getToa(message);
         TOA1003003 toa1003003 = new TOA1003003();
         toa1003003.header.REQ_SN = toa.INFO.REQ_SN;
-        toa1003003.header.TX_CODE = toa.INFO.TRX_CODE;
+        toa1003003.header.TX_CODE = "1003003";
         toa1003003.body.QUERY_SN = toa.BODY.QUERY_TRANS.QUERY_SN;
         toa1003003.body.REMARK = toa.BODY.QUERY_TRANS.QUERY_REMARK;
         // 处理完成
