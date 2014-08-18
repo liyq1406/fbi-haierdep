@@ -30,7 +30,7 @@ public class T100002Toa {
     }
 
     public ToaHeader INFO;
-    public Body BODY;
+    public Body BODY = new Body();
 
     @Override
     public String toString() {

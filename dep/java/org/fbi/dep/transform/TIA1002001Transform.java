@@ -42,7 +42,7 @@ public class TIA1002001Transform extends AbstractTiaTransform {
             String bizID = tia1002001.header.BIZ_ID.toUpperCase();
             tia.INFO.USER_NAME = PropertyManager.getProperty("unionpay_user_name_" + bizID);
             tia.INFO.USER_PASS = PropertyManager.getProperty("unionpay_user_pass_" + bizID);
-            tia.BODY.TRANS_SUM.BUSINESS_CODE = PropertyManager.getProperty("unionpay_business_code_" + bizID);
+            tia.BODY.TRANS_SUM.BUSINESS_CODE = PropertyManager.getProperty("unionpay_business_code_DF_" + bizID);
             tia.BODY.TRANS_SUM.MERCHANT_ID = PropertyManager.getProperty("unionpay_merchant_id_" + bizID);
         }
         tia.BODY.TRANS_SUM.SUBMIT_TIME = DateUtils.getDatetime14();
@@ -55,7 +55,7 @@ public class TIA1002001Transform extends AbstractTiaTransform {
         for(TIA1002001.Body.BodyDetail bodyDetail : tia1002001.body.TRANS_DETAILS) {
             T100002Tia.Body.BodyDetail detail = new T100002Tia.Body.BodyDetail();
             try {
-                BeanUtils.copyProperties(detail, bodyDetail);
+//                BeanUtils.copyProperties(detail, bodyDetail);
                 detail.BANK_CODE = bodyDetail.BANK_CODE;
                 detail.ACCOUNT_TYPE = bodyDetail.ACCOUNT_TYPE;
                 detail.ACCOUNT_NO = bodyDetail.ACCOUNT_NO;

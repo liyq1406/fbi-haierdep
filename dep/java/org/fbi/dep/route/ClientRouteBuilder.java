@@ -22,7 +22,6 @@ public class ClientRouteBuilder extends RouteBuilder {
                     @Override
                     public void process(Exchange exchange) throws Exception {
                         exchange.getOut().setHeader("JMSCorrelationID", exchange.getIn().getMessageId());
-                        logger.info("ClientRouteBuilder JMSCorrelationID : " + exchange.getIn().getMessageId());
                         exchange.getOut().setHeader("JMSX_CHANNELID", exchange.getIn().getHeader("JMSX_CHANNELID"));
                         exchange.getOut().setHeader("JMSX_APPID", exchange.getIn().getHeader("JMSX_APPID"));
                         exchange.getOut().setHeader("JMSX_BIZID", exchange.getIn().getHeader("JMSX_BIZID"));
@@ -68,7 +67,6 @@ public class ClientRouteBuilder extends RouteBuilder {
                     @Override
                     public void process(Exchange exchange) throws Exception {
                         exchange.getOut().setHeader("JMSCorrelationID", exchange.getIn().getMessageId());
-                        logger.info("ClientRouteBuilder JMSCorrelationID : " + exchange.getIn().getMessageId());
                         exchange.getOut().setHeader("JMSX_CHANNELID", exchange.getIn().getHeader("JMSX_CHANNELID"));
                         exchange.getOut().setHeader("JMSX_APPID", exchange.getIn().getHeader("JMSX_APPID"));
                         exchange.getOut().setHeader("JMSX_BIZID", exchange.getIn().getHeader("JMSX_BIZID"));
@@ -83,7 +81,6 @@ public class ClientRouteBuilder extends RouteBuilder {
                     @Override
                     public void process(Exchange exchange) throws Exception {
                         exchange.getOut().setHeader("JMSCorrelationID", exchange.getIn().getMessageId());
-                        logger.info("ClientRouteBuilder JMSCorrelationID : " + exchange.getIn().getMessageId() + "ChinnelID : " + exchange.getIn().getHeader("JMSX_CHANNELID"));
                         exchange.getOut().setHeader("JMSX_CHANNELID", exchange.getIn().getHeader("JMSX_CHANNELID"));
                         exchange.getOut().setHeader("JMSX_APPID", exchange.getIn().getHeader("JMSX_APPID"));
                         exchange.getOut().setHeader("JMSX_BIZID", exchange.getIn().getHeader("JMSX_BIZID"));
@@ -99,10 +96,6 @@ public class ClientRouteBuilder extends RouteBuilder {
                     @Override
                     public void process(Exchange exchange) throws Exception {
                         exchange.getOut().setHeader("JMSCorrelationID", exchange.getIn().getMessageId());
-                        logger.info("ClientRouteBuilder JMSCorrelationID : " + exchange.getIn().getMessageId());
-                        logger.info("¡¾HEADER Properties¡¿ChannelID:" + exchange.getIn().getHeader("JMSX_CHANNELID"));
-                        logger.info("¡¾HEADER Properties¡¿JMSX_APPID:" + exchange.getIn().getHeader("JMSX_APPID"));
-                        logger.info("¡¾HEADER Properties¡¿JMSX_BIZID:" + exchange.getIn().getHeader("JMSX_BIZID"));
 
                         exchange.getOut().setHeader("JMSX_CHANNELID", exchange.getIn().getHeader("JMSX_CHANNELID"));
                         exchange.getOut().setHeader("JMSX_APPID", exchange.getIn().getHeader("JMSX_APPID"));
@@ -132,7 +125,6 @@ public class ClientRouteBuilder extends RouteBuilder {
                     @Override
                     public void process(Exchange exchange) throws Exception {
                         exchange.getOut().setHeader("JMSCorrelationID", exchange.getIn().getMessageId());
-                        logger.info("ClientRouteBuilder JMSCorrelationID : " + exchange.getIn().getMessageId());
                         exchange.getOut().setHeader("JMSX_CHANNELID", exchange.getIn().getHeader("JMSX_CHANNELID"));
                         exchange.getOut().setHeader("JMSX_APPID", exchange.getIn().getHeader("JMSX_APPID"));
                         exchange.getOut().setHeader("JMSX_BIZID", exchange.getIn().getHeader("JMSX_BIZID"));
@@ -147,7 +139,6 @@ public class ClientRouteBuilder extends RouteBuilder {
                     @Override
                     public void process(Exchange exchange) throws Exception {
                         exchange.getOut().setHeader("JMSCorrelationID", exchange.getIn().getMessageId());
-                        logger.info("ClientRouteBuilder JMSCorrelationID : " + exchange.getIn().getMessageId());
                         exchange.getOut().setHeader("JMSX_CHANNELID", exchange.getIn().getHeader("JMSX_CHANNELID"));
                         exchange.getOut().setHeader("JMSX_APPID", exchange.getIn().getHeader("JMSX_APPID"));
                         exchange.getOut().setHeader("JMSX_BIZID", exchange.getIn().getHeader("JMSX_BIZID"));
@@ -162,7 +153,6 @@ public class ClientRouteBuilder extends RouteBuilder {
                     @Override
                     public void process(Exchange exchange) throws Exception {
                         exchange.getOut().setHeader("JMSCorrelationID", exchange.getIn().getMessageId());
-                        logger.info("ClientRouteBuilder JMSCorrelationID : " + exchange.getIn().getMessageId() + "ChinnelID : " + exchange.getIn().getHeader("JMSX_CHANNELID"));
                         exchange.getOut().setHeader("JMSX_CHANNELID", exchange.getIn().getHeader("JMSX_CHANNELID"));
                         exchange.getOut().setHeader("JMSX_APPID", exchange.getIn().getHeader("JMSX_APPID"));
                         exchange.getOut().setHeader("JMSX_BIZID", exchange.getIn().getHeader("JMSX_BIZID"));

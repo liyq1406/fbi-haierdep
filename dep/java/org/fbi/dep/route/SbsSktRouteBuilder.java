@@ -75,24 +75,16 @@ public class SbsSktRouteBuilder extends RouteBuilder {
                                          logger.info("MAC校验成功");
                                      }
 
-                                     // TODO 闸口
+                                     // 未通过闸口时，抛出异常，但暂时保留CheckResult
                                      String checkerClass = PropertyManager.getProperty("check." + userid + "." + txnCode);
                                      CheckResult checkResult = new CheckResult(userid, txnCode);
+                                     // 用户交易权限闸口
+                                     new TxnUseridChecker().check(userid, txnCode, checkResult);
+                                     // 业务数据闸口
                                      if (!StringUtils.isEmpty(checkerClass)) {
                                          logger.info(txnCode + "交易启动闸口：" + checkerClass);
                                          TxnChecker checker = (TxnChecker) Class.forName(checkerClass).newInstance();
                                          checker.check(userid, txnCode, msgData, checkResult);
-                                         logger.info(txnCode + "交易闸口检查结果：" + ("0000".equals(checkResult.getResultCode()) ? "通过" : checkResult.getResultMsg()));
-                                         if (!"0000".equals(checkResult.getResultCode())) {
-                                             throw new RuntimeException(checkResult.getResultCode() + "|" + checkResult.getResultMsg());
-                                         }
-                                     } else {
-                                         new TxnUseridChecker().checkUserid(userid, txnCode, checkResult);
-                                         if (!"0000".equals(checkResult.getResultCode())) {
-                                             throw new RuntimeException(checkResult.getResultCode() + "|" + checkResult.getResultMsg());
-                                         } else {
-                                             logger.info("闸口校验通过.");
-                                         }
                                      }
                                      AbstractTiaBytesTransform bytesTransform = (AbstractTiaBytesTransform) Class.forName("org.fbi.dep.transform.TiaXml" + txnCode + "Transform").newInstance();
                                      byte[] sbsReqMsg = bytesTransform.run(msgData, userid);

@@ -35,23 +35,27 @@ public class TOA100Processor implements Processor {
             case 100001:
             case 100004:
                 reqTxnCode = inMessage.getHeader("REQ_TXN_CODE", String.class);
-                if("1001003".equals(reqTxnCode)) {
+                if ("1001003".equals(reqTxnCode)) {
                     toa = new TOA1001003Transform().transform(datagram, txnCode);
                 } else
-                toa = new TOA1001001Transform().transform(datagram, txnCode);
+                    toa = new TOA1001001Transform().transform(datagram, txnCode);
                 break;
             case 100005:
                 toa = new TOA1001002Transform().transform(datagram, txnCode);
                 break;
             case 100002:
-                toa = new TOA1002001Transform().transform(datagram, txnCode);
+                reqTxnCode = inMessage.getHeader("REQ_TXN_CODE", String.class);
+                if ("1001002".equals(reqTxnCode)) {
+                    toa = new TOA1001002Transform().transform(datagram, txnCode);
+                } else
+                    toa = new TOA1002001Transform().transform(datagram, txnCode);
                 break;
             case 200001:
                 reqTxnCode = inMessage.getHeader("REQ_TXN_CODE", String.class);
-                if("1003003".equals(reqTxnCode)) {
+                if ("1003003".equals(reqTxnCode)) {
                     toa = new TOA1003003Transform().transform(datagram, txnCode);
                 } else
-                toa = new TOA1003001Transform().transform(datagram, txnCode);
+                    toa = new TOA1003001Transform().transform(datagram, txnCode);
                 break;
             default:
                 break;

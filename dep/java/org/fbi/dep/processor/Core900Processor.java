@@ -20,11 +20,11 @@ public class Core900Processor implements Processor {
         logger.info("------SBS 核心报文处理------");
         Message inMessage = exchange.getIn();
         byte[] bytesDatagram = (byte[]) inMessage.getBody();
-        logger.info("客户端的报文内容【byte[]】： " + new String(bytesDatagram));
+        logger.info("客户端的报文内容【byte[]】： " + new String(bytesDatagram).trim());
 
         CtgManager ctgManager = new CtgManager();
         byte[] rtnBytesDatagram = ctgManager.processTxn(bytesDatagram);
-        logger.info("接收sbs的报文内容【byte[]】： " + new String(rtnBytesDatagram));
+        logger.info("接收sbs的报文内容【byte[]】： " + new String(rtnBytesDatagram).trim());
 
         exchange.getOut().setHeader("JMSCorrelationID", inMessage.getHeader("JMSCorrelationID"));
         exchange.getOut().setHeader("JMSX_APPID", inMessage.getHeader("JMSX_APPID"));

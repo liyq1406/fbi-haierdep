@@ -60,7 +60,7 @@ public class DepHttpClient {
             ResponseHandler<String> responseHandler = new BasicResponseHandler();
 //            responseBody = httpclient.execute(httppost, responseHandler);
             HttpResponse httpResponse = httpclient.execute(httppost);
-            String charset = EntityUtils.getContentCharSet(httpResponse.getEntity());
+//            String charset = EntityUtils.getContentCharSet(httpResponse.getEntity());
             // ÉèÖÃ×Ö·û¼¯£¬ÒÔ·ÀÂÒÂë
             responseBody = EntityUtils.toString(httpResponse.getEntity(), charsetName);
         } catch (UnsupportedEncodingException e) {

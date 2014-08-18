@@ -1,7 +1,7 @@
 package org.fbi.dep.management;
 
 import org.fbi.dep.enums.TxnRtnCode;
-import org.fbi.dep.model.Act9009001List;
+import org.fbi.dep.model.ActList9009001;
 import org.fbi.dep.model.CheckResult;
 import org.fbi.dep.model.txn.TiaXml9009001;
 import org.slf4j.Logger;
@@ -13,15 +13,15 @@ import java.util.List;
 /**
  * 9009001 SBS内转账号白名单检查
  */
-public class Txn9009001ActChecker implements TxnChecker {
+public class Txn9009001Checker implements TxnChecker {
 
-    private static Logger logger = LoggerFactory.getLogger(Txn9009001ActChecker.class);
+    private static Logger logger = LoggerFactory.getLogger(Txn9009001Checker.class);
 
     public void check(String userid, String txnCode, String reqMsg, CheckResult res) {
         if (res == null) res = new CheckResult(userid, txnCode);
         TiaXml9009001 tia = (TiaXml9009001) (new TiaXml9009001().getTia(reqMsg));
-        Act9009001List.ActInfo actno = null;
-        for (Act9009001List.ActInfo record : getActnoWhitelist("/9009001Actlist.xml")) {
+        ActList9009001.Act actno = null;
+        for (ActList9009001.Act record : getActnoWhitelist("/ActList9009001.xml")) {
             if (record.actno.equals(tia.BODY.OUT_ACTNO) && record.userid.equalsIgnoreCase(userid)) {
                 actno = record;
                 break;
@@ -30,9 +30,7 @@ public class Txn9009001ActChecker implements TxnChecker {
         if (actno == null) {
             res.setResultCode(TxnRtnCode.TXN_CHECK_ERR.getCode());
             res.setResultMsg(TxnRtnCode.TXN_CHECK_ERR.getTitle());
-            logger.info("Txn9009001ActChecker 校验未通过：[Actno]" + tia.BODY.OUT_ACTNO + "[userid]" + userid);
-        } else {
-            logger.info("Txn9009001ActChecker 校验通过");
+            logger.info("校验未通过：[Actno]" + tia.BODY.OUT_ACTNO + "[userid]" + userid);
         }
     }
 
@@ -58,11 +56,11 @@ public class Txn9009001ActChecker implements TxnChecker {
         return buffer.toString();
     }
 
-    private List<Act9009001List.ActInfo> getActnoWhitelist(String fileName) {
+    private List<ActList9009001.Act> getActnoWhitelist(String fileName) {
         String xml = readFile(fileName);
-        Act9009001List actnoWhiteList = new Act9009001List();
+        ActList9009001 actnoWhiteList = new ActList9009001();
         actnoWhiteList = actnoWhiteList.toBean(xml);
-        return actnoWhiteList.ActInfo;
+        return actnoWhiteList.Acts;
     }
 
 }

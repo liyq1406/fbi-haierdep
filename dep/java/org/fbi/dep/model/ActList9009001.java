@@ -13,21 +13,21 @@ import java.util.List;
  * °×Ãûµ¥ÕËºÅ
  */
 @XStreamAlias("List")
-public class Act9009001List implements Serializable {
+public class ActList9009001 implements Serializable {
 
     @XStreamImplicit
-    public List<ActInfo> ActInfo = new ArrayList<ActInfo>();
+    public List<Act> Acts = new ArrayList<Act>();
 
-    public static class ActInfo implements Serializable {
+    public static class Act implements Serializable {
         public String actno;
         public String userid;
         public String txnNo;
         public String inOut;
     }
 
-    public Act9009001List toBean(String xml) {
+    public ActList9009001 toBean(String xml) {
         XStream xs = new XStream(new DomDriver());
-        xs.processAnnotations(Act9009001List.class);
-        return (Act9009001List) xs.fromXML(xml);
+        xs.processAnnotations(ActList9009001.class);
+        return (ActList9009001) xs.fromXML(xml);
     }
 }

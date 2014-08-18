@@ -4,18 +4,40 @@ import org.fbi.dep.enums.TxnStatus;
 import org.fbi.dep.model.txn.TOA1001001;
 import org.fbi.dep.model.txn.TOA1001002;
 import org.fbi.endpoint.unionpay.txn.domain.T100001Toa;
+import org.fbi.endpoint.unionpay.txn.domain.T100002Toa;
 import org.fbi.endpoint.unionpay.txn.domain.T100005Toa;
 
 import java.math.BigDecimal;
 
 /**
- * 实时代付
+ * 批量单笔代付
  */
 public class TOA1001002Transform extends AbstractToaTransform {
     @Override
     public TOA1001002 transform(String datagram, String txCode) {
-        return get100005RtnBean(datagram);
+        if ("100002".equals(txCode)) {
+            return get100002RtnBean(datagram);
+        } else
+            return get100005RtnBean(datagram);
     }
+
+    private TOA1001002 get100002RtnBean(String message) {
+
+        T100002Toa toa = T100002Toa.getToa(message);
+        TOA1001002 toa1001002 = null;
+        String retcode_head = toa.INFO.RET_CODE;      //报文头返回码
+        toa1001002 = new TOA1001002();
+        toa1001002.header.REQ_SN = toa.INFO.REQ_SN;
+        toa1001002.header.TX_CODE = toa.INFO.TRX_CODE;
+
+        toa1001002.header.RETURN_CODE = toa.INFO.RET_CODE;
+        toa1001002.header.RETURN_MSG = toa.INFO.ERR_MSG;
+
+//        T100002Toa.Body.BodyDetail bodyDetail = toa.BODY.RET_DETAILS.get(0);
+
+        return toa1001002;
+    }
+
 
     private TOA1001002 get100005RtnBean(String message) {
 

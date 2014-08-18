@@ -39,7 +39,8 @@ public class TIA100Processor implements Processor {
             datagram = new TIA1001003Transform().transform(tia1001003);
         } else if(msgBody instanceof TIA1001002) {
             TIA1001002 tia1001002 = (TIA1001002) msgBody;
-            datagram = new TIA1002001Transform().transform(tia1001002);
+            exchange.getOut().setHeader("REQ_TXN_CODE", "1001002");
+            datagram = new TIA1001002Transform().transform(tia1001002);
         } else if(msgBody instanceof TIA1002001) {
             TIA1002001 tia1002001 = (TIA1002001) msgBody;
             datagram = new TIA1002001Transform().transform(tia1002001);

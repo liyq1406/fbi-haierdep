@@ -239,8 +239,8 @@ public class T100005Tia {
 
     @Override
     public String toString() {
-        this.INFO.TRX_CODE = "100002";
-        this.INFO.LEVEL = "5";
+        this.INFO.TRX_CODE = "100005";
+        this.INFO.LEVEL = "0";
         XmlFriendlyReplacer replacer = new XmlFriendlyReplacer("$", "_");
         HierarchicalStreamDriver hierarchicalStreamDriver = new XppDriver(replacer);
         XStream xs = new XStream(hierarchicalStreamDriver);
@@ -251,7 +251,7 @@ public class T100005Tia {
     public static void main(String[] argv) {
         T100005Tia tia = new T100005Tia();
         tia.INFO = new TiaHeader();
-        tia.INFO.TRX_CODE = "100002";
+        tia.INFO.TRX_CODE = "100005";
         tia.INFO.REQ_SN = "" + System.currentTimeMillis();
 
         tia.BODY = new Body();

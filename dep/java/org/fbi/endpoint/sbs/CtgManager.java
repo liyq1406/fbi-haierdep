@@ -73,8 +73,6 @@ public class CtgManager {
                 byte[] headBytes = tiaBytes;
                 System.arraycopy(headBytes, 0, abytCommarea, 0, headBytes.length); //打包包头
     
-                logger.info("发送包内容:\n" + new String(tiaBytes));
-    
                 //发送包
                 eciRequestObject = new ECIRequest(ECIRequest.ECI_SYNC, //ECI call type
                         strChosenServer, //CICS server

@@ -13,7 +13,7 @@ import java.util.List;
  */
 public class TxnUseridChecker {
 
-    public void checkUserid(String userid, String txnCode, CheckResult res) {
+    public void check(String userid, String txnCode, CheckResult res) {
         String txns = PropertyManager.getProperty("sbs.txns." + userid);
         if (StringUtils.isEmpty(txns)) {
             res.setResultCode(TxnRtnCode.TXN_CHECK_ERR.getCode());
