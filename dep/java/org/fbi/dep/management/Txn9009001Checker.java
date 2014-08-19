@@ -21,7 +21,8 @@ public class Txn9009001Checker implements TxnChecker {
         if (res == null) res = new CheckResult(userid, txnCode);
         TiaXml9009001 tia = (TiaXml9009001) (new TiaXml9009001().getTia(reqMsg));
         ActList9009001.Act actno = null;
-        for (ActList9009001.Act record : getActnoWhitelist("/ActList9009001.xml")) {
+        List<ActList9009001.Act> acts = getActnoWhitelist("/ActList9009001.xml");
+        for (ActList9009001.Act record : acts) {
             if (record.actno.equals(tia.BODY.OUT_ACTNO) && record.userid.equalsIgnoreCase(userid)) {
                 actno = record;
                 break;
@@ -31,6 +32,7 @@ public class Txn9009001Checker implements TxnChecker {
             res.setResultCode(TxnRtnCode.TXN_CHECK_ERR.getCode());
             res.setResultMsg(TxnRtnCode.TXN_CHECK_ERR.getTitle());
             logger.info("校验未通过：[Actno]" + tia.BODY.OUT_ACTNO + "[userid]" + userid);
+            throw new RuntimeException(TxnRtnCode.TXN_CHECK_ERR.getCode() + "|可转账账号校验未通过");
         }
     }
 

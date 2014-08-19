@@ -29,7 +29,6 @@ public class DepSktMessageEncoder extends OneToOneEncoder {
         System.arraycopy(msglen, 0, bytesResData, 0, msglen.length);
         System.arraycopy(msgbuf, 0, bytesResData, msglen.length, msgbuf.length);
 
-        logger.info("【DepSktMessageEncoder 发送报文长度】" + bytesResData.length);
         logger.info("【DepSktMessageEncoder 发送报文】" + new String(bytesResData));
         ChannelBuffer buffer = ChannelBuffers.dynamicBuffer();
         buffer.writeBytes(bytesResData);
