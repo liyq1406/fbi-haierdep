@@ -4,33 +4,36 @@ import org.fbi.dep.util.StringPad;
 import java.io.*;
 import java.net.Socket;
 
-public class SbsSktXml9009060 {
+// 8011
+public class SbsSktXml9009301 {
     public static void main(String[] args) {
         try {
             String xmlmsg = "<?xml version=\"1.0\" encoding=\"GBK\"?>" +
                     "<ROOT>" +
                     "<INFO>" +
-                    "<TXN_CODE>9009060</TXN_CODE>" +
+                    "<TXN_CODE>9009301</TXN_CODE>" +
                     "<REQ_SN>FCCF0000322321</REQ_SN>" +
                     "</INFO>" +
                     "<BODY>" +
-                    "<CUSKID>1</CUSKID>" +
+                    "<CUSNAM>测试客户AAA</CUSNAM>" +
+                    "<CORADD>山东青岛</CORADD>" +
                     "<PASTYP>1</PASTYP>" +
-                    "<PASSNO>370212018012383</PASSNO>" +
-                    "<ACTTYP>0</ACTTYP>" +
-                    "<BEGNUM>000001</BEGNUM>" +
+                    "<PASSNO>3702120185555</PASSNO>" +
+                    "<ZIPCDE>266000</ZIPCDE>" +
+                    "<TELNUM>110</TELNUM>" +
+                    "<TELEXN>110</TELEXN>" +
                     "</BODY>" +
                     "</ROOT>";
-            String mac = MD5Helper.getMD5String(xmlmsg + "20140711FCCFAPP001FCCF20140815001");
-            String reqmsg = "1.00FCCFAPP0019009060   201407111450050000" +
+            String mac = MD5Helper.getMD5String(xmlmsg + "20140711FCCFAPP001FCCF20140724001");
+            String reqmsg = "1.00FCCFAPP0019009301   201407111450050000" +
                     StringPad.rightPad4ChineseToByteLength("系统响应状态信息", 20, " ")
                     + mac + xmlmsg;
             int length = reqmsg.getBytes().length + 8;
             System.out.println("【本地客户端】发送报文总长度：" + length);
             String message = appendStrToLength(String.valueOf(length), " ", 8) + reqmsg;
             System.out.println("发送报文：" + message);
-            Socket socket = new Socket("10.143.18.20", 62006);
-//            Socket socket = new Socket("127.0.0.1", 62006);
+//            Socket socket = new Socket("10.143.18.20", 62006);
+            Socket socket = new Socket("127.0.0.1", 62006);
             socket.setSoTimeout(10000);
             OutputStream os = socket.getOutputStream();
             os.write(message.getBytes());

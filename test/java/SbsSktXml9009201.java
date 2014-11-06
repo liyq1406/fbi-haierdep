@@ -4,32 +4,31 @@ import org.fbi.dep.util.StringPad;
 import java.io.*;
 import java.net.Socket;
 
-public class SbsSktXml9009060 {
+public class SbsSktXml9009201 {
     public static void main(String[] args) {
         try {
             String xmlmsg = "<?xml version=\"1.0\" encoding=\"GBK\"?>" +
                     "<ROOT>" +
                     "<INFO>" +
-                    "<TXN_CODE>9009060</TXN_CODE>" +
-                    "<REQ_SN>FCCF0000322321</REQ_SN>" +
+                    "<TXN_CODE>9009201</TXN_CODE>" +
+                    "<REQ_SN>AA4100324292341</REQ_SN>" +
                     "</INFO>" +
                     "<BODY>" +
-                    "<CUSKID>1</CUSKID>" +
-                    "<PASTYP>1</PASTYP>" +
-                    "<PASSNO>370212018012383</PASSNO>" +
-                    "<ACTTYP>0</ACTTYP>" +
-                    "<BEGNUM>000001</BEGNUM>" +
+                    "<SFFLAG>S</SFFLAG>" +
+                    "<TXNAMT>50</TXNAMT>" +
+                    "<REMARK>付手续费</REMARK>" +
+                    "<RESERVE></RESERVE>" +
                     "</BODY>" +
                     "</ROOT>";
-            String mac = MD5Helper.getMD5String(xmlmsg + "20140711FCCFAPP001FCCF20140815001");
-            String reqmsg = "1.00FCCFAPP0019009060   201407111450050000" +
+            String mac = MD5Helper.getMD5String(xmlmsg + "20140711SCFAPP001SCF20140711001");
+            String reqmsg = "1.00SCFAPP001 9009201   201407111450050000" +
                     StringPad.rightPad4ChineseToByteLength("系统响应状态信息", 20, " ")
                     + mac + xmlmsg;
             int length = reqmsg.getBytes().length + 8;
             System.out.println("【本地客户端】发送报文总长度：" + length);
             String message = appendStrToLength(String.valueOf(length), " ", 8) + reqmsg;
             System.out.println("发送报文：" + message);
-            Socket socket = new Socket("10.143.18.20", 62006);
+            Socket socket = new Socket("10.143.20.15", 62006);
 //            Socket socket = new Socket("127.0.0.1", 62006);
             socket.setSoTimeout(10000);
             OutputStream os = socket.getOutputStream();

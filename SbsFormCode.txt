@@ -1,9 +1,5 @@
-package org.fbi.dep.enums;
 
-import java.util.Hashtable;
-
-public enum SBSFormCode implements EnumApp {
-    T999("T999", "重复完成交易"),
+    TEST("TEST", "信息提示演示，帐号{0}余额为{1}"),
     D001("D001", "交易资料输入参数错误"),
     D002("D002", "交易资料输出资料过长"),
     D003("D003", "交易资料输出设备代号错误"),
@@ -1173,44 +1169,3 @@ public enum SBSFormCode implements EnumApp {
     W312("W312", "数据已发送银行,返回结果不明确,需要确认原因"),
     W313("W313", "本客户有未结清的贷款或票据等账户"),
     WB02("WB02", "该笔业务不存在或已被银行拒绝"),
-    OTHER("9999", "其它错误"),
-
-    SERVER_EXCEPTION("9000", "服务器异常");
-
-    private String code = null;
-    private String title = null;
-    private static Hashtable<String, SBSFormCode> aliasEnums;
-
-    SBSFormCode(String code, String title) {
-        this.init(code, title);
-    }
-
-    @SuppressWarnings("unchecked")
-    private void init(String code, String title) {
-        this.code = code;
-        this.title = title;
-        synchronized (this.getClass()) {
-            if (aliasEnums == null) {
-                aliasEnums = new Hashtable();
-            }
-        }
-        aliasEnums.put(code, this);
-        aliasEnums.put(title, this);
-    }
-
-    public static SBSFormCode valueOfAlias(String alias) {
-        return aliasEnums.get(alias);
-    }
-
-    public String getCode() {
-        return this.code;
-    }
-
-    public String getTitle() {
-        return this.title;
-    }
-
-    public String toRtnMsg() {
-        return this.code + "|" + this.title;
-    }
-}

@@ -3,6 +3,8 @@ package org.fbi.dep.transform;
 import org.apache.commons.lang.StringUtils;
 import org.fbi.dep.model.txn.TiaXml9009060;
 import org.fbi.dep.model.txn.TiaXml9009101;
+import org.fbi.dep.model.txn.TiaXml9009301;
+import org.fbi.dep.model.txn.TiaXml9009401;
 import org.fbi.dep.util.StringPad;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -40,6 +42,35 @@ public class SbsTxnDataTransform {
 
     public static byte[] convertToTxn8855(TiaXml9009060 tia, String termId) {
         return convert("8855", termId, assembleT8855Param(tia));
+    }
+
+    public static byte[] convertToTxn8011(TiaXml9009301 tia, String termId) {
+        return convert("8011", termId, assembleT8011Param(tia));
+    }
+
+
+    public static byte[] convertToTxn8124(TiaXml9009401 tia, String termId) {
+        return convert("8124", termId, assembleT8124Param(tia));
+    }
+
+    private static List<String> assembleT8124Param(TiaXml9009401 tia) {
+        List<String> paramList = new ArrayList<String>();
+        paramList.add(tia.BODY.CUSIDT);
+        paramList.add(tia.BODY.APCODE);
+        paramList.add(tia.BODY.CURCDE);
+        return paramList;
+    }
+
+    private static List<String> assembleT8011Param(TiaXml9009301 tia) {
+        List<String> paramList = new ArrayList<String>();
+        paramList.add(tia.BODY.CUSNAM);
+        paramList.add(tia.BODY.CORADD);
+        paramList.add(tia.BODY.ZIPCDE);
+        paramList.add(tia.BODY.TELNUM);
+        paramList.add(tia.BODY.TELEXN);
+        paramList.add(tia.BODY.PASTYP);
+        paramList.add(tia.BODY.PASSNO);
+        return paramList;
     }
 
     private static List<String> assembleT8855Param(TiaXml9009060 tia) {
