@@ -29,7 +29,7 @@ public class ToaXml9009060 extends ToaXml {
 
         @XStreamAlias("TRANS_DETAIL")
         public static class BodyDetail implements Serializable {
-            public String CUSACT = "0001";   // ’À∫≈
+            public String CUSACT = "";       // ’À∫≈
             public String ACTTYP = "";       // ’Àªß÷÷¿‡
             public String BOKBAL = "";       // ”‡∂Ó
             public String AVABAL = "";       // ø…”√”‡∂Ó
