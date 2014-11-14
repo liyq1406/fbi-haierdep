@@ -24,9 +24,9 @@ public class ToaXml9009061 extends ToaXml {
     public static class Body implements Serializable {
         public String TOTCNT;       // 总记录数
         public String CURCNT;       // 本包内记录数
-        public List<BodyDetail> TRANS_DETAILS;
+        public List<BodyDetail> DETAILS;
 
-        @XStreamAlias("TRANS_DETAIL")
+        @XStreamAlias("DETAIL")
         public static class BodyDetail implements Serializable {
 
             public String CUSIDT = "";       // 客户号

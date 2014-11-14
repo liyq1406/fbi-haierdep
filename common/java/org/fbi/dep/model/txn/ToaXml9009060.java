@@ -25,9 +25,9 @@ public class ToaXml9009060 extends ToaXml {
         public String CUSNAM;       // 户名
         public String TOTCNT;       // 总记录数
         public String CURCNT;       // 本包内记录数
-        public List<BodyDetail> TRANS_DETAILS;
+        public List<BodyDetail> DETAILS;
 
-        @XStreamAlias("TRANS_DETAIL")
+        @XStreamAlias("DETAIL")
         public static class BodyDetail implements Serializable {
             public String CUSACT = "";       // 账号
             public String ACTTYP = "";       // 账户种类

@@ -9,7 +9,7 @@ import org.fbi.dep.model.base.TiaXmlInfo;
 import java.io.Serializable;
 
 /**
- * 根据客户证件信息查询账号列表-返回报文中有客户号
+ * 根据客户证件信息查询账户列表
  */
 
 @XStreamAlias("ROOT")

@@ -36,7 +36,7 @@ public class ToaXml9009060Transform extends AbstractToaBytesTransform {
             toa.BODY.CUSNAM = t925.getFormBodyHeader().getCUSNAM();
             toa.BODY.TOTCNT = t925.getFormBodyHeader().getTOTCNT();
             toa.BODY.CURCNT = t925.getFormBodyHeader().getCURCNT();
-            toa.BODY.TRANS_DETAILS = new ArrayList<ToaXml9009060.Body.BodyDetail>();
+            toa.BODY.DETAILS = new ArrayList<ToaXml9009060.Body.BodyDetail>();
             for (T925.Bean bean : t925.getBeanList()) {
                 ToaXml9009060.Body.BodyDetail detail = new ToaXml9009060.Body.BodyDetail();
                 detail.CUSACT = bean.getCUSACT();
@@ -49,7 +49,7 @@ public class ToaXml9009060Transform extends AbstractToaBytesTransform {
                 detail.EXPDAT = bean.getEXPDAT();
                 detail.INTRAT = bean.getINTRAT();
                 detail.ACTSTS = bean.getACTSTS();
-                toa.BODY.TRANS_DETAILS.add(detail);
+                toa.BODY.DETAILS.add(detail);
             }
         } else {
             toa.INFO.RET_MSG = SBSFormCode.valueOfAlias(formCode).getTitle();
