@@ -1,0 +1,14 @@
+<List>
+    <Sms>
+        <bizCode>0010</bizCode>
+        <phoneNumber>18661986511,13905320231,13605329592</phoneNumber>
+    </Sms>
+    <Sms>
+        <bizCode>0011</bizCode>
+        <phoneNumber>13905320231,13605329592</phoneNumber>
+    </Sms>
+    <Sms>
+        <bizCode>0012</bizCode>
+        <phoneNumber>18661986511</phoneNumber>
+    </Sms>
+</List>

@@ -34,6 +34,8 @@ public class Bootstrap {
     private static String UNIONPAY_SBS_SOCKET_PORT = PropertyManager.getProperty("dep.localhost.unionpay.sbs.port");
     private static String UNIONPAY_SOCKET_PORT = PropertyManager.getProperty("dep.localhost.unionpay.port");
     private static String SBS_SOCKET_PORT = PropertyManager.getProperty("dep.localhost.sbs.port");
+    private static String SMS_SOCKET_PORT = PropertyManager.getProperty("dep.localhost.sms.port");
+
 
     public static void main(String[] args) throws Exception {
 
@@ -61,6 +63,7 @@ public class Bootstrap {
 //        RouteBuilder upSktRouteBuilder = new PayoutDirectSktRouteBuilder(UNIONPAY_SOCKET_PORT);
 //        RouteBuilder upSbsRouteBuilder = new PayoutIndirectSktRouteBuilder(UNIONPAY_SBS_SOCKET_PORT);
         RouteBuilder sbsSktRouteBuilder = new SbsSktRouteBuilder(SBS_SOCKET_PORT);
+        RouteBuilder smsSktRouteBuilder = new SmsSktRouteBuilder(SMS_SOCKET_PORT);
         try {
             logger.info("CamelContext开始添加路由...");
             context.addRoutes(coreRouteBuilder);
@@ -71,6 +74,7 @@ public class Bootstrap {
 //            context.addRoutes(upSktRouteBuilder);
 //            context.addRoutes(upSbsRouteBuilder);
             context.addRoutes(sbsSktRouteBuilder);
+            context.addRoutes(smsSktRouteBuilder);
             logger.info("CamelContext开始启动...");
             context.start();
             logger.info("CamelContext已成功启动...");
