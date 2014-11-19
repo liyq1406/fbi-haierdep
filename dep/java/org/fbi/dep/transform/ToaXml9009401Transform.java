@@ -24,7 +24,7 @@ public class ToaXml9009401Transform extends AbstractToaBytesTransform {
         ToaXml9009401 toa = new ToaXml9009401();
         toa.INFO.RET_CODE = formCode;
         SOFForm form = response.getSofForms().get(0);
-        if ("T101".equalsIgnoreCase(response.getFormCodes().get(0))) {
+        if ("T101".equalsIgnoreCase(formCode)) {
             toa.INFO.RET_MSG = "交易成功";
             T101 t = (T101) form.getFormBody();
             toa.BODY.ACTNUM = t.getACTNUM();

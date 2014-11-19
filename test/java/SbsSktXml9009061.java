@@ -16,7 +16,7 @@ public class SbsSktXml9009061 {
                     "<BODY>" +
                     "<CUSKID>1</CUSKID>" +
                     "<PASTYP>4</PASTYP>" +
-                    "<PASSNO>320481198408020015</PASSNO>" +
+                    "<PASSNO>11111</PASSNO>" +
                     "<ACTTYP>2</ACTTYP>" +
                     "<BEGNUM>000001</BEGNUM>" +
                     "</BODY>" +

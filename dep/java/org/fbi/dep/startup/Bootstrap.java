@@ -31,8 +31,8 @@ public class Bootstrap {
     private static String ACTIVE_MQ_USER_NAME = PropertyManager.getProperty("dep.activemq.admin.username");
     private static String ACTIVE_MQ_PASSWORD = PropertyManager.getProperty("dep.activemq.admin.password");
     private static String ACTIVE_MQ_BORKER_URL = PropertyManager.getProperty("dep.activemq.brokerURL");
-    private static String UNIONPAY_SBS_SOCKET_PORT = PropertyManager.getProperty("dep.localhost.unionpay.sbs.port");
-    private static String UNIONPAY_SOCKET_PORT = PropertyManager.getProperty("dep.localhost.unionpay.port");
+//    private static String UNIONPAY_SBS_SOCKET_PORT = PropertyManager.getProperty("dep.localhost.unionpay.sbs.port");
+//    private static String UNIONPAY_SOCKET_PORT = PropertyManager.getProperty("dep.localhost.unionpay.port");
     private static String SBS_SOCKET_PORT = PropertyManager.getProperty("dep.localhost.sbs.port");
     private static String SMS_SOCKET_PORT = PropertyManager.getProperty("dep.localhost.sms.port");
 

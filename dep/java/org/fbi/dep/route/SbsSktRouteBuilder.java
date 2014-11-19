@@ -5,6 +5,7 @@ import org.apache.camel.Processor;
 import org.apache.camel.builder.RouteBuilder;
 import org.apache.commons.lang.StringUtils;
 import org.fbi.dep.component.jms.JmsBytesClient;
+import org.fbi.dep.enums.SBSFormCode;
 import org.fbi.dep.enums.TxnRtnCode;
 import org.fbi.dep.helper.MD5Helper;
 import org.fbi.dep.management.TxnChecker;
@@ -114,6 +115,10 @@ public class SbsSktRouteBuilder extends RouteBuilder {
                                              exmsg = TxnRtnCode.SERVER_EXCEPTION.getCode() + "|" + exmsg;
                                          }
                                          String errmsg[] = exmsg.split("\\|");
+                                         SBSFormCode msgFormCode = SBSFormCode.valueOfAlias(errmsg[0]);
+                                         if (msgFormCode != null) {
+                                             errmsg[1] = msgFormCode.getTitle();
+                                         }
                                          String rtnmsg = tiaToToa.run(rtnMsgData, errmsg[0], errmsg[1]);
                                          String rtnmac = MD5Helper.getMD5String(rtnmsg + txnDate + userid + userkey);
                                          rtnMsgHeader = rtnMsgHeader + errmsg[0]

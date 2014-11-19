@@ -27,9 +27,10 @@ public class ToaXml9009061Transform extends AbstractToaBytesTransform {
         // bean -> txn bean
         ToaXml9009061 toa = new ToaXml9009061();
         toa.INFO.RET_CODE = formCode;
-        SOFForm form = response.getSofForms().get(0);
-        if ("T928".equalsIgnoreCase(response.getFormCodes().get(0))) {
+
+        if ("T928".equalsIgnoreCase(formCode)) {
             toa.INFO.RET_MSG = "交易成功";
+            SOFForm form = response.getSofForms().get(0);
             T928 t928 = (T928) form.getFormBody();
             toa.BODY.TOTCNT = t928.getFormBodyHeader().getTOTCNT();
             toa.BODY.CURCNT = t928.getFormBodyHeader().getCURCNT();

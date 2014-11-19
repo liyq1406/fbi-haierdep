@@ -10,13 +10,13 @@ import java.net.Socket;
 public class SmsDepTest {
     public static void main(String[] args) {
         try {
-            String xmlmsg = "0012苹果市值超越整个俄罗斯股市";
+            String xmlmsg = "001115854897347|人生本无定数， 回首已是天涯。";
             int length = xmlmsg.getBytes().length + 8;
             System.out.println("【本地客户端】发送报文总长度：" + length);
             String message = appendStrToLength(String.valueOf(length), " ", 8) + xmlmsg;
             System.out.println("发送报文：" + message);
-//            Socket socket = new Socket("10.143.18.20", 5000);
-            Socket socket = new Socket("127.0.0.1", 5000);
+//            Socket socket = new Socket("127.0.0.1", 61002);
+            Socket socket = new Socket("10.143.18.20", 61002);
             socket.setSoTimeout(10000);
             OutputStream os = socket.getOutputStream();
             os.write(message.getBytes());

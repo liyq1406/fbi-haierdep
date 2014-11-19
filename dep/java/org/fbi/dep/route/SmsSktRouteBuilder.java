@@ -53,10 +53,36 @@ public class SmsSktRouteBuilder extends RouteBuilder {
                                      String msgData = new String(bodyBytes, "GBK");
 
                                      // TODO 读取文件，根据业务号读取手机号码，将msgData发送到手机上
-                                     String[] phoneNums = SmsTool.getPhoneNumberList(bizCode);
-                                     logger.info("短信业务种类：" + bizCode + phoneNums);
-                                     for(String num : phoneNums) {
-                                         SmsTool.sendMessage(num, msgData);
+                                     // 0-短信 1-邮件 2-微信
+                                     if (bizCode.startsWith("0")) {
+                                         // 报文中有手机号
+                                         if (bizCode.equals("0011")) {
+
+                                             int index = msgData.indexOf("|");
+                                             String phones = msgData.substring(0, index);
+                                             String msgContent = msgData.substring(index + 1);
+                                             if (StringUtils.isEmpty(phones)) {
+                                                 exchange.getOut().setBody("0000".getBytes());
+                                             } else {
+                                                 String[] phoneNums = phones.split(",");
+                                                 for (String num : phoneNums) {
+                                                     if (!StringUtils.isEmpty(num) && num.length() == 11) {
+                                                         SmsTool.sendMessage(num, msgContent);
+                                                     } else {
+                                                         logger.info("错误的手机号：" + num);
+                                                     }
+                                                 }
+                                             }
+                                         } else { // 报文中没有手机号，需要读取手机号列表文件
+                                             String[] phoneNums = SmsTool.getPhoneNumberList(bizCode);
+                                             logger.info("短信业务种类：" + bizCode + phoneNums);
+                                             if (phoneNums == null) {
+                                                 exchange.getOut().setBody("0000".getBytes());
+                                             }
+                                             for (String num : phoneNums) {
+                                                 SmsTool.sendMessage(num, msgData);
+                                             }
+                                         }
                                      }
                                      exchange.getOut().setBody(bizCode.getBytes());
                                  } catch (Exception e) {

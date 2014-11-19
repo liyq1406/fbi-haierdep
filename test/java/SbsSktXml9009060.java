@@ -21,7 +21,7 @@ public class SbsSktXml9009060 {
                     "<BEGNUM>000001</BEGNUM>" +
                     "</BODY>" +
                     "</ROOT>";
-            String mac = MD5Helper.getMD5String(xmlmsg + "20140711FCCFAPP001FCCF20140815001");
+            String mac = MD5Helper.getMD5String(xmlmsg + "20140711FCCFAPP001FCCF20140724001");
             String reqmsg = "1.00FCCFAPP0019009060   201407111450050000" +
                     StringPad.rightPad4ChineseToByteLength("系统响应状态信息", 20, " ")
                     + mac + xmlmsg;
@@ -29,9 +29,9 @@ public class SbsSktXml9009060 {
             System.out.println("【本地客户端】发送报文总长度：" + length);
             String message = appendStrToLength(String.valueOf(length), " ", 8) + reqmsg;
             System.out.println("发送报文：" + message);
-            Socket socket = new Socket("10.143.18.20", 62006);
+            Socket socket = new Socket("10.143.20.15", 62006);
 //            Socket socket = new Socket("127.0.0.1", 62006);
-            socket.setSoTimeout(10000);
+            socket.setSoTimeout(100000);
             OutputStream os = socket.getOutputStream();
             os.write(message.getBytes());
             os.flush();
