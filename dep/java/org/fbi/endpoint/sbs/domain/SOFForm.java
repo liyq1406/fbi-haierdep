@@ -1,5 +1,6 @@
 package org.fbi.endpoint.sbs.domain;
 
+import org.apache.commons.lang.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -30,7 +31,7 @@ public class SOFForm {
         length = formHeaderLength + formBodyFieldLength + formBodyLength;
         // 包体
         logger.info("FormCode:" + formHeader.getFormCode() + " 包体长度：" + formBodyLength);
-        if (formBodyLength != 0) {
+        if (formBodyLength != 0 && !StringUtils.isEmpty(formHeader.getFormCode().trim())) {
             try {
                 // 实例化Form体
                 // 新增系统别判断
