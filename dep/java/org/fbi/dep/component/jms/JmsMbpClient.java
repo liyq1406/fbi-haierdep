@@ -37,7 +37,7 @@ public class JmsMbpClient {
             sender.setDeliveryMode(DeliveryMode.PERSISTENT);
             BytesMessage message = session.createBytesMessage();
             message.writeBytes(tiaBuf);
-            message.setStringProperty("JMSX_CHANNELID", "900");
+            message.setStringProperty("JMSX_CHANNELID", "920");
             message.setStringProperty("JMSX_APPID", "mbp");
             message.setStringProperty("JMSX_BIZID", "mbp");
             message.setStringProperty("JMSX_TXCODE", "mbp");

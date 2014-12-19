@@ -50,7 +50,6 @@ public class AppRouteBuilder extends RouteBuilder {
                 .choice()
                 .when(simple("${header.JMSX_SRCMSGFLAG} == 'bcc.app'"))
                 .to("jms:queue:queue.dep.core.fcdep.bcc")
-                        // 2012-06-06
                 .when(simple("${header.JMSX_SRCMSGFLAG} == 'mbp.app'"))
                 .to("jms:queue:queue.dep.core.fcdep.mbp")
                 .when(simple("${header.JMSX_SRCMSGFLAG} == 'haierfip.app'"))

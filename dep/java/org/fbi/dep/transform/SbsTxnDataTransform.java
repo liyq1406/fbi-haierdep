@@ -3,10 +3,12 @@ package org.fbi.dep.transform;
 import org.apache.commons.lang.StringUtils;
 import org.fbi.dep.model.txn.*;
 import org.fbi.dep.util.StringPad;
+import org.fbi.endpoint.eai.transCreditInfoFromSBStoJDE.ObjectFactory;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import java.io.UnsupportedEncodingException;
+import java.lang.reflect.Field;
 import java.math.BigDecimal;
 import java.text.DecimalFormat;
 import java.text.SimpleDateFormat;
@@ -25,10 +27,39 @@ public class SbsTxnDataTransform {
 
     private static Logger logger = LoggerFactory.getLogger(SbsTxnDataTransform.class);
 
+    public static byte[] convertToTxnN022(TiaXml9009003 tia, String termId) {
 
+        List<String> tiaList = new ArrayList<String>();
+        tiaList.add(tia.BODY.FBTIDX);
+        tiaList.add(tia.BODY.REQNUM);
+        tiaList.add(tia.BODY.ORDDAT);
+        tiaList.add(tia.BODY.CHQNUM);
+        return convert("n022", termId, tiaList);
+    }
+
+    public static byte[] convertToTxnN120(TiaXml9009002 tia, String termId) {
+
+        List<String> tiaList = new ArrayList<String>();
+        tiaList.add(tia.INFO.REQ_SN);
+        try {
+            Field[] fields = tia.getClass().getFields();
+            Object obj = null;
+            for (Field field : fields) {
+                obj = field.get(tia.BODY);
+                if (obj != null) {
+                    tiaList.add(obj.toString());
+                } else {
+                    tiaList.add("");
+                }
+            }
+        } catch (Exception e) {
+            throw new RuntimeException("SBS报文组装异常");
+        }
+        return convert("n120", termId, tiaList);
+    }
 
     public static byte[] convertToTxnAa41(String sn, String outActno, String inActno, String amt, String termId, String remark) {
-        if(StringUtils.isEmpty(remark)) remark = "资金交换平台";
+        if (StringUtils.isEmpty(remark)) remark = "资金交换平台";
         List<String> tiaList = assembleTaa41Param(sn, outActno, inActno, new BigDecimal(amt), remark);
         return convert("aa41", termId, tiaList);
     }

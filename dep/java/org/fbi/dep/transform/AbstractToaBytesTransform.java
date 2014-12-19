@@ -1,10 +1,15 @@
 package org.fbi.dep.transform;
 
 import org.fbi.dep.enums.TxnRtnCode;
+import org.fbi.dep.model.base.ToaXml;
 import org.fbi.dep.util.PropertyManager;
 import org.fbi.endpoint.sbs.core.SOFHeader;
+import org.fbi.endpoint.sbs.domain.SOFFormBody;
+import org.fbi.endpoint.sbs.model.form.ac.T531;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+
+import java.lang.reflect.Field;
 
 /**
  * Created with IntelliJ IDEA.
@@ -32,4 +37,22 @@ public abstract class AbstractToaBytesTransform {
     abstract String transform(byte[] bytes);
 
 
+    protected void copyFormBodyToToa(SOFFormBody formBody, ToaXml toa) {
+        try {
+            Field[] fields = formBody.getClass().getFields();
+            Class toaCLass = toa.getClass();
+            Object obj = null;
+            for (Field field : fields) {
+                obj = field.get(formBody);
+                if (obj != null) {
+                    Field toaField = toaCLass.getField(field.getName());
+                    if (toaField != null) {
+                        toaField.set(toa, obj);
+                    }
+                }
+            }
+        } catch (Exception e) {
+            throw new RuntimeException("AbstractToaBytesTransform copyFormBodyToToa Ω‚Œˆ“Ï≥£");
+        }
+    }
 }

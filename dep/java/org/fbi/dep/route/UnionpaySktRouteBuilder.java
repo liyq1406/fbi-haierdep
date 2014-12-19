@@ -11,23 +11,24 @@ import org.fbi.dep.helper.MD5Helper;
 import org.fbi.dep.management.TxnChecker;
 import org.fbi.dep.management.TxnUseridChecker;
 import org.fbi.dep.model.CheckResult;
-import org.fbi.dep.txn.AbstractTxnProcessor;
-import org.fbi.dep.transform.*;
+import org.fbi.dep.transform.AbstractTiaBytesTransform;
+import org.fbi.dep.transform.AbstractTiaToToa;
+import org.fbi.dep.transform.AbstractToaBytesTransform;
 import org.fbi.dep.util.PropertyManager;
 import org.fbi.dep.util.StringPad;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 /**
- * 外联SBS交易
+ * Unionpay
  */
-public class SbsSktRouteBuilder extends RouteBuilder {
+public class UnionpaySktRouteBuilder extends RouteBuilder {
 
-    private static Logger logger = LoggerFactory.getLogger(SbsSktRouteBuilder.class);
+    private static Logger logger = LoggerFactory.getLogger(UnionpaySktRouteBuilder.class);
     private static String SERVER_IP = PropertyManager.getProperty("dep.localhost.ip");
     private String server_port;
 
-    public SbsSktRouteBuilder(String port) {
+    public UnionpaySktRouteBuilder(String port) {
         this.server_port = port;
     }
 
@@ -88,24 +89,14 @@ public class SbsSktRouteBuilder extends RouteBuilder {
                                          TxnChecker checker = (TxnChecker) Class.forName(checkerClass).newInstance();
                                          checker.check(userid, txnCode, msgData, checkResult);
                                      }
-                                     String rtnXml = "";
-                                     // 特殊交易特殊处理
-                                     Class txnClass = Class.forName("org.fbi.dep.processor.Txn" + txnCode + "Processor");
-                                     if (txnClass != null) {
-                                         AbstractTxnProcessor processor = (AbstractTxnProcessor) txnClass.newInstance();
-                                         rtnXml = processor.process(userid, msgData);
-                                     } else {
-                                         // 直连SBS
-                                         AbstractTiaBytesTransform bytesTransform = (AbstractTiaBytesTransform) Class.forName("org.fbi.dep.transform.TiaXml" + txnCode + "Transform").newInstance();
-                                         byte[] sbsReqMsg = bytesTransform.run(msgData, userid);
-                                         // SBS
-                                         byte[] sbsResBytes = new JmsBytesClient().sendRecivMsg("900", "fcdep", "fcdep", txnCode, userid,
-                                                 "queue.dep.core.fcdep.sbs", "queue.dep.core.sbs.fcdep", sbsReqMsg);
-                                         // 报文转换为dep-sbs-xml报文
-                                         AbstractToaBytesTransform toaTransform = (AbstractToaBytesTransform) Class.forName("org.fbi.dep.transform.ToaXml" + txnCode + "Transform").newInstance();
-                                         rtnXml = toaTransform.run(sbsResBytes);
-
-                                     }
+                                     AbstractTiaBytesTransform bytesTransform = (AbstractTiaBytesTransform) Class.forName("org.fbi.dep.transform.TiaXml" + txnCode + "Transform").newInstance();
+                                     byte[] upayReqMsg = bytesTransform.run(msgData, userid);
+                                     // unionpay
+                                     byte[] upayResBytes = new JmsBytesClient().sendRecivMsg("100", "fcdep", "fcdep", txnCode, userid,
+                                             "queue.dep.core.fcdep.unionpay", "queue.dep.core.unionpay.fcdep", upayReqMsg);
+                                     // 报文转换为dep-sbs-xml报文
+                                     AbstractToaBytesTransform toaTransform = (AbstractToaBytesTransform) Class.forName("org.fbi.dep.transform.ToaXml" + txnCode + "Transform").newInstance();
+                                     String rtnXml = toaTransform.run(upayResBytes);
                                      String rtnmac = MD5Helper.getMD5String(rtnXml + txnDate + userid + userkey);
                                      rtnMsgHeader = rtnMsgHeader + TxnRtnCode.TXN_PROCESSED.getCode()
                                              + StringPad.rightPad4ChineseToByteLength(TxnRtnCode.TXN_PROCESSED.getTitle(), 20, " ")
@@ -142,5 +133,4 @@ public class SbsSktRouteBuilder extends RouteBuilder {
                          }
                 );
     }
-
 }

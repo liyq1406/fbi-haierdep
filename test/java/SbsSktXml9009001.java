@@ -1,5 +1,5 @@
-import org.fbi.dep.helper.MD5Helper;
-import org.fbi.dep.util.StringPad;
+import helper.MD5Helper;
+import helper.StringPad;
 
 import java.io.*;
 import java.net.Socket;
