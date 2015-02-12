@@ -1,4 +1,4 @@
-package org.fbi.endpoint.sbs.model.form.ac;
+package org.fbi.endpoint.sbs.model.form.re;
 
 import org.fbi.endpoint.sbs.domain.SOFFormBody;
 

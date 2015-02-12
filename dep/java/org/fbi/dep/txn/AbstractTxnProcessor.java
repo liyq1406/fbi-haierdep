@@ -3,13 +3,14 @@ package org.fbi.dep.txn;
 import org.fbi.dep.model.base.ToaXml;
 import org.fbi.endpoint.sbs.domain.SOFFormBody;
 
+import java.io.IOException;
 import java.lang.reflect.Field;
 
 /**
  * 交易处理
  */
 public abstract class AbstractTxnProcessor implements TxnProcessor {
-    public abstract String process(String userid, String msgData);
+    public abstract String process(String userid, String msgData) throws ClassNotFoundException, InstantiationException, IllegalAccessException, IOException;
 
     protected void copyFormBodyToToa(SOFFormBody formBody, ToaXml toa) {
         try {

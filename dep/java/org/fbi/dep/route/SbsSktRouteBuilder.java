@@ -64,17 +64,17 @@ public class SbsSktRouteBuilder extends RouteBuilder {
                                      txnCode = msgHeader.substring(14, 24).trim();
                                      txnDate = msgHeader.substring(24, 32).trim();
                                      String txnTime = msgHeader.substring(32, 38).trim();
-                                     logger.info("用户标识：" + userid + " " + userkey + " 交易时间:" + txnDate + " " + txnTime);
                                      String mac = new String(headerBytes, 62, 32);
                                      // MD5校验
                                      // MAC	32	以（Message Data部分 + TXN_DATE + USER_ID + USER_KEY）为依据产生的用ASC字符表示的16进制MD5值。其中USER_KEY由财务公司针对每个用户单独下发。
                                      String md5 = MD5Helper.getMD5String(msgData + txnDate + userid + userkey);
                                      // 验证失败 返回验证失败信息
                                      if (!md5.equalsIgnoreCase(mac)) {
+                                         logger.info("用户标识：" + userid + " " + userkey + " 交易时间:" + txnDate + " " + txnTime);
                                          logger.info("MAC校验失败[服务端]MD5:" + md5 + "[客户端]MAC:" + mac);
                                          throw new RuntimeException(TxnRtnCode.MSG_VERIFY_MAC_ILLEGAL.toRtnMsg());
                                      } else {
-                                         logger.info("MAC校验成功");
+                                         logger.info("MAC校验成功,用户标识：" + userid + " " + userkey + " 交易时间:" + txnDate + " " + txnTime);
                                      }
 
                                      // 未通过闸口时，抛出异常，但暂时保留CheckResult
@@ -90,7 +90,12 @@ public class SbsSktRouteBuilder extends RouteBuilder {
                                      }
                                      String rtnXml = "";
                                      // 特殊交易特殊处理
-                                     Class txnClass = Class.forName("org.fbi.dep.processor.Txn" + txnCode + "Processor");
+                                     Class txnClass = null;
+                                     try {
+                                         txnClass = Class.forName("org.fbi.dep.txn.Txn" + txnCode + "Processor");
+                                     } catch (ClassNotFoundException e) {
+                                         txnClass = null;
+                                     }
                                      if (txnClass != null) {
                                          AbstractTxnProcessor processor = (AbstractTxnProcessor) txnClass.newInstance();
                                          rtnXml = processor.process(userid, msgData);

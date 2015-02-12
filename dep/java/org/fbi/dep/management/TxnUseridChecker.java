@@ -30,7 +30,6 @@ public class TxnUseridChecker {
             if (!txnList.contains(txnCode)) {
                 res.setResultCode(TxnRtnCode.TXN_CHECK_ERR.getCode());
                 res.setResultMsg("权限不足，无法执行交易：" + txnCode);
-                logger.info("权限内交易：" + txns);
                 throw new RuntimeException(TxnRtnCode.TXN_CHECK_ERR.getCode() + "|权限不足");
             }
         }

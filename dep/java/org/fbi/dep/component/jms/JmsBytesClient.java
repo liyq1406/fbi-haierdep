@@ -41,7 +41,6 @@ public class JmsBytesClient {
             message.setStringProperty("JMSX_PASSWORD", userid);
             sender.send(message);
             String sentMsgID = message.getJMSMessageID();
-            logger.info("MessageID : " + sentMsgID);
             String filter = "JMSCorrelationID = '" + sentMsgID + "'";
             Destination responseDestination = session.createQueue(resQueue);
             MessageConsumer receiver = session.createConsumer(responseDestination, filter);

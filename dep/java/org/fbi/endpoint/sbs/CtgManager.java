@@ -90,7 +90,7 @@ public class CtgManager {
                 //获取返回报文
                 flowRequest(eciRequestObject);
     
-                logger.info("【CtgManager】返回包内容:" + format16(abytCommarea));
+                logger.info("【CtgManager】返回包内容:" + format16(abytCommarea).substring(0, 200));
                 return abytCommarea;
             } catch (Exception e) {
                 logger.error("与SBS通讯出现问题：", e);

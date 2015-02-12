@@ -3,9 +3,7 @@ package org.fbi.dep.transform;
 import org.fbi.dep.enums.TxnRtnCode;
 import org.fbi.dep.model.base.ToaXml;
 import org.fbi.dep.util.PropertyManager;
-import org.fbi.endpoint.sbs.core.SOFHeader;
 import org.fbi.endpoint.sbs.domain.SOFFormBody;
-import org.fbi.endpoint.sbs.model.form.ac.T531;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 

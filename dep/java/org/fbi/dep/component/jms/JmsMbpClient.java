@@ -6,6 +6,8 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import javax.jms.*;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 
 /**
  * Created with IntelliJ IDEA.
@@ -37,7 +39,7 @@ public class JmsMbpClient {
             sender.setDeliveryMode(DeliveryMode.PERSISTENT);
             BytesMessage message = session.createBytesMessage();
             message.writeBytes(tiaBuf);
-            message.setStringProperty("JMSX_CHANNELID", "920");
+            message.setStringProperty("JMSX_CHANNELID", "900");
             message.setStringProperty("JMSX_APPID", "mbp");
             message.setStringProperty("JMSX_BIZID", "mbp");
             message.setStringProperty("JMSX_TXCODE", "mbp");
@@ -45,20 +47,30 @@ public class JmsMbpClient {
             message.setStringProperty("JMSX_PASSWORD", "mbp");
             sender.send(message);
             String sentMsgID = message.getJMSMessageID();
-            logger.info("MessageID : " + sentMsgID);
+            long startMillis = System.currentTimeMillis();
+            SimpleDateFormat sdf = new SimpleDateFormat("HH:mm:ss:SSS");
+            logger.info(sentMsgID + " StartTime:" + sdf.format(new Date()));
             String filter = "JMSCorrelationID = '" + sentMsgID + "'";
+            logger.info(filter);
+
             Destination responseDestination = session.createQueue("queue.dep.core.fcdep.mbp");
             MessageConsumer receiver = session.createConsumer(responseDestination, filter);
             BytesMessage rtnMessage = (BytesMessage) receiver.receive(ACTIVEMQ_TIMEOUT);
+            long endMillis = System.currentTimeMillis();
+            logger.info("MessageID : " + sentMsgID + " 耗时：" + (endMillis - startMillis) + " mm. 超时限定：" + ACTIVEMQ_TIMEOUT);
+
             if (rtnMessage == null) {
                 session.close();
                 connection.close();
+                logger.info(sentMsgID + " EndTime:" + sdf.format(new Date()));
                 throw new RuntimeException("消息接收超时！");
             } else {
                 session.close();
                 connection.close();
                 byte[] rtnBytes = new byte[(int) rtnMessage.getBodyLength()];
                 rtnMessage.readBytes(rtnBytes);
+                logger.info(sentMsgID + "\n 返回报文 " + new String(rtnBytes));
+
                 return rtnBytes;
             }
         } catch (JMSException jmse) {

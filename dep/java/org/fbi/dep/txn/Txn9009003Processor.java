@@ -3,9 +3,7 @@ package org.fbi.dep.txn;
 import org.apache.commons.lang.StringUtils;
 import org.fbi.dep.component.jms.JmsBytesClient;
 import org.fbi.dep.enums.SBSFormCode;
-import org.fbi.dep.model.txn.TiaXml9009002;
 import org.fbi.dep.model.txn.TiaXml9009003;
-import org.fbi.dep.model.txn.ToaXml9009002;
 import org.fbi.dep.model.txn.ToaXml9009003;
 import org.fbi.dep.transform.SbsTxnDataTransform;
 import org.fbi.dep.util.JaxbHelper;
@@ -13,13 +11,9 @@ import org.fbi.dep.util.PropertyManager;
 import org.fbi.endpoint.mbp.domain.ClientRequestHead;
 import org.fbi.endpoint.mbp.domain.queryresultrequest.QueryResultRequestParam;
 import org.fbi.endpoint.mbp.domain.queryresultrequest.QueryResultRequestRoot;
-import org.fbi.endpoint.mbp.domain.transactrequest.TransactRequestParam;
-import org.fbi.endpoint.mbp.domain.transactrequest.TransactRequestRoot;
 import org.fbi.endpoint.sbs.core.FebResponse;
 import org.fbi.endpoint.sbs.domain.SOFForm;
-import org.fbi.endpoint.sbs.model.form.ac.T531;
 import org.fbi.endpoint.sbs.model.form.ac.T543;
-import org.fbi.endpoint.sbs.model.form.ac.T999;
 import org.fbi.endpoint.sbs.model.form.ac.WB02;
 
 /**
@@ -40,7 +34,7 @@ public class Txn9009003Processor extends AbstractTxnProcessor {
         }
         byte[] sbsReqMsg = SbsTxnDataTransform.convertToTxnN022(tia, termID);
         // SBS
-        byte[] bytes = new JmsBytesClient().sendRecivMsg("900", "fcdep", "fcdep", "9009002", userid,
+        byte[] bytes = new JmsBytesClient().sendRecivMsg("900", "fcdep", "fcdep", "9009003", userid,
                 "queue.dep.core.fcdep.sbs", "queue.dep.core.sbs.fcdep", sbsReqMsg);
         // 解析SBS报文
         FebResponse response = new FebResponse();
@@ -53,7 +47,7 @@ public class Txn9009003Processor extends AbstractTxnProcessor {
         if ("T543".equalsIgnoreCase(formCode)) {
             toa.INFO.RET_MSG = "交易成功";
             SOFForm form = response.getSofForms().get(0);
-            T543 t531 = (T543) form.getFormBody();
+            T543 t543 = (T543) form.getFormBody();
             // TODO
 
         } else if ("WB02".equalsIgnoreCase(formCode)) {

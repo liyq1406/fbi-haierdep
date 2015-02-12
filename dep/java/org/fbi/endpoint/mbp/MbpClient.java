@@ -1,7 +1,10 @@
 package org.fbi.endpoint.mbp;
 
+import org.fbi.dep.util.JaxbHelper;
 import org.fbi.dep.util.PropertyManager;
 import org.fbi.dep.util.StringPad;
+import org.fbi.endpoint.mbp.domain.transactreponse.TransactResponseRoot;
+import org.fbi.endpoint.mbp.domain.transactrequest.TransactRequestRoot;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -13,7 +16,7 @@ import java.net.Socket;
 /**
  * 同步Socket客户端
  */
-public class SyncSocketClient {
+public class MbpClient {
 
     private final Logger logger = LoggerFactory.getLogger(this.getClass());
     private static final String MBP_TIMEOUT = PropertyManager.getProperty("socket.mbp.timeout");
@@ -60,10 +63,17 @@ public class SyncSocketClient {
             System.arraycopy(buf, 0, dataBytes, readIndex, buf.length);
             readIndex += toRead;
         }
-        byte[] msgbuf = new byte[74 + toReadlength];
+        /*byte[] msgbuf = new byte[74 + toReadlength];
         System.arraycopy(headerBytes, 0, msgbuf, 0, headerBytes.length);
-        System.arraycopy(dataBytes, 0, msgbuf, headerBytes.length, dataBytes.length);
-        return msgbuf;
+        System.arraycopy(dataBytes, 0, msgbuf, headerBytes.length, dataBytes.length);*/
+        return dataBytes;
+    }
+
+    public TransactResponseRoot convert4Transact(byte[] bytes) {
+        JaxbHelper jaxbHelper = new JaxbHelper();
+        TransactResponseRoot resBean = jaxbHelper.xmlToBean(TransactResponseRoot.class, bytes);
+        logger.info("MBP Response:" + resBean);
+        return resBean;
     }
 
 }

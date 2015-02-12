@@ -31,18 +31,18 @@ public class MbpDztzRouteBuilder extends RouteBuilder {
                         byte[] nettyBytes = (byte[]) exchange.getIn().getBody();
                         String message = new String(nettyBytes);
                         logger.info("【PROCESSOR报文解码】：" + message);
-                        logger.info("【PROCESSOR报文解码】报文正文长度：" + nettyBytes.length);
+//                        logger.info("【PROCESSOR报文解码】报文正文长度：" + nettyBytes.length);
 
                         byte[] macBytes = new byte[32];
                         System.arraycopy(nettyBytes, 0, macBytes, 0, macBytes.length);
                         String macStr = new String(macBytes);
-                        logger.info("【服务端报文解码】Mac：" + macStr);
+//                        logger.info("【服务端报文解码】Mac：" + macStr);
 
                         byte[] sbsBytes = new byte[nettyBytes.length - 32];
                         System.arraycopy(nettyBytes, 32, sbsBytes, 0, sbsBytes.length);
 
                         byte[] termId = new byte[4]; // 终端号
-                        logger.info("【sbs报文】" + new String(sbsBytes, "ISO8859-1"));
+//                        logger.info("【sbs报文】" + new String(sbsBytes, "ISO8859-1"));
                         System.arraycopy(sbsBytes, 20, termId, 0, termId.length);
 
                         // 按终端分配权限，IP，可用的交易，非法IP不可接入

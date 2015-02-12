@@ -22,7 +22,6 @@ public abstract class AbstractTiaToToa {
         try {
 //            ToaXml toaXml = transform(xml, errCode, errMsg);
             rtnmsg = transform(xml, rtnCode, errMsg);
-            logger.info(rtnmsg);
         } catch (Exception e) {
             logger.error(TxnRtnCode.MSG_ANALYSIS_ILLEGAL.toRtnMsg(), e);
             throw new RuntimeException(TxnRtnCode.MSG_ANALYSIS_ILLEGAL.toRtnMsg());

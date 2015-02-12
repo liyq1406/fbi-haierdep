@@ -16,17 +16,21 @@ public class Core900Processor implements Processor {
 
     @Override
     public void process(Exchange exchange) throws Exception {
-        
-        logger.info("------SBS 核心报文处理------");
+
         Message inMessage = exchange.getIn();
+        String msgID = inMessage.getHeader("JMSCorrelationID").toString();
+        logger.info(msgID + "  --SBS核心报文处理--");
+
         byte[] bytesDatagram = (byte[]) inMessage.getBody();
-        logger.info("客户端的报文内容【byte[]】： " + new String(bytesDatagram).trim());
+        logger.info("SBS的报文发送包： " + new String(bytesDatagram).trim());
+        long startM = System.currentTimeMillis();
+
 
         CtgManager ctgManager = new CtgManager();
         byte[] rtnBytesDatagram = ctgManager.processTxn(bytesDatagram);
-        logger.info("接收sbs的报文内容【byte[]】： " + new String(rtnBytesDatagram).trim());
-
-        exchange.getOut().setHeader("JMSCorrelationID", inMessage.getHeader("JMSCorrelationID"));
+        long endM = System.currentTimeMillis();
+        logger.info(msgID + " --SBS交易处理耗时--：" + (endM - startM) + " mm.");
+        exchange.getOut().setHeader("JMSCorrelationID", msgID);
         exchange.getOut().setHeader("JMSX_APPID", inMessage.getHeader("JMSX_APPID"));
         exchange.getOut().setHeader("JMSX_CHANNELID", inMessage.getHeader("JMSX_CHANNELID"));
         exchange.getOut().setHeader("JMSX_SRCMSGFLAG", inMessage.getHeader("JMSX_SRCMSGFLAG"));

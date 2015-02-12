@@ -42,9 +42,10 @@ public class SbsTxnDataTransform {
         List<String> tiaList = new ArrayList<String>();
         tiaList.add(tia.INFO.REQ_SN);
         try {
-            Field[] fields = tia.getClass().getFields();
+            Field[] fields = tia.BODY.getClass().getFields();
             Object obj = null;
             for (Field field : fields) {
+//                logger.info("Field:" + field.getName());
                 obj = field.get(tia.BODY);
                 if (obj != null) {
                     tiaList.add(obj.toString());
@@ -53,6 +54,7 @@ public class SbsTxnDataTransform {
                 }
             }
         } catch (Exception e) {
+            logger.error("SBS报文组装异常", e);
             throw new RuntimeException("SBS报文组装异常");
         }
         return convert("n120", termId, tiaList);

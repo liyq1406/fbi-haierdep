@@ -5,8 +5,8 @@ import org.fbi.dep.enums.SBSFormCode;
 import org.fbi.dep.model.txn.ToaXml9009002;
 import org.fbi.endpoint.sbs.core.FebResponse;
 import org.fbi.endpoint.sbs.domain.SOFForm;
-import org.fbi.endpoint.sbs.model.form.ac.T531;
-import org.fbi.endpoint.sbs.model.form.ac.T999;
+import org.fbi.endpoint.sbs.model.form.re.T531;
+import org.fbi.endpoint.sbs.model.form.re.T999;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 

@@ -3,8 +3,7 @@ package org.fbi.dep.processor;
 import org.apache.camel.Exchange;
 import org.apache.camel.Message;
 import org.apache.camel.Processor;
-import org.fbi.endpoint.mbp.SyncSocketClient;
-import org.fbi.endpoint.sbs.CtgManager;
+import org.fbi.endpoint.mbp.MbpClient;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -23,7 +22,7 @@ public class Core920Processor implements Processor {
         byte[] msg = (byte[]) inMessage.getBody();
         logger.info("[MBP] 请求报文内容： " + msg);
 
-        byte[] rtnMsg = new SyncSocketClient().onSend(msg);
+        byte[] rtnMsg = new MbpClient().onSend(msg);
 
         exchange.getOut().setHeader("JMSCorrelationID", inMessage.getHeader("JMSCorrelationID"));
         exchange.getOut().setHeader("JMSX_APPID", inMessage.getHeader("JMSX_APPID"));

@@ -29,13 +29,13 @@ public class SOFForm {
         formBodyLength = (short) (s2 | s1);
         // 包总长度
         length = formHeaderLength + formBodyFieldLength + formBodyLength;
-        // 包体
-        logger.info("FormCode:" + formHeader.getFormCode() + " 包体长度：" + formBodyLength);
+
         if (formBodyLength != 0 && !StringUtils.isEmpty(formHeader.getFormCode().trim())) {
+            // 包体
+            logger.info("FormCode:" + formHeader.getFormCode() + " 包体长度：" + formBodyLength);
             try {
                 // 实例化Form体
                 // 新增系统别判断
-                logger.info("Form class:" + "org.fbi.endpoint.sbs.model.form." + formHeader.getFormSys().toLowerCase() + "." + formHeader.getFormCode());
                 Class clazz = Class.forName("org.fbi.endpoint.sbs.model.form." + formHeader.getFormSys().toLowerCase() + "." + formHeader.getFormCode());
                 formBody = (SOFFormBody) clazz.newInstance();
                 // 截取Form体字节数据
