@@ -41,7 +41,7 @@ public class TOA1003003Transform extends AbstractToaTransform {
         toa1003003.body.REMARK = toa.BODY.QUERY_TRANS.QUERY_REMARK;
         toa1003003.header.RETURN_CODE = toa.INFO.RET_CODE;
         toa1003003.header.RETURN_MSG = toa.INFO.ERR_MSG;
-        if (toa.BODY != null) {
+        if (toa.BODY != null && toa.BODY.RET_DETAILS != null && !toa.BODY.RET_DETAILS.isEmpty()) {
             for (T200001Toa.Body.BodyDetail detail : toa.BODY.RET_DETAILS) {
                 TOA1003003.Body.BodyDetail record = new TOA1003003.Body.BodyDetail();
                 record.SN = detail.SN;

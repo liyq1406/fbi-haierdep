@@ -61,9 +61,16 @@ public class SbsTxnDataTransform {
     }
 
     public static byte[] convertToTxnAa41(String sn, String outActno, String inActno, String amt, String termId, String remark) {
-        if (StringUtils.isEmpty(remark)) remark = "资金交换平台";
+        if (StringUtils.isEmpty(remark)) remark = "资金交换平台9009001";
         List<String> tiaList = assembleTaa41Param(sn, outActno, inActno, new BigDecimal(amt), remark);
         return convert("aa41", termId, tiaList);
+    }
+
+    public static byte[] convertToTxnAa4b(String sn, String outActno, String inActno, String amt,
+                                          String inActno2, String amt2, String termId, String remark) {
+        if (StringUtils.isEmpty(remark)) remark = "资金交换平台9009004";
+        List<String> tiaList = assembleTaa4bParam(sn, outActno, inActno, amt, inActno2, amt2, remark);
+        return convert("aa4b", termId, tiaList);
     }
 
     public static byte[] convertToTxnN080(TiaXml9009101 tia, String termId) {
@@ -215,6 +222,77 @@ public class SbsTxnDataTransform {
         txnparamList.add(" ");
         //MAGFL2
         txnparamList.add(" ");
+
+        return txnparamList;
+    }
+
+    private static List<String> assembleTaa4bParam(String sn, String fromAcct, String toAcct, String txnAmt,
+                                                   String toAcct2, String txnAmt2, String remark) {
+
+
+//        DecimalFormat df = new DecimalFormat("#############0.00");
+        List<String> txnparamList = new ArrayList<String>();
+        String txndate = new SimpleDateFormat("yyyyMMdd").format(new Date());
+
+        //转出帐户类型
+        txnparamList.add("01");
+        //转出帐户
+        txnparamList.add(fromAcct);
+        //取款方式
+        txnparamList.add("3");
+        //转出帐户户名
+        txnparamList.add("");
+        //取款密码
+        txnparamList.add(StringUtils.leftPad("", 6, ' '));
+        //证件类型
+        txnparamList.add("N");
+        //外围系统流水号
+        txnparamList.add(StringUtils.rightPad(sn, 18, ' '));      //交易流水号
+        //支票种类
+        txnparamList.add(" ");
+        //支票号
+        txnparamList.add("");
+        //支票密码
+        txnparamList.add("");
+        //签发日期
+        txnparamList.add("");
+        //无折标识
+        txnparamList.add("3");
+        //备用字段
+        txnparamList.add("");
+        //备用字段
+        txnparamList.add("");
+
+        //交易金额
+//        String amt = df.format(txnAmt);
+//        txnparamList.add("+" + StringUtils.leftPad(amt, 16, '0'));   //金额
+
+        txnparamList.add(txnAmt);
+
+        //转入帐户类型
+        txnparamList.add("01");
+        //转入帐户 (商户帐号)
+        txnparamList.add(toAcct);
+
+        //转入帐户户名
+        txnparamList.add("");
+        //无折标识
+        txnparamList.add(" ");
+        //交易日期
+        txnparamList.add(txndate);
+        //摘要
+        txnparamList.add(remark);
+        //产品码
+        txnparamList.add("N201");
+        //MAGFL1
+        txnparamList.add(" ");
+        //MAGFL2
+        txnparamList.add(" ");
+        // 再转入帐户
+        txnparamList.add(toAcct2);
+        // 再转入金额
+//        txnparamList.add(df.format(txnAmt2));
+        txnparamList.add(txnAmt2);
 
         return txnparamList;
     }
