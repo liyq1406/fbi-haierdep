@@ -1,4 +1,4 @@
-import org.fbi.dep.helper.ChinapayShTxnHandler;
+import org.fbi.endpoint.chinapaysh.ChinapayShTxnHandler;
 
 import java.io.*;
 import java.text.SimpleDateFormat;

@@ -66,10 +66,11 @@ public class SbsTxnDataTransform {
         return convert("aa41", termId, tiaList);
     }
 
-    public static byte[] convertToTxnAa4b(String sn, String outActno, String inActno, String amt,
-                                          String inActno2, String amt2, String termId, String remark) {
+    public static byte[] convertToTxnAa4b(String sn, String outActno, String outActName, String inActno,
+                                          String inActName, String amt,
+                                          String inActno2, String inActName2, String amt2, String termId, String remark) {
         if (StringUtils.isEmpty(remark)) remark = "资金交换平台9009004";
-        List<String> tiaList = assembleTaa4bParam(sn, outActno, inActno, amt, inActno2, amt2, remark);
+        List<String> tiaList = assembleTaa4bParam(sn, outActno, outActName, inActno, inActName, amt, inActno2, inActName2, amt2, remark);
         return convert("aa4b", termId, tiaList);
     }
 
@@ -226,8 +227,10 @@ public class SbsTxnDataTransform {
         return txnparamList;
     }
 
-    private static List<String> assembleTaa4bParam(String sn, String fromAcct, String toAcct, String txnAmt,
-                                                   String toAcct2, String txnAmt2, String remark) {
+    private static List<String> assembleTaa4bParam(String sn, String fromAcct, String outActName, String toAcct,
+                                                   String inActName, String txnAmt,
+                                                   String toAcct2, String inActName2,
+                                                   String txnAmt2, String remark) {
 
 
 //        DecimalFormat df = new DecimalFormat("#############0.00");
@@ -241,7 +244,7 @@ public class SbsTxnDataTransform {
         //取款方式
         txnparamList.add("3");
         //转出帐户户名
-        txnparamList.add("");
+        txnparamList.add(outActName);
         //取款密码
         txnparamList.add(StringUtils.leftPad("", 6, ' '));
         //证件类型
@@ -275,7 +278,7 @@ public class SbsTxnDataTransform {
         txnparamList.add(toAcct);
 
         //转入帐户户名
-        txnparamList.add("");
+        txnparamList.add(inActName);
         //无折标识
         txnparamList.add(" ");
         //交易日期

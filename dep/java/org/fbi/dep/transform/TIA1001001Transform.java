@@ -115,6 +115,8 @@ public class TIA1001001Transform extends AbstractTiaTransform {
         tia.BODY.TRANS_SUM.SUBMIT_TIME = DateUtils.getDatetime14();
 
         long amount = new BigDecimal(tia1001001.body.AMOUNT).multiply(new BigDecimal("100")).longValue();
+
+
         tia.BODY.TRANS_SUM.TOTAL_SUM = String.valueOf(amount);
         tia.BODY.TRANS_DETAILS = new ArrayList<T100004Tia.Body.BodyDetail>();
         T100004Tia.Body.BodyDetail detail = new T100004Tia.Body.BodyDetail();

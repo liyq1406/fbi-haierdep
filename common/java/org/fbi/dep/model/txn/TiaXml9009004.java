@@ -19,9 +19,12 @@ public class TiaXml9009004 extends TiaXml {
 
     public static class Body implements Serializable {
         public String OUT_ACTNO;
+        public String OUT_ACTNAME;
         public String IN_ACTNO;
+        public String IN_ACTNAME;
         public String TXN_AMT;
         public String IN_ACTNO2;
+        public String IN_ACTNAME2;
         public String TXN_AMT2;
         public String REMARK;
         public String RESERVE;

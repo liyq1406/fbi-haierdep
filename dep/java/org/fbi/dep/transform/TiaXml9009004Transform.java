@@ -21,8 +21,9 @@ public class TiaXml9009004Transform extends AbstractTiaBytesTransform {
             termID = "MT01";
         }
         byte[] bytes = SbsTxnDataTransform.convertToTxnAa4b(xml9009004.INFO.REQ_SN,
-                xml9009004.BODY.OUT_ACTNO, xml9009004.BODY.IN_ACTNO,
-                xml9009004.BODY.TXN_AMT, xml9009004.BODY.IN_ACTNO2, xml9009004.BODY.TXN_AMT2, termID, xml9009004.BODY.REMARK);
+                xml9009004.BODY.OUT_ACTNO, xml9009004.BODY.OUT_ACTNAME, xml9009004.BODY.IN_ACTNO,
+                xml9009004.BODY.IN_ACTNAME, xml9009004.BODY.TXN_AMT, xml9009004.BODY.IN_ACTNO2,
+                xml9009004.BODY.IN_ACTNAME2, xml9009004.BODY.TXN_AMT2, termID, xml9009004.BODY.REMARK);
         return bytes;
     }
 }

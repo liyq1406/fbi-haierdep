@@ -1,9 +1,6 @@
-import chinapay.Base64;
-import chinapay.PrivateKey;
-import chinapay.SecureLink;
 import org.apache.http.NameValuePair;
 import org.apache.http.message.BasicNameValuePair;
-import org.fbi.dep.helper.ChinapayShTxnHandler;
+import org.fbi.endpoint.chinapaysh.ChinapayShTxnHandler;
 
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -21,10 +18,11 @@ public class ChinapaySingleClientTest {
     public static void main(String[] args) {
 
         // TODO 测试
-        singleCut();
-//        singleQry();
+//        singleCut();
+        singleQry();
     }
 
+    // 支付版本号 version 20100831 改为 20141120
     public static void singleCut() {
 
         String transDate = new SimpleDateFormat("yyyyMMdd").format(new Date());
@@ -41,10 +39,15 @@ public class ChinapaySingleClientTest {
         String curyId = "156";
         String transAmt = "000000000100";
         String priv1 = encodeToUnicode("yuliu");
-        String version = "20100831";
+        String version = "20141120";
         String gateId = "7008";
-        String msg = ChinapayShTxnHandler.SINGLE_MER_ID + transDate + orderNo + transType + openBankId + cardType
-                + cardNo + usrName + certType + certId + curyId + transAmt + priv1 + version + gateId;
+        // TODO
+        String bgRetUrl = "";
+        String pageRetUrl = "";
+        /*String msg = ChinapayShTxnHandler.SINGLE_MER_ID + transDate + orderNo + transType + openBankId + cardType
+                + cardNo + usrName + certType + certId + curyId + transAmt + priv1 + version + gateId;*/
+        String msg = ChinapayShTxnHandler.SINGLE_MER_ID + orderNo + transAmt + curyId + transDate
+                + transType + version + bgRetUrl + pageRetUrl + gateId + priv1;
         System.out.println("要签名的数据：" + msg);
 
 
@@ -75,11 +78,12 @@ public class ChinapaySingleClientTest {
 
     }
 
+    // 查询 version=20060831
     public static void singleQry() {
         String transType = "0003";
         String orderNo = "3310100010096802";
         String transDate = new SimpleDateFormat("yyyyMMdd").format(new Date());;
-        String version = "20100831";
+        String version = "20060831";
         String msg = MerId + transType + orderNo + transDate + version;
 
         List<NameValuePair> nvps = new ArrayList<NameValuePair>();
