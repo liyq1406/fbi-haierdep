@@ -297,6 +297,10 @@ public class SbsTxnDataTransform {
 //        txnparamList.add(df.format(txnAmt2));
         txnparamList.add(txnAmt2);
 
+        // 再转入账户名 20150416
+        logger.info("INACTNAME2:" + inActName2);
+        txnparamList.add(inActName2);
+
         return txnparamList;
     }
 

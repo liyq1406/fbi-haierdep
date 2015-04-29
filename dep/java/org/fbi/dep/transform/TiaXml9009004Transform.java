@@ -20,6 +20,9 @@ public class TiaXml9009004Transform extends AbstractTiaBytesTransform {
         if (StringUtils.isEmpty(termID)) {
             termID = "MT01";
         }
+
+        logger.info("ACTNAME2: " + xml9009004.BODY.IN_ACTNAME2);
+
         byte[] bytes = SbsTxnDataTransform.convertToTxnAa4b(xml9009004.INFO.REQ_SN,
                 xml9009004.BODY.OUT_ACTNO, xml9009004.BODY.OUT_ACTNAME, xml9009004.BODY.IN_ACTNO,
                 xml9009004.BODY.IN_ACTNAME, xml9009004.BODY.TXN_AMT, xml9009004.BODY.IN_ACTNO2,

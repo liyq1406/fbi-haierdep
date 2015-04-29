@@ -18,7 +18,7 @@ public class TxnUseridChecker {
     private static Logger logger = LoggerFactory.getLogger(TxnUseridChecker.class);
 
     public void check(String userid, String txnCode, CheckResult res) {
-        String txns = PropertyManager.getProperty("sbs.txns." + userid);
+        String txns = PropertyManager.getProperty("wsys.txns." + userid);
         if (StringUtils.isEmpty(txns)) {
             res.setResultCode(TxnRtnCode.TXN_CHECK_ERR.getCode());
             res.setResultMsg(TxnRtnCode.TXN_CHECK_ERR.getTitle());

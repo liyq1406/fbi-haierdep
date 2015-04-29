@@ -1,6 +1,12 @@
 package org.fbi.dep.management;
 
+import org.fbi.dep.model.ActList;
 import org.fbi.dep.model.CheckResult;
+
+import java.io.BufferedReader;
+import java.io.IOException;
+import java.io.InputStreamReader;
+import java.util.List;
 
 /**
  * Created with IntelliJ IDEA.
@@ -12,4 +18,5 @@ import org.fbi.dep.model.CheckResult;
 public interface TxnChecker {
 
     void check(String userid, String txnCode, String reqMsg, CheckResult res);
+
 }
