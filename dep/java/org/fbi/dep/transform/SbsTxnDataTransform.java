@@ -86,6 +86,10 @@ public class SbsTxnDataTransform {
         return convert("8856", termId, assembleT8856Param(tia));
     }
 
+    public static byte[] convertToTxn8118(TiaXml9009062 tia, String termId) {
+        return convert("8118", termId, assembleT8118Param(tia));
+    }
+
     public static byte[] convertToTxn8011(TiaXml9009301 tia, String termId) {
         return convert("8011", termId, assembleT8011Param(tia));
     }
@@ -135,6 +139,15 @@ public class SbsTxnDataTransform {
         return paramList;
     }
 
+    private static List<String> assembleT8118Param(TiaXml9009062 tia) {
+        List<String> paramList = new ArrayList<String>();
+        paramList.add(tia.BODY.BATSEQ);
+        paramList.add(tia.BODY.ORGIDT);
+        paramList.add(tia.BODY.DEPNUM);
+        paramList.add(tia.BODY.ORGID3);
+        paramList.add(tia.BODY.ACTNUM);
+        return paramList;
+    }
 
     private static List<String> assembleTn080Param(TiaXml9009101 tia) {
         List<String> paramList = new ArrayList<String>();
