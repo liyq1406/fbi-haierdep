@@ -33,19 +33,26 @@ public class SOFForm {
         if (formBodyLength != 0 && !StringUtils.isEmpty(formHeader.getFormCode().trim())) {
             // 包体
             logger.info("FormCode:" + formHeader.getFormCode() + " 包体长度：" + formBodyLength);
-            try {
-                // 实例化Form体
-                // 新增系统别判断
-                Class clazz = Class.forName("org.fbi.endpoint.sbs.model.form." + formHeader.getFormSys().toLowerCase() + "." + formHeader.getFormCode());
-                formBody = (SOFFormBody) clazz.newInstance();
-                // 截取Form体字节数据
-                byte[] bodyBytes = new byte[formBodyLength];
-                System.arraycopy(buffer, offset + formHeaderLength + formBodyFieldLength, bodyBytes, 0, formBodyLength);
-                // 装配Form体
-                formBody.assembleFields(0, bodyBytes);
-            } catch (Exception e) {
-                logger.error("Form解析错误", e);
-                throw new RuntimeException(formHeader.getFormCode() + "|SBS错误返回码：" + formHeader.getFormCode());
+            /*
+            * (SBS返回代码为W,T开头代表成功，其他字母开头代表失败；
+            * 成功时，包体长度均大于0，W返回成功消息不带form体，特殊情况会约定form格式,T返回均带form格式；
+            * 失败时，包体长度通常为0；)ADD BY YXY
+            * */
+            if (formHeader.getFormCode().startsWith("T")||formHeader.getFormCode().startsWith("W")){
+                try {
+                    // 实例化Form体
+                    // 新增系统别判断
+                    Class clazz = Class.forName("org.fbi.endpoint.sbs.model.form." + formHeader.getFormSys().toLowerCase() + "." + formHeader.getFormCode());
+                    formBody = (SOFFormBody) clazz.newInstance();
+                    // 截取Form体字节数据
+                    byte[] bodyBytes = new byte[formBodyLength];
+                    System.arraycopy(buffer, offset + formHeaderLength + formBodyFieldLength, bodyBytes, 0, formBodyLength);
+                    // 装配Form体
+                    formBody.assembleFields(0, bodyBytes);
+                } catch (Exception e) {
+                    logger.error("Form解析错误", e);
+                    throw new RuntimeException(formHeader.getFormCode() + "|SBS返回码：" + formHeader.getFormCode());
+                }
             }
         }
     }
