@@ -149,10 +149,10 @@ public class SbsTxnDataTransform {
 
     private static List<String> assembleT8118Param(TiaXml9009062 tia) {
         List<String> paramList = new ArrayList<String>();
-        paramList.add(tia.BODY.BATSEQ);
-        paramList.add(tia.BODY.ORGIDT);
-        paramList.add(tia.BODY.DEPNUM);
-        paramList.add(tia.BODY.ORGID3);
+        paramList.add("111111");
+        paramList.add("010"); //柜员机构号
+        paramList.add("60");  //柜员部门号
+        paramList.add("010"); //帐户机构号
         paramList.add(tia.BODY.ACTNUM);
         return paramList;
     }
@@ -160,10 +160,10 @@ public class SbsTxnDataTransform {
     private static List<String> assembleT8854ParamFor9009051(TiaXml9009051 tia) {
         SimpleDateFormat sdf=new SimpleDateFormat("yyyyMMdd");
         List<String> paramList = new ArrayList<String>();
-        paramList.add(tia.BODY.BATSEQ);
-        paramList.add(tia.BODY.ORGIDT);
-        paramList.add(tia.BODY.DEPNUM);
-        paramList.add(tia.BODY.ORGID3);
+        paramList.add("111111");
+        paramList.add("010"); //柜员机构号
+        paramList.add("60");  //柜员部门号
+        paramList.add("010"); //帐户机构号
         paramList.add(tia.BODY.ACTNO);
         paramList.add(sdf.format(new Date()));
         paramList.add(sdf.format(new Date()));
@@ -173,10 +173,10 @@ public class SbsTxnDataTransform {
 
     private static List<String> assembleT8854ParamFor9009052(TiaXml9009052 tia) {
         List<String> paramList = new ArrayList<String>();
-        paramList.add(tia.BODY.BATSEQ);
-        paramList.add(tia.BODY.ORGIDT);
-        paramList.add(tia.BODY.DEPNUM);
-        paramList.add(tia.BODY.ORGID3);
+        paramList.add("111111");
+        paramList.add("010"); //柜员机构号
+        paramList.add("60");  //柜员部门号
+        paramList.add("010"); //帐户机构号
         paramList.add(tia.BODY.ACTNO);
         paramList.add(tia.BODY.START_DATE);
         paramList.add(tia.BODY.END_DATE);

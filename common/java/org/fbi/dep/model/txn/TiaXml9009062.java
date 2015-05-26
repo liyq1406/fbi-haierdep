@@ -18,10 +18,6 @@ public class TiaXml9009062 extends TiaXml {
     public Body BODY;
 
     public static class Body implements Serializable {
-        public String BATSEQ="111111";
-        public String ORGIDT="010"; //柜员机构号
-        public String DEPNUM="60";  //柜员部门号
-        public String ORGID3="010"; //帐户机构号
         public String ACTNUM;       //账号	 C(22) 完整账号(8010开头)
     }
 
