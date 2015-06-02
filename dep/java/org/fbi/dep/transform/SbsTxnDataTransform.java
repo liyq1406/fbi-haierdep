@@ -353,7 +353,9 @@ public class SbsTxnDataTransform {
     }
 
     private static byte[] convert(String txnCode, String termID, List<String> tiaList) {
-        String header = "TPEI" + txnCode + "  010       " + termID + "MT01                       ";
+//        String header = "TPEI" + txnCode + "  010       " + termID + "MT01                       ";
+        // 2015-06-02 授权柜员设置为9999
+        String header = "TPEI" + txnCode + "  010       " + termID + "MT019999                   ";
         byte[] tiaBuf = new byte[32000];
         byte[] bytes = header.getBytes();
         System.arraycopy(bytes, 0, tiaBuf, 0, bytes.length);
