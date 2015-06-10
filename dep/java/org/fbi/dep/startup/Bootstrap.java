@@ -7,10 +7,7 @@ import org.apache.camel.component.jms.JmsComponent;
 import org.apache.camel.impl.DefaultCamelContext;
 import org.apache.camel.impl.JndiRegistry;
 import org.apache.camel.util.jndi.JndiContext;
-import org.fbi.dep.component.netty.DepSktMessageDecoder;
-import org.fbi.dep.component.netty.DepSktMessageEncoder;
-import org.fbi.dep.component.netty.MbpSktMessageDecoder;
-import org.fbi.dep.component.netty.MbpSktMessageEncoder;
+import org.fbi.dep.component.netty.*;
 import org.fbi.dep.route.*;
 import org.fbi.dep.util.PropertyManager;
 import org.slf4j.Logger;
@@ -35,6 +32,7 @@ public class Bootstrap {
 //    private static String UNIONPAY_SOCKET_PORT = PropertyManager.getProperty("dep.localhost.unionpay.port");
     private static String SBS_SOCKET_PORT = PropertyManager.getProperty("dep.localhost.sbs.port");
     private static String SMS_SOCKET_PORT = PropertyManager.getProperty("dep.localhost.sms.port");
+    private static String SBS_HTTP_PORT = PropertyManager.getProperty("dep.localhost.sbs.http.port");
 
 
     public static void main(String[] args) throws Exception {
@@ -64,6 +62,7 @@ public class Bootstrap {
 //        RouteBuilder upSbsRouteBuilder = new PayoutIndirectSktRouteBuilder(UNIONPAY_SBS_SOCKET_PORT);
         RouteBuilder sbsSktRouteBuilder = new SbsSktRouteBuilder(SBS_SOCKET_PORT);
         RouteBuilder smsSktRouteBuilder = new SmsSktRouteBuilder(SMS_SOCKET_PORT);
+        RouteBuilder sbsHttpRouteBuilder = new SbsHttpRouteBuilder(SBS_HTTP_PORT);
         try {
             logger.info("CamelContext开始添加路由...");
             context.addRoutes(coreRouteBuilder);
@@ -75,6 +74,7 @@ public class Bootstrap {
 //            context.addRoutes(upSbsRouteBuilder);
             context.addRoutes(sbsSktRouteBuilder);
             context.addRoutes(smsSktRouteBuilder);
+            context.addRoutes(sbsHttpRouteBuilder);
             logger.info("CamelContext开始启动...");
             context.start();
             logger.info("CamelContext已成功启动...");
