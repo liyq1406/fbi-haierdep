@@ -65,7 +65,7 @@ public class SbsHttpRouteBuilder extends RouteBuilder {
                                         sb.append(new String(tmp, 0, l));
                                     }
                                     byte[] bytes = sb.toString().getBytes();
-                                    logger.info("接收到报文：" + new String(bytes));
+                                    logger.info("【SbsHttpRouteBuilder 接收到报文】" + new String(bytes));
 
                                     //客户端请求报文格式为(Encrypt-MD5:32字节MD5值+回车换行+XML报文体)
                                     //1.解析mac
@@ -157,6 +157,7 @@ public class SbsHttpRouteBuilder extends RouteBuilder {
                                         rtnXml = toaTransform.run(sbsResBytes);
                                     }
                                     rtnmac = MD5Helper.getMD5String(rtnXml + userId + userKey);
+                                    logger.info("【SbsHttpRouteBuilder 发送报文】" + new String((rtnmac + "\n" + rtnXml).getBytes("GBK")));
                                     exchange.getOut().setBody((rtnmac + "\n" + rtnXml).getBytes("GBK"));
                                 } catch (Exception e) {
                                     //  返回异常信息
@@ -195,6 +196,7 @@ public class SbsHttpRouteBuilder extends RouteBuilder {
                                     }
                                     rtnXml = errXmlHttp.toString();
                                     rtnmac = MD5Helper.getMD5String(rtnXml + userId + userKey);
+                                    logger.info("【SbsHttpRouteBuilder 发送报文】" + new String((rtnmac + "\n" + rtnXml).getBytes("GBK")));
                                     exchange.getOut().setBody((rtnmac + "\n" + rtnXml).getBytes("GBK"));
                                 }
                             }
