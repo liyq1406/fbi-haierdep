@@ -25,6 +25,8 @@ public class CoreRouteBuilder extends RouteBuilder {
                 .to("jms:queue:queue.dep.core.fip.in")
                 .when(simple("${header.JMSX_CHANNELID} == '100'"))
                 .to("jms:queue:queue.dep.core.unionpay.in")
+                .when(simple("${header.JMSX_CHANNELID} == '120'"))
+                .to("jms:queue:queue.dep.core.allinpay.in")
                 .when(simple("${header.JMSX_CHANNELID} == '200'"))
                 .to("jms:queue:queue.dep.core.ccbvips.in")
                 .when(simple("${header.JMSX_CHANNELID} == '300'"))
@@ -45,6 +47,12 @@ public class CoreRouteBuilder extends RouteBuilder {
                 .process(new Core100Processor())
                 .to("jms:queue:queue.dep.core.unionpay.out");
         from("jms:queue:queue.dep.core.unionpay.out").to("jms:queue:queue.dep.core.out");
+
+        // allinpay
+        from("jms:queue:queue.dep.core.allinpay.in?concurrentConsumers=20")
+                .process(new Core120Processor())
+                .to("jms:queue:queue.dep.core.allinpay.out");
+        from("jms:queue:queue.dep.core.allinpay.out").to("jms:queue:queue.dep.core.out");
 
         // ccbvips
         from("jms:queue:queue.dep.core.ccbvips.in?concurrentConsumers=20")
