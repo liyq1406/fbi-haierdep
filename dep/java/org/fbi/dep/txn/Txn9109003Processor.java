@@ -1,5 +1,6 @@
 package org.fbi.dep.txn;
 
+import com.thoughtworks.xstream.converters.ConversionException;
 import org.fbi.dep.component.jms.JmsObjMsgClient;
 import org.fbi.dep.model.txn.TiaXml9109003;
 import org.slf4j.Logger;
@@ -15,7 +16,7 @@ import java.io.IOException;
 public class Txn9109003Processor extends AbstractTxnProcessor {
     private static Logger logger = LoggerFactory.getLogger(Txn9109003Processor.class);
 
-    public String process(String userid, String msgData) throws ClassNotFoundException, InstantiationException, IllegalAccessException, IOException {
+    public String process(String userid, String msgData) throws ClassNotFoundException,ConversionException, InstantiationException, IllegalAccessException, IOException {
         TiaXml9109003 tia = (TiaXml9109003) (new TiaXml9109003().getTia(msgData));
 
         // fip

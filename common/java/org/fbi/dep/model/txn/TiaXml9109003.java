@@ -34,27 +34,12 @@ public class TiaXml9109003 extends TiaXml {
     }
 
     public static class Body implements Serializable {
-        public String startdate;      //交易起始日期
-        public String enddate;        //交易结束日期
         public String pagenum;        //请求页码
         public String pagesize;       //每页记录数
+        public String startdate;      //交易起始日期
+        public String enddate;        //交易结束日期
+        public String acctid;         //银行账户
         public String reserve;        //保留域
-
-        public String getStartdate() {
-            return startdate;
-        }
-
-        public void setStartdate(String startdate) {
-            this.startdate = startdate;
-        }
-
-        public String getEnddate() {
-            return enddate;
-        }
-
-        public void setEnddate(String enddate) {
-            this.enddate = enddate;
-        }
 
         public String getPagenum() {
             return pagenum;
@@ -72,6 +57,30 @@ public class TiaXml9109003 extends TiaXml {
             this.pagesize = pagesize;
         }
 
+        public String getStartdate() {
+            return startdate;
+        }
+
+        public void setStartdate(String startdate) {
+            this.startdate = startdate;
+        }
+
+        public String getEnddate() {
+            return enddate;
+        }
+
+        public void setEnddate(String enddate) {
+            this.enddate = enddate;
+        }
+
+        public String getAcctid() {
+            return acctid;
+        }
+
+        public void setAcctid(String acctid) {
+            this.acctid = acctid;
+        }
+
         public String getReserve() {
             return reserve;
         }
@@ -79,7 +88,6 @@ public class TiaXml9109003 extends TiaXml {
         public void setReserve(String reserve) {
             this.reserve = reserve;
         }
-
     }
 
     @Override
