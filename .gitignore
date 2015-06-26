@@ -2,6 +2,11 @@
 ## Eclipse
 #################
 
+*.ipr
+*.iws
+*.iml
+out/
+
 *.pydevproject
 .project
 .metadata

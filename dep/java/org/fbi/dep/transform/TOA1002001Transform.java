@@ -1,13 +1,7 @@
 package org.fbi.dep.transform;
 
-import org.fbi.dep.enums.TxnStatus;
-import org.fbi.dep.model.txn.TOA1001001;
-import org.fbi.dep.model.txn.TOA1001002;
 import org.fbi.dep.model.txn.TOA1002001;
-import org.fbi.endpoint.unionpay.txn.domain.T100001Toa;
 import org.fbi.endpoint.unionpay.txn.domain.T100002Toa;
-
-import java.math.BigDecimal;
 
 /**
  * ÅúÁ¿´ú¸¶

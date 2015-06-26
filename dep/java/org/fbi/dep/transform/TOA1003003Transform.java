@@ -1,7 +1,5 @@
 package org.fbi.dep.transform;
 
-import org.fbi.dep.enums.TxnStatus;
-import org.fbi.dep.model.txn.TOA1003001;
 import org.fbi.dep.model.txn.TOA1003003;
 import org.fbi.dep.util.PropertyManager;
 import org.fbi.endpoint.unionpay.txn.domain.T200001Toa;

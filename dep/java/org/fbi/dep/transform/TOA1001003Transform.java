@@ -1,9 +1,7 @@
 package org.fbi.dep.transform;
 
 import org.fbi.dep.model.txn.TOA1001003;
-import org.fbi.dep.model.txn.TOA1002001;
 import org.fbi.endpoint.unionpay.txn.domain.T100001Toa;
-import org.fbi.endpoint.unionpay.txn.domain.T100002Toa;
 
 /**
  * 批量多笔代扣
