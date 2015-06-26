@@ -3,18 +3,15 @@ package org.fbi.dep.processor;
 import org.apache.camel.Exchange;
 import org.apache.camel.Message;
 import org.apache.camel.Processor;
-import org.fbi.dep.helper.DepHttpClient;
-import org.fbi.dep.helper.UnionpayCryptHelper;
+import org.fbi.dep.helper.AllinpayCryptHelper;
+import org.fbi.dep.helper.allinPayHelper.XmlTools;
 import org.fbi.dep.util.PropertyManager;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 /**
- * Created by IntelliJ IDEA.
- * User: zhangxiaobo
- * Date: 12-2-13
- * Time: 下午9:53
- * To change this template use File | Settings | File Templates.
+ * Created by Lichao.W At 2015/6/24 22:21
+ * wanglichao@163.com
  */
 public class Core120Processor implements Processor {
 
@@ -28,13 +25,14 @@ public class Core120Processor implements Processor {
         String appID = (String) inMessage.getHeader("JMSX_APPID");
         String bizID = (String) inMessage.getHeader("JMSX_BIZID");
 
-        String serverUrl = PropertyManager.getProperty("unionpay_server_url");
+        String serverUrl = PropertyManager.getProperty("allinpay_server_url");
         String datagram = inMessage.getBody(String.class);
 
-        logger.info("银联业务处理报文：" + datagram);
+        logger.info("通联业务处理报文：" + datagram);
 
-        String xmlStr = UnionpayCryptHelper.signMsg(datagram, bizID.toUpperCase());
-        String rtnDatagram = new DepHttpClient().doPost(serverUrl, xmlStr, PropertyManager.getProperty("unionpay_http_charset_name"));
+        String xmlStr = AllinpayCryptHelper.signMsgAl(datagram); // 添加通联签名验证
+
+        String rtnDatagram = XmlTools.send(serverUrl, xmlStr);  //发送到通联
 
         exchange.getOut().setHeader("JMSCorrelationID", inMessage.getHeader("JMSCorrelationID"));
         exchange.getOut().setHeader("JMSX_APPID", appID);

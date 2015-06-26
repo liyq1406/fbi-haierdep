@@ -9,11 +9,8 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 /**
- * Created by IntelliJ IDEA.
- * User: zhangxiaobo
- * Date: 12-2-13
- * Time: ÏÂÎç9:27
- * To change this template use File | Settings | File Templates.
+ * Created by Lichao.W At 2015/6/24 22:21
+ * wanglichao@163.com
  */
 public class TIA120Processor implements Processor {
 
@@ -24,29 +21,30 @@ public class TIA120Processor implements Processor {
         Object msgBody = exchange.getIn().getBody();
         String datagram = null;
         // TODO ADD
-        if (msgBody instanceof TIA1003001) {
-            TIA1003001 tia1003001 = (TIA1003001) msgBody;
-            exchange.getOut().setHeader("REQ_TXN_CODE", "1003001");
-            datagram = new TIA1003001Transform().transform(tia1003001);
-        } else if (msgBody instanceof TIA1001001) {
-            TIA1001001 tia1001001 = (TIA1001001) msgBody;
-            datagram = new TIA1001001Transform().transform(tia1001001);
-        } else if(msgBody instanceof TIA1001003) {
-            TIA1001003 tia1001003 = (TIA1001003) msgBody;
-            exchange.getOut().setHeader("REQ_TXN_CODE", "1001003");
-            datagram = new TIA1001003Transform().transform(tia1001003);
-        } else if(msgBody instanceof TIA1001002) {
-            TIA1001002 tia1001002 = (TIA1001002) msgBody;
-            exchange.getOut().setHeader("REQ_TXN_CODE", "1001002");
-            datagram = new TIA1001002Transform().transform(tia1001002);
-        } else if(msgBody instanceof TIA1002001) {
+        if (msgBody instanceof TIA1201001) {
+            TIA1201001 tia1201001 = (TIA1201001) msgBody;
+            exchange.getOut().setHeader("REQ_TXN_CODE", "1201001");
+            datagram = new TIA1201001Transform().transform(tia1201001);
+        } else if (msgBody instanceof TIA1201011) {
+            TIA1201011 tia1201011 = (TIA1201011) msgBody;
+            exchange.getOut().setHeader("REQ_TXN_CODE", "1201011");
+            datagram = new TIA1201011Transform().transform(tia1201011);
+        } else if(msgBody instanceof TIA1202004) {
+            TIA1202004 tia1202004 = (TIA1202004) msgBody;
+            exchange.getOut().setHeader("REQ_TXN_CODE", "1202004");
+            datagram = new TIA1202004Transform().transform(tia1202004);
+        } else if(msgBody instanceof TIA1202005) {
+            TIA1202005 tia1202005 = (TIA1202005) msgBody;
+            exchange.getOut().setHeader("REQ_TXN_CODE", "1202005");
+            datagram = new TIA1202005Transform().transform(tia1202005);
+        } /*else if(msgBody instanceof TIA1002001) {
             TIA1002001 tia1002001 = (TIA1002001) msgBody;
             datagram = new TIA1002001Transform().transform(tia1002001);
         } else if(msgBody instanceof TIA1003003) {
             TIA1003003 tia1003003 = (TIA1003003) msgBody;
             exchange.getOut().setHeader("REQ_TXN_CODE", "1003003");
             datagram = new TIA1003003Transform().transform(tia1003003);
-        }
+        }*/
         exchange.getOut().setBody(datagram);
 
         String correlationID = exchange.getIn().getHeader("JMSCorrelationID", String.class);

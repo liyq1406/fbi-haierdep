@@ -9,11 +9,8 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 /**
- * Created by IntelliJ IDEA.
- * User: zhangxiaobo
- * Date: 12-2-13
- * Time: ÏÂÎç9:51
- * To change this template use File | Settings | File Templates.
+ * Created by Lichao.W At 2015/6/24 22:21
+ * wanglichao@163.com
  */
 public class TOA120Processor implements Processor {
 
@@ -33,12 +30,25 @@ public class TOA120Processor implements Processor {
         String reqTxnCode = null;
         switch (Integer.parseInt(txnCode)) {
             case 100001:
-            case 100004:
-                reqTxnCode = inMessage.getHeader("REQ_TXN_CODE", String.class);
+                /*reqTxnCode = inMessage.getHeader("REQ_TXN_CODE", String.class);
                 if ("1001003".equals(reqTxnCode)) {
                     toa = new TOA1001003Transform().transform(datagram, txnCode);
+                } else*/
+                    toa = new TOA1201001Transform().transform(datagram, txnCode);
+                break;
+            case 100011:
+                /*reqTxnCode = inMessage.getHeader("REQ_TXN_CODE", String.class);
+                if ("1001003".equals(reqTxnCode)) {
+                    toa = new TOA1001003Transform().transform(datagram, txnCode);
+                } else*/
+                    toa = new TOA1201011Transform().transform(datagram, txnCode);
+                break;
+            case 200004:
+                reqTxnCode = inMessage.getHeader("REQ_TXN_CODE", String.class);
+                if ("1202005".equals(reqTxnCode)) {
+                    toa = new TOA1202005Transform().transform(datagram, txnCode);
                 } else
-                    toa = new TOA1001001Transform().transform(datagram, txnCode);
+                    toa = new TOA1202004Transform().transform(datagram, txnCode);
                 break;
             case 100005:
                 toa = new TOA1001002Transform().transform(datagram, txnCode);
@@ -50,13 +60,7 @@ public class TOA120Processor implements Processor {
                 } else
                     toa = new TOA1002001Transform().transform(datagram, txnCode);
                 break;
-            case 200001:
-                reqTxnCode = inMessage.getHeader("REQ_TXN_CODE", String.class);
-                if ("1003003".equals(reqTxnCode)) {
-                    toa = new TOA1003003Transform().transform(datagram, txnCode);
-                } else
-                    toa = new TOA1003001Transform().transform(datagram, txnCode);
-                break;
+
             default:
                 break;
         }

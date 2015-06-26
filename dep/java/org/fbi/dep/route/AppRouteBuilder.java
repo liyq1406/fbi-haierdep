@@ -6,6 +6,7 @@ import org.apache.camel.RuntimeCamelException;
 import org.apache.camel.builder.RouteBuilder;
 import org.apache.commons.lang.StringUtils;
 import org.fbi.dep.processor.TOA100Processor;
+import org.fbi.dep.processor.TOA120Processor;
 import org.fbi.dep.processor.TOA900Processor;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -62,7 +63,7 @@ public class AppRouteBuilder extends RouteBuilder {
                 .process(new TOA100Processor())
                 .to("jms:queue:queue.dep.object.out")
                 .when(simple("${header.JMSX_CHANNELID} == '120'"))
-                .process(new TOA100Processor())
+                .process(new TOA120Processor())
                 .to("jms:queue:queue.dep.object.out")
                 .when(simple("${header.JMSX_CHANNELID} == '900'"))
                 .process(new TOA900Processor())

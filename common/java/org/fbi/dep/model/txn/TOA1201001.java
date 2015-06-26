@@ -5,12 +5,11 @@ import org.fbi.dep.model.base.TOABody;
 import org.fbi.dep.model.base.TOAHeader;
 
 import java.io.Serializable;
-import java.math.BigDecimal;
 
 /**
- * 银联：代扣
- * User: zhanrui
- * Date: 2012-01-31
+ * 通联：批量代扣
+ * User: wanglichao
+ * Date: 2015-06-22
  */
 public class TOA1201001 extends TOA implements Serializable {
     public Header header = new Header();
@@ -31,9 +30,8 @@ public class TOA1201001 extends TOA implements Serializable {
     }
 
     public static class Body extends TOABody {
-        public String ACCOUNT_NO;
-        public String ACCOUNT_NAME;
-        public BigDecimal AMOUNT;
-        public String REMARK;
+        public String SN;
+        public String RET_CODE;
+        public String ERR_MSG;
     }
 }

@@ -48,7 +48,7 @@ public class CoreRouteBuilder extends RouteBuilder {
                 .to("jms:queue:queue.dep.core.unionpay.out");
         from("jms:queue:queue.dep.core.unionpay.out").to("jms:queue:queue.dep.core.out");
 
-        // allinpay
+        //TODO allinpay start
         from("jms:queue:queue.dep.core.allinpay.in?concurrentConsumers=20")
                 .process(new Core120Processor())
                 .to("jms:queue:queue.dep.core.allinpay.out");
