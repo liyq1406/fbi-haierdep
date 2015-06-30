@@ -25,7 +25,7 @@ public class T120001Tia {
 
     public static class Body {
         public BodyHeader TRANS_SUM = new BodyHeader();
-        public List<T120001Tia.Body.BodyDetail> TRANS_DETAILS = new ArrayList<>();
+        public List<T120001Tia.Body.BodyDetail> TRANS_DETAILS = new ArrayList<T120001Tia.Body.BodyDetail>();
 
         public static class BodyHeader {
             public String BUSINESS_CODE = "";
@@ -80,7 +80,7 @@ public class T120001Tia {
         tia.INFO.TRX_CODE = "100001"; //通联批量代扣交易码
         tia.INFO.REQ_SN = "" + System.currentTimeMillis();
 
-        tia.BODY.TRANS_DETAILS = new ArrayList<>();
+        tia.BODY.TRANS_DETAILS = new ArrayList<T120001Tia.Body.BodyDetail>();
 
         T120001Tia.Body.BodyDetail record = new T120001Tia.Body.BodyDetail();
         tia.BODY.TRANS_DETAILS.add(record);
