@@ -2,7 +2,6 @@ package org.fbi.dep.model.txn;
 
 import com.thoughtworks.xstream.XStream;
 import com.thoughtworks.xstream.annotations.XStreamAlias;
-import com.thoughtworks.xstream.annotations.XStreamImplicit;
 import com.thoughtworks.xstream.io.HierarchicalStreamDriver;
 import com.thoughtworks.xstream.io.xml.DomDriver;
 import com.thoughtworks.xstream.io.xml.XmlFriendlyReplacer;
@@ -11,7 +10,6 @@ import org.fbi.dep.model.base.ToaXml;
 import org.fbi.dep.model.base.ToaXmlHttpInfo;
 
 import java.io.Serializable;
-import java.util.List;
 
 /**
  * Created by XIANGYANG on 2015-6-30.
@@ -40,7 +38,25 @@ public class ToaXml9101103 extends ToaXml {
     }
 
     public static class Body implements Serializable {
+        public String rtncode;    //业务层面-返回代码
+        public String rtnmsg;     //业务层面-返回信息
         public String resultcode;    //结果响应码 0-未处理 1-成功 2-失败  3-不明
+
+        public String getRtncode() {
+            return rtncode;
+        }
+
+        public void setRtncode(String rtncode) {
+            this.rtncode = rtncode;
+        }
+
+        public String getRtnmsg() {
+            return rtnmsg;
+        }
+
+        public void setRtnmsg(String rtnmsg) {
+            this.rtnmsg = rtnmsg;
+        }
 
         public String getResultcode() {
             return resultcode;

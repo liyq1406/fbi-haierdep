@@ -40,9 +40,27 @@ public class ToaXml9101104 extends ToaXml {
     }
 
     public static class Body implements Serializable {
+        public String rtncode;    //业务层面-返回代码
+        public String rtnmsg;     //业务层面-返回信息
         public String pagesum;    //总页数
         @XStreamImplicit
         public List<BodyDetail> records;
+
+        public String getRtncode() {
+            return rtncode;
+        }
+
+        public void setRtncode(String rtncode) {
+            this.rtncode = rtncode;
+        }
+
+        public String getRtnmsg() {
+            return rtnmsg;
+        }
+
+        public void setRtnmsg(String rtnmsg) {
+            this.rtnmsg = rtnmsg;
+        }
 
         public String getPagesum() {
             return pagesum;
