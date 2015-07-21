@@ -88,6 +88,7 @@ public class ToaXml9101104 extends ToaXml {
         public String schpaydate;   //计划还款日
         public String channel;      //代扣渠道编号 01-银联 02-通联
         public String resultcode;   //代扣结果响应码 0-未处理 1-成功 2-失败  3-不明
+        public String resultmsg;    //代扣结果响应信息
 
         public String getIouno() {
             return iouno;
@@ -135,6 +136,14 @@ public class ToaXml9101104 extends ToaXml {
 
         public void setResultcode(String resultcode) {
             this.resultcode = resultcode;
+        }
+
+        public String getResultmsg() {
+            return resultmsg;
+        }
+
+        public void setResultmsg(String resultmsg) {
+            this.resultmsg = resultmsg;
         }
     }
 

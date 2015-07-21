@@ -70,6 +70,8 @@ public class AppRouteBuilder extends RouteBuilder {
                 .to("jms:queue:queue.dep.object.out")
                 .when(simple("${header.JMSX_CHANNELID} == '910'"))
                 .to("jms:queue:queue.dep.object.out")
+                .when(simple("${header.JMSX_CHANNELID} == '91001'"))
+                .to("jms:queue:queue.dep.object.out")
                 .otherwise()
                 .to("jms:queue:queue.dep.route.error");
     }

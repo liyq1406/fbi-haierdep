@@ -23,6 +23,8 @@ public class CoreRouteBuilder extends RouteBuilder {
                 .to("jms:queue:queue.dep.core.sbs.in")
                 .when(simple("${header.JMSX_CHANNELID} == '910'"))
                 .to("jms:queue:queue.dep.core.fip.in")
+                .when(simple("${header.JMSX_CHANNELID} == '91001'"))
+                .to("jms:queue:queue.dep.core.fip.rfm.in")
                 .when(simple("${header.JMSX_CHANNELID} == '100'"))
                 .to("jms:queue:queue.dep.core.unionpay.in")
                 .when(simple("${header.JMSX_CHANNELID} == '120'"))
