@@ -33,6 +33,8 @@ public class CoreRouteBuilder extends RouteBuilder {
                 .to("jms:queue:queue.dep.core.eai.in")
                 .when(simple("${header.JMSX_CHANNELID} == '920'"))
                 .to("jms:queue:queue.dep.core.mbp.in")
+                .when(simple("${header.JMSX_CHANNELID} == '800'"))
+                .to("jms:queue:queue.dep.core.rfm.in")
                 .otherwise()
                 .to("jms:queue:queue.dep.route.error");
 
@@ -72,6 +74,12 @@ public class CoreRouteBuilder extends RouteBuilder {
                 .to("jms:queue:queue.dep.core.mbp.out");
         from("jms:queue:queue.dep.core.mbp.out").to("jms:queue:queue.dep.core.out");
 
+        //taan fdc
+        from("jms:queue:queue.dep.core.rfm.in?concurrentConsumers=20")
+                .process(new Core800Processor())
+                .to("jms:queue:queue.dep.core.rfm.out");
+        from("jms:queue:queue.dep.core.rfm.out").to("jms:queue:queue.dep.core.out");
+
         // fip
         /*
         fip监听queue.dep.core.fip.in队列，返回queue.dep.core.fip.out队列
@@ -80,7 +88,7 @@ public class CoreRouteBuilder extends RouteBuilder {
         from("jms:queue:queue.dep.core.fip.out").to("jms:queue:queue.dep.core.out");
 
         from("jms:queue:queue.dep.core.out").to("jms:queue:queue.dep.app.out");
-        
+
     }
 
 }

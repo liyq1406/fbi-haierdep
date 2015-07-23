@@ -46,7 +46,7 @@ public class T120011Tia {
 
     @Override
     public String toString() {
-        XmlFriendlyReplacer replacer = new XmlFriendlyReplacer("$", "_");
+        XmlFriendlyReplacer replacer = new XmlFriendlyReplacer("__", "_");
         HierarchicalStreamDriver hierarchicalStreamDriver = new XppDriver(replacer);
         XStream xs = new XStream(hierarchicalStreamDriver);
         xs.processAnnotations(T120011Tia.class);

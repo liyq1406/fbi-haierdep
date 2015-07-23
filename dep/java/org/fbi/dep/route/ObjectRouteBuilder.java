@@ -1,11 +1,10 @@
 package org.fbi.dep.route;
 
-import org.apache.camel.Exchange;
-import org.apache.camel.Processor;
 import org.apache.camel.builder.RouteBuilder;
 import org.fbi.dep.processor.TIA100Processor;
 import org.fbi.dep.processor.TIA120Processor;
 import org.fbi.dep.processor.TIA900Processor;
+import org.fbi.dep.processor.TIA800Processor;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -33,6 +32,9 @@ public class ObjectRouteBuilder extends RouteBuilder {
                 .when(simple("${header.JMSX_CHANNELID} == '120'"))
                 .process(new TIA120Processor())
                 .to("jms:queue:queue.dep.app.in")
+                .when(simple("${header.JMSX_CHANNELID} == '800'"))
+                .process(new TIA800Processor())
+                .to("jms:queue:queue.dep.app.in")
                 .when(simple("${header.JMSX_CHANNELID} == '900'"))
                 .process(new TIA900Processor())
                 .to("jms:queue:queue.dep.app.in")
@@ -49,6 +51,8 @@ public class ObjectRouteBuilder extends RouteBuilder {
                 .to("jms:queue:queue.dep.fcdep.qdzzjs")
                 .when(simple("${header.JMSX_SRCMSGFLAG} == 'haierfip.object'"))
                 .to("jms:queue:queue.dep.fcdep.haierfip")
+                .when(simple("${header.JMSX_SRCMSGFLAG} == 'haierrfm.object'"))
+                .to("jms:queue:queue.dep.fcdep.haierrfm")
                 .when(simple("${header.JMSX_SRCMSGFLAG} == 'fcdep.object'"))
                 .to("jms:queue:queue.dep.out.fcdep.object")
 
