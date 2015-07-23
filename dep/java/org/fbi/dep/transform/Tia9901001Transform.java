@@ -3,7 +3,7 @@ package org.fbi.dep.transform;
 import org.apache.commons.lang.StringUtils;
 import org.fbi.dep.model.base.TIA;
 import org.fbi.dep.model.txn.TIA1001001;
-import org.fbi.dep.model.txn.TIA8001001;
+import org.fbi.dep.model.txn.TIA9901001;
 import org.fbi.dep.util.DateUtils;
 import org.fbi.dep.util.PropertyManager;
 import org.fbi.endpoint.unionpay.txn.domain.T100001Tia;
@@ -21,16 +21,16 @@ import java.util.List;
  * Time: ÏÂÎç9:11
  * To change this template use File | Settings | File Templates.
  */
-public class TIA8001001Transform extends AbstractTiaTransform {
+public class Tia9901001Transform extends AbstractTiaTransform {
 
     @Override
     public String transform(TIA tia) {
-        TIA8001001 tia8001001 = (TIA8001001) tia;
+        TIA9901001 tia8001001 = (TIA9901001) tia;
 
         return convertTo800001Str(tia8001001);
     }
 
-    private String convertTo800001Str(TIA8001001 tia8001001) {
+    private String convertTo800001Str(TIA9901001 tia8001001) {
         /*T100001Tia tia = new T100001Tia();
         tia.INFO.TRX_CODE = "100001";
         tia.INFO.LEVEL = "5";

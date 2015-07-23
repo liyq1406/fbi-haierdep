@@ -14,7 +14,7 @@ import java.math.BigDecimal;
  * Time: ионГ11:59
  * To change this template use File | Settings | File Templates.
  */
-public class TOA8001001Transform extends AbstractToaTransform {
+public class Toa991001Transform extends AbstractToaTransform {
     @Override
     public TOA1001001 transform(String datagram, String txCode) {
 
