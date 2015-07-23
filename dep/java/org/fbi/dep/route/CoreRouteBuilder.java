@@ -82,7 +82,19 @@ public class CoreRouteBuilder extends RouteBuilder {
         from("jms:queue:queue.dep.core.fip.out").to("jms:queue:queue.dep.core.out");
 
         from("jms:queue:queue.dep.core.out").to("jms:queue:queue.dep.app.out");
-        
+
+        // rfm
+        /*
+        rfm监听queue.dep.core.rfm.in队列，返回queue.dep.core.rfm.out队列
+        rfm充当Core910Processor的角色
+         */
+        from("jms:queue:queue.dep.core.rfm.out").to("jms:queue:queue.dep.core.out");
+
+        from("jms:queue:queue.dep.core.out").to("jms:queue:queue.dep.app.out");
+
+        from("jms:queue:queue.rfm.dep")
+                .process(new TIARFMProcessor())
+                .to("jms:queue:queue.dep.rfm");
     }
 
 }
