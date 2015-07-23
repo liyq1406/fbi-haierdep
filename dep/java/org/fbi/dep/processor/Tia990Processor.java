@@ -15,9 +15,9 @@ import org.slf4j.LoggerFactory;
  * Time: ÏÂÎç9:27
  * To change this template use File | Settings | File Templates.
  */
-public class Tia990Processor implements Processor {
+public class TIA990Processor implements Processor {
 
-    private static Logger logger = LoggerFactory.getLogger(Tia990Processor.class);
+    private static Logger logger = LoggerFactory.getLogger(TIA990Processor.class);
 
     @Override
     public void process(Exchange exchange) throws Exception {
@@ -26,11 +26,9 @@ public class Tia990Processor implements Processor {
         // TODO ADD
         if (msgBody instanceof TIA9901001) {
             TIA9901001 tia9901001 = (TIA9901001) msgBody;
-//            exchange.getOut().setHeader("REQ_TXN_CODE", "1003001");
-            datagram = new Tia9901001Transform().transform(tia9901001);
+            datagram = new Tia9901001ToStr().transform(tia9901001);
         } else if (msgBody instanceof TIA1001001) {
-            TIA1001001 tia1001001 = (TIA1001001) msgBody;
-            datagram = new TIA1001001Transform().transform(tia1001001);
+
         }
         exchange.getOut().setBody(datagram);
 

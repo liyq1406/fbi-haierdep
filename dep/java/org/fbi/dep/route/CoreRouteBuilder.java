@@ -85,7 +85,7 @@ public class CoreRouteBuilder extends RouteBuilder {
 
         // rfm
         from("jms:queue:queue.dep.core.fip.rfm.in")
-                .process(new Tia990Processor())
+                .process(new TIA990Processor())
                 .to("jms:queue:queue.dep.rfm");
     }
 
