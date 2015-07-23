@@ -5,15 +5,16 @@ import com.thoughtworks.xstream.annotations.XStreamAlias;
 import com.thoughtworks.xstream.io.xml.DomDriver;
 import org.fbi.dep.model.base.TiaXml;
 import org.fbi.dep.model.base.TiaXmlHttpInfo;
+
 import java.io.Serializable;
 
 /**
- * Created by XIANGYANG on 2015-6-2.
- * 查询建行到账明细-请求报文
+ * Created by XIANGYANG on 2015-6-30.
+ * 代扣结果查询-批量模式-请求报文
  */
 
 @XStreamAlias("root")
-public class TiaXml9109003 extends TiaXml {
+public class TiaXml9101104 extends TiaXml {
     public TiaXmlHttpInfo info;
     public Body body;
 
@@ -34,28 +35,10 @@ public class TiaXml9109003 extends TiaXml {
     }
 
     public static class Body implements Serializable {
+        public String startdate;      //起始日期
+        public String enddate;        //结束日期
         public String pagenum;        //请求页码
-        public String pagesize;       //每页记录数
-        public String startdate;      //交易起始日期
-        public String enddate;        //交易结束日期
-        public String acctid;         //银行账户
-        public String reserve;        //保留域
-
-        public String getPagenum() {
-            return pagenum;
-        }
-
-        public void setPagenum(String pagenum) {
-            this.pagenum = pagenum;
-        }
-
-        public String getPagesize() {
-            return pagesize;
-        }
-
-        public void setPagesize(String pagesize) {
-            this.pagesize = pagesize;
-        }
+        public String pagesize;       //页面记录数
 
         public String getStartdate() {
             return startdate;
@@ -73,27 +56,27 @@ public class TiaXml9109003 extends TiaXml {
             this.enddate = enddate;
         }
 
-        public String getAcctid() {
-            return acctid;
+        public String getPagenum() {
+            return pagenum;
         }
 
-        public void setAcctid(String acctid) {
-            this.acctid = acctid;
+        public void setPagenum(String pagenum) {
+            this.pagenum = pagenum;
         }
 
-        public String getReserve() {
-            return reserve;
+        public String getPagesize() {
+            return pagesize;
         }
 
-        public void setReserve(String reserve) {
-            this.reserve = reserve;
+        public void setPagesize(String pagesize) {
+            this.pagesize = pagesize;
         }
     }
 
     @Override
     public TiaXml getTia(String xml) {
         XStream xs = new XStream(new DomDriver());
-        xs.processAnnotations(TiaXml9109003.class);
-        return (TiaXml9109003) xs.fromXML(xml);
+        xs.processAnnotations(TiaXml9101104.class);
+        return (TiaXml9101104) xs.fromXML(xml);
     }
 }

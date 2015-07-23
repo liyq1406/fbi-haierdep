@@ -39,6 +39,8 @@ public class ObjectRouteBuilder extends RouteBuilder {
                 .process(new TIA900Processor())
                 .to("jms:queue:queue.dep.app.in")
                 .when(simple("${header.JMSX_CHANNELID} == '910'"))
+                .to("jms:queue:queue.dep.app.in")
+                .when(simple("${header.JMSX_CHANNELID} == '91001'"))
                 .to("jms:queue:queue.dep.app.in");
 
         from("jms:queue:queue.dep.object.out")

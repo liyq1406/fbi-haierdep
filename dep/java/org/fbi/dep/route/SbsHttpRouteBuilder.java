@@ -1,5 +1,6 @@
 package org.fbi.dep.route;
 
+import com.thoughtworks.xstream.converters.ConversionException;
 import org.apache.camel.Exchange;
 import org.apache.camel.Processor;
 import org.apache.camel.builder.RouteBuilder;
@@ -56,8 +57,9 @@ public class SbsHttpRouteBuilder extends RouteBuilder {
                                 String txnTime = null;
                                 String userKey = null;
                                 String rtnXml = null;
+                                NettyChannelBufferStreamCache cf = null;
                                 try {
-                                    NettyChannelBufferStreamCache cf = (NettyChannelBufferStreamCache) exchange.getIn().getBody();
+                                    cf = (NettyChannelBufferStreamCache) exchange.getIn().getBody();
                                     StringBuffer sb = new StringBuffer();
                                     int l;
                                     byte[] tmp = new byte[2048];
@@ -65,7 +67,7 @@ public class SbsHttpRouteBuilder extends RouteBuilder {
                                         sb.append(new String(tmp, 0, l));
                                     }
                                     byte[] bytes = sb.toString().getBytes();
-                                    logger.info("【SbsHttpRouteBuilder 接收到报文】" + new String(bytes));
+                                    logger.info("【SbsHttpRouteBuilder 接收到报文】" + sb.toString());
 
                                     //客户端请求报文格式为(Encrypt-MD5:32字节MD5值+回车换行+XML报文体)
                                     //1.解析mac
@@ -114,7 +116,7 @@ public class SbsHttpRouteBuilder extends RouteBuilder {
                                     //3.MD5校验
                                     // MAC(32位，以Message Data部分 +  USER_ID + USER_KEY）为依据产生的用ASC字符表示的16进制MD5值。其中USER_KEY由财务公司针对每个用户单独下发。
                                     userKey = PropertyManager.getProperty("wsys.userkey." + userId);
-                                    String md5 = MD5Helper.getMD5String(xmlMsgData + userId + userKey);
+                                    String md5 = MD5Helper.getMD5String(userId + userKey + xmlMsgData);
                                     // 验证失败 返回验证失败信息
                                     if (!md5.equalsIgnoreCase(mac)) {
                                         logger.info("用户标识：" + userId + " " + userKey + " 交易时间:" + txnDate + " " + txnTime);
@@ -156,7 +158,7 @@ public class SbsHttpRouteBuilder extends RouteBuilder {
                                         AbstractToaBytesTransform toaTransform = (AbstractToaBytesTransform) Class.forName("org.fbi.dep.transform.ToaXml" + txnCode + "Transform").newInstance();
                                         rtnXml = toaTransform.run(sbsResBytes);
                                     }
-                                    rtnmac = MD5Helper.getMD5String(rtnXml + userId + userKey);
+                                    rtnmac = MD5Helper.getMD5String(userId + userKey + rtnXml);
                                     logger.info("【SbsHttpRouteBuilder 发送报文】" + new String((rtnmac + "\n" + rtnXml).getBytes("GBK")));
                                     exchange.getOut().setBody((rtnmac + "\n" + rtnXml).getBytes("GBK"));
                                 } catch (Exception e) {
@@ -169,13 +171,12 @@ public class SbsHttpRouteBuilder extends RouteBuilder {
                                     errXmlHttp.getInfo().setTxndate(txnDate);
                                     errXmlHttp.getInfo().setTxntime(txnTime);
 
-                                    if (txnCode == null) {
-                                        String errMsg = "报文解析失败，无法解析到交易码.";
-                                        logger.error(errMsg, e);
+                                    if (txnCode == null|| ConversionException.class.equals(e.getClass())) {
+                                        logger.error("报文解析失败", e);
                                         errXmlHttp.getInfo().setRtncode(TxnRtnCode.MSG_ANALYSIS_ILLEGAL.getCode());
-                                        errXmlHttp.getInfo().setRtnmsg(errMsg);
+                                        errXmlHttp.getInfo().setRtnmsg(TxnRtnCode.MSG_ANALYSIS_ILLEGAL.getTitle());
                                         errXmlHttp.getBody().setRtncode(TxnRtnCode.MSG_ANALYSIS_ILLEGAL.getCode());
-                                        errXmlHttp.getBody().setRtnmsg(errMsg);
+                                        errXmlHttp.getBody().setRtnmsg(TxnRtnCode.MSG_ANALYSIS_ILLEGAL.getTitle());
                                     } else {
                                         String exmsg = e.getMessage();
                                         logger.error("交易异常", e);
@@ -198,6 +199,8 @@ public class SbsHttpRouteBuilder extends RouteBuilder {
                                     rtnmac = MD5Helper.getMD5String(rtnXml + userId + userKey);
                                     logger.info("【SbsHttpRouteBuilder 发送报文】" + new String((rtnmac + "\n" + rtnXml).getBytes("GBK")));
                                     exchange.getOut().setBody((rtnmac + "\n" + rtnXml).getBytes("GBK"));
+                                }finally {
+                                    cf.close();
                                 }
                             }
                         }

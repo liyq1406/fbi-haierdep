@@ -13,5 +13,4 @@ public class ABaseTiaHeader {
     public String USER_PASS = "";
     public String REQ_SN = "";
     public String SIGNED_MSG = "";
-
 }
