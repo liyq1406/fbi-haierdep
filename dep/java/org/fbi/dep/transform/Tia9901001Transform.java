@@ -15,10 +15,11 @@ import java.util.Arrays;
 import java.util.List;
 
 /**
+ * 泰安房产中心资金监管系统—建立监管
  * Created by IntelliJ IDEA.
- * User: zhangxiaobo
- * Date: 12-2-13
- * Time: 下午9:11
+ * User: hanjianlong
+ * Date: 2015-07-24
+ * Time: 9:11
  * To change this template use File | Settings | File Templates.
  */
 public class Tia9901001Transform extends AbstractTiaTransform {
@@ -30,7 +31,7 @@ public class Tia9901001Transform extends AbstractTiaTransform {
     }
 
     private String convertBeanToStr(TIA9901001 tia9901001Para) {
-        /*01	交易代码	    4	2001
+        /*01	交易代码	    4	1001
           02	监管银行代码	2
           03	城市代码	    6
           04	监管申请编号    14
@@ -61,7 +62,7 @@ public class Tia9901001Transform extends AbstractTiaTransform {
     }
     private TIA9901001 convertStrToBean(String strPara) {
         TIA9901001 tia9901001Para=new TIA9901001();
-        /*01	交易代码	    4	2001
+        /*01	交易代码	    4	1001
           02	监管银行代码	2
           03	城市代码	    6
           04	监管申请编号    14
