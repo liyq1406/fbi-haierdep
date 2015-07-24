@@ -24,7 +24,7 @@ public class CoreRouteBuilder extends RouteBuilder {
                 .when(simple("${header.JMSX_CHANNELID} == '910'"))
                 .to("jms:queue:queue.dep.core.fip.in")
                 .when(simple("${header.JMSX_CHANNELID} == '990'"))
-                .to("jms:queue:queue.dep.core.fip.rfm.in")
+                .to("jms:queue:queue.dep.core.rfm.in")
                 .when(simple("${header.JMSX_CHANNELID} == '100'"))
                 .to("jms:queue:queue.dep.core.unionpay.in")
                 .when(simple("${header.JMSX_CHANNELID} == '120'"))
@@ -84,9 +84,10 @@ public class CoreRouteBuilder extends RouteBuilder {
         from("jms:queue:queue.dep.core.out").to("jms:queue:queue.dep.app.out");
 
         // rfm
-        from("jms:queue:queue.dep.core.fip.rfm.in")
-                .process(new TIA990Processor())
-                .to("jms:queue:queue.dep.rfm");
+        from("jms:queue:queue.dep.core.rfm.in")
+                .process(new Core990Processor())
+                .to("jms:queue:queue.dep.core.out");
+        from("jms:queue:queue.dep.core.out").to("jms:queue:queue.dep.app.out");
     }
 
 }
