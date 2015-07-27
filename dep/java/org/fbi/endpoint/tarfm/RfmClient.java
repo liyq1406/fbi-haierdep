@@ -29,25 +29,44 @@ public class RfmClient {
 
         InputStream is = socket.getInputStream();
         BufferedInputStream bis = new BufferedInputStream(is);
-        byte[] byteBuffer = new byte[16];
-        bis.read(byteBuffer);
-        String lengthStr = new String(byteBuffer, 0, 16);
-        logger.info("报文正文长度: " + lengthStr);
-        int strLength = 256;
+
+        byte[] headerBytes = new byte[10];
+        is.read(headerBytes);
+        byte[] lengthBytes = new byte[6];
+        System.arraycopy(headerBytes, 0, lengthBytes, 0, 6);
+        int strLength = Integer.parseInt(new String(lengthBytes).trim());
+        logger.info("RFM报文正文长度: " + strLength);
         byte[] strBytes = new byte[strLength];
-        bis.read(strBytes);
-        String resDatagram = new String(byteBuffer) + new String(strBytes);
+        int available = 0;
+        int readIndex = 0;
+
+        while (readIndex < strLength) {
+            int toRead = 0;
+            available = is.available();
+            if (available == 0) continue;
+            if (strLength - readIndex >= available) {
+                toRead = available;
+            } else {
+                toRead = strLength - readIndex;
+            }
+//            logger.info("toRead:" + toRead);
+            byte[] buf = new byte[toRead];
+            is.read(buf);
+            System.arraycopy(buf, 0, strBytes, readIndex, buf.length);
+            readIndex += toRead;
+        }
+        String resDatagram = new String(headerBytes) + new String(strBytes);
         is.close();
         bis.close();
         socket.close();
         long endTime = System.currentTimeMillis();
-        logger.info("耗时：" + (endTime - startTime));
+        logger.info("耗时：" + (endTime - startTime)+"ms");
         return resDatagram;
     }
 
     public static void main(String[] args) throws Exception{
-        String reqmsg = "123456|9988|555555     |8899|";
+        String reqmsg = "123456|9988|555555     |汉字会不会乱码99|";
         String rtnmsg = new RfmClient().processTxn(reqmsg);
-        System.out.println(rtnmsg);
+        System.out.println("房产中心返回报文："+rtnmsg);
     }
 }

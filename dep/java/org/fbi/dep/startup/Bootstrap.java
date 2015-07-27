@@ -31,7 +31,7 @@ public class Bootstrap {
 //    private static String UNIONPAY_SBS_SOCKET_PORT = PropertyManager.getProperty("dep.localhost.unionpay.sbs.port");
 //    private static String UNIONPAY_SOCKET_PORT = PropertyManager.getProperty("dep.localhost.unionpay.port");
     private static String SBS_SOCKET_PORT = PropertyManager.getProperty("dep.localhost.sbs.port");
-    private static String RFM_SOCKET_PORT = PropertyManager.getProperty("dep.localhost.rfm.port");
+//    private static String RFM_SOCKET_PORT = PropertyManager.getProperty("dep.localhost.rfm.port");
     private static String SMS_SOCKET_PORT = PropertyManager.getProperty("dep.localhost.sms.port");
     private static String SBS_HTTP_PORT = PropertyManager.getProperty("dep.localhost.sbs.http.port");
 
@@ -62,7 +62,7 @@ public class Bootstrap {
 //        RouteBuilder upSktRouteBuilder = new PayoutDirectSktRouteBuilder(UNIONPAY_SOCKET_PORT);
 //        RouteBuilder upSbsRouteBuilder = new PayoutIndirectSktRouteBuilder(UNIONPAY_SBS_SOCKET_PORT);
         RouteBuilder sbsSktRouteBuilder = new SbsSktRouteBuilder(SBS_SOCKET_PORT);
-        RouteBuilder rfmSktRouteBuilder = new RfmSktRouteBuilder(RFM_SOCKET_PORT);
+//        RouteBuilder rfmSktRouteBuilder = new RfmSktRouteBuilder(RFM_SOCKET_PORT);
         RouteBuilder smsSktRouteBuilder = new SmsSktRouteBuilder(SMS_SOCKET_PORT);
         RouteBuilder sbsHttpRouteBuilder = new SbsHttpRouteBuilder(SBS_HTTP_PORT);
         try {
@@ -75,7 +75,7 @@ public class Bootstrap {
 //            context.addRoutes(upSktRouteBuilder);
 //            context.addRoutes(upSbsRouteBuilder);
             context.addRoutes(sbsSktRouteBuilder);
-            context.addRoutes(rfmSktRouteBuilder);
+//            context.addRoutes(rfmSktRouteBuilder);
             context.addRoutes(smsSktRouteBuilder);
             context.addRoutes(sbsHttpRouteBuilder);
             logger.info("CamelContext¿ªÊ¼Æô¶¯...");

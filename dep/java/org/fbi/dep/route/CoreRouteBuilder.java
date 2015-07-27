@@ -83,10 +83,7 @@ public class CoreRouteBuilder extends RouteBuilder {
 
         from("jms:queue:queue.dep.core.out").to("jms:queue:queue.dep.app.out");
 
-        // rfm
-        from("jms:queue:queue.dep.core.fip.rfm.in")
-                .process(new Tia990Processor())
-                .to("jms:queue:queue.dep.rfm");
+
     }
 
 }
