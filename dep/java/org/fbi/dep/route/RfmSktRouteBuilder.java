@@ -10,7 +10,9 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 /**
- * 短信平台
+ * 泰安房产资金监管
+ * User: hanjianlong
+ * Date: 2015-07-16
  */
 public class RfmSktRouteBuilder extends RouteBuilder {
 
