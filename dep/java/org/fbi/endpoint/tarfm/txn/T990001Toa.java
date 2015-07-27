@@ -18,7 +18,7 @@ import java.util.List;
  * To change this template use File | Settings | File Templates.
  */
 @XStreamAlias("GZELINK")
-public class T800001Toa {
+public class T990001Toa {
     public ToaHeader INFO;
     public Body BODY;
 
@@ -41,14 +41,14 @@ public class T800001Toa {
         XmlFriendlyReplacer replacer = new XmlFriendlyReplacer("$", "_");
         HierarchicalStreamDriver hierarchicalStreamDriver = new XppDriver(replacer);
         XStream xs = new XStream(hierarchicalStreamDriver);
-        xs.processAnnotations(T800001Toa.class);
+        xs.processAnnotations(T990001Toa.class);
         return "<?xml version=\"1.0\" encoding=\"GBK\"?>" + "\n" + xs.toXML(this);
     }
 
-    public static T800001Toa getToa(String xml) {
+    public static T990001Toa getToa(String xml) {
         XStream xs = new XStream(new DomDriver());
-        xs.processAnnotations(T800001Toa.class);
-        return (T800001Toa) xs.fromXML(xml);
+        xs.processAnnotations(T990001Toa.class);
+        return (T990001Toa) xs.fromXML(xml);
     }
 
     public static void main(String[] argv) {
@@ -78,11 +78,11 @@ public class T800001Toa {
                 "  </BODY>\n" +
                 "</GZELINK>";
 
-        T800001Toa toa = new T800001Toa();
+        T990001Toa toa = new T990001Toa();
 
         XStream xs = new XStream(new DomDriver());
-        xs.processAnnotations(T800001Toa.class);
-        toa = (T800001Toa) xs.fromXML(xml);
+        xs.processAnnotations(T990001Toa.class);
+        toa = (T990001Toa) xs.fromXML(xml);
 
         System.out.println(toa);
     }

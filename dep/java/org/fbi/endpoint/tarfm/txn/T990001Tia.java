@@ -13,7 +13,7 @@ import org.fbi.endpoint.unionpay.core.BaseTiaHeader;
  * Time: 上午9:27
  * To change this template use File | Settings | File Templates.
  */
-public class T800001Tia {
+public class T990001Tia {
     public TiaHeader INFO = new TiaHeader();
     public Body BODY = new Body();
 
@@ -60,22 +60,38 @@ public class T800001Tia {
 
     @Override
     public String toString() {
-        XmlFriendlyReplacer replacer = new XmlFriendlyReplacer("$", "_");
+        /*XmlFriendlyReplacer replacer = new XmlFriendlyReplacer("$", "_");
         HierarchicalStreamDriver hierarchicalStreamDriver = new XppDriver(replacer);
         XStream xs = new XStream(hierarchicalStreamDriver);
-        xs.processAnnotations(T800001Tia.class);
-        return xs.toXML(this);
+        xs.processAnnotations(T990001Tia.class);
+        return xs.toXML(this);*/
+        String sendStr = getLeftSpaceStr("0532",6)+"|"+getLeftSpaceStr(this.INFO.TRX_CODE,20)+"|"+
+                getLeftSpaceStr(this.INFO.VERSION,2)+"|"+
+                getLeftSpaceStr(this.INFO.REQ_SN,14)+"|"+"bbbbbbbbbboooooooody"+"|";
+        return  sendStr;
     }
 
+    //左对齐 不够的又补空格
+    public String getLeftSpaceStr(String strValue, int totleBytesLen) {
+        if(strValue == null) strValue = "";
+        if (strValue.getBytes().length < totleBytesLen) {
+            int spacelen = totleBytesLen - strValue.getBytes().length;
+            for (int i = 0; i < spacelen; i++) {
+                strValue += " ";
+            }
+        }else if (strValue.getBytes().length > totleBytesLen){
+            throw new RuntimeException("bean转换成String长度超过规定长度！");
+        }
+        return strValue;
+    }
     public static void main(String[] argv) {
-        T800001Tia tia = new T800001Tia();
+        T990001Tia tia = new T990001Tia();
         tia.INFO = new TiaHeader();
         tia.INFO.TRX_CODE = "800001";
         tia.INFO.REQ_SN = "" + System.currentTimeMillis();
 
         tia.BODY = new Body();
         tia.BODY.TRANS_SUM = new Body.BodyHeader();
-
         System.out.println(tia.toString());
     }
 }
