@@ -25,12 +25,12 @@ public class Tia9901001Transform extends AbstractTiaTransform {
 
     @Override
     public String transform(TIA tia) {
-        TIA9901001 tia9901001 = (TIA9901001) tia;
+        TIA9901001 tia8001001 = (TIA9901001) tia;
 
-        return convertTo990001Str(tia9901001);
+        return convertTo800001Str(tia8001001);
     }
 
-    private String convertTo990001Str(TIA9901001 tia9901001) {
+    private String convertTo800001Str(TIA9901001 tia8001001) {
         /*T100001Tia tia = new T100001Tia();
         tia.INFO.TRX_CODE = "100001";
         tia.INFO.LEVEL = "5";
