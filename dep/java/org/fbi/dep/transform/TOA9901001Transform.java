@@ -4,10 +4,11 @@ import org.fbi.dep.model.base.TOA;
 import org.fbi.dep.model.txn.TOA9901001;
 
 /**
+ * 泰安房产资金监管系统，建立监管翻译
  * Created by IntelliJ IDEA.
- * User: zhangxiaobo
- * Date: 12-2-14
- * Time: 上午11:59
+ * User: hanjianlong
+ * Date: 15-6-30
+ * Time: 下午2:12
  * To change this template use File | Settings | File Templates.
  */
 public class TOA9901001Transform extends AbstractToaTransform {

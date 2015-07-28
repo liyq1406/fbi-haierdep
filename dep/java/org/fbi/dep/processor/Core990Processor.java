@@ -4,8 +4,10 @@ import org.apache.camel.Exchange;
 import org.apache.camel.Message;
 import org.apache.camel.Processor;
 import org.apache.commons.lang.StringUtils;
+import org.fbi.dep.enums.EnuTaTxCode;
 import org.fbi.dep.model.base.TIA;
 import org.fbi.dep.transform.Tia9901001Transform;
+import org.fbi.dep.transform.Tia9901002Transform;
 import org.fbi.endpoint.tarfm.util.MsgHelper;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -37,8 +39,15 @@ public class Core990Processor implements Processor {
 
         String  msg = inMessage.getBody(String.class);
         logger.info("[RFM] 请求报文内容： " + msg);
-        Tia9901001Transform tia9901001TransformTemp=new Tia9901001Transform();
-        String strTemp=tia9901001TransformTemp.transform((TIA)inMessage.getBody());
+        String strTemp="";
+        TIA tiaTemp=(TIA) inMessage.getBody();
+        if(EnuTaTxCode.TRADE_1001.getCode().equals(tiaTemp.getHeader().TX_CODE)) {
+            Tia9901001Transform tia9901001TransformTemp = new Tia9901001Transform();
+            strTemp = tia9901001TransformTemp.transform(tiaTemp);
+        }else if(EnuTaTxCode.TRADE_1002.getCode().equals(tiaTemp.getHeader().TX_CODE)){
+            Tia9901002Transform tia9901002TransformTemp = new Tia9901002Transform();
+            strTemp = tia9901002TransformTemp.transform(tiaTemp);
+        }
         exchange.getOut().setBody(strTemp);
     }
 }
