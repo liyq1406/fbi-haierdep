@@ -68,7 +68,7 @@ public class AppRouteBuilder extends RouteBuilder {
                 .to("jms:queue:queue.dep.object.out")
                 .when(simple("${header.JMSX_CHANNELID} == '990'"))
                 .process(new TOA990Processor())
-				.to("jms:queue:queue.dep.object.out")
+				.to("jms:queue:queue.dep.core.rfm.out")
                 .when(simple("${header.JMSX_CHANNELID} == '900'"))
                 .process(new TOA900Processor())
                 .to("jms:queue:queue.dep.object.out")

@@ -90,20 +90,6 @@ public class ClientRouteBuilder extends RouteBuilder {
                 })
                 .to("jms:queue:queue.dep.app.in");
 
-        from("jms:queue:queue.dep.core.haierrfm.fcdep")
-                .process(new Processor() {
-                    @Override
-                    public void process(Exchange exchange) throws Exception {
-                        exchange.getOut().setHeader("JMSCorrelationID", exchange.getIn().getMessageId());
-                        exchange.getOut().setHeader("JMSX_CHANNELID", exchange.getIn().getHeader("JMSX_CHANNELID"));
-                        exchange.getOut().setHeader("JMSX_APPID", exchange.getIn().getHeader("JMSX_APPID"));
-                        exchange.getOut().setHeader("JMSX_BIZID", exchange.getIn().getHeader("JMSX_BIZID"));
-                        exchange.getOut().setHeader("JMSX_SRCMSGFLAG", "haierrfm.app");
-                        exchange.getOut().setBody(exchange.getIn().getBody());
-                    }
-                })
-                .to("jms:queue:queue.dep.app.in");
-
         // 2012-06-06
         from("jms:queue:queue.dep.core.mbp.fcdep?concurrentConsumers=20")
                 .process(new Processor() {

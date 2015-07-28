@@ -14,48 +14,29 @@ import java.net.Socket;
 public class RfmSktClient {
     private static Logger logger = LoggerFactory.getLogger(RfmSktClient.class);
 
-    public static final String HOSTIP = PropertyManager.getProperty("TARFM_HOSTIP");
-    public static final int HOSTPORT = PropertyManager.getIntProperty("TARFM_HOSTPORT");
-    public static final int TIMEOUT = PropertyManager.getIntProperty("TARFM_TIMEOUT");
+    public static final String HOSTIP = PropertyManager.getProperty("socket.rfm.ip");
+    public static final int HOSTPORT = PropertyManager.getIntProperty("socket.rfm.port");
+    public static final int TIMEOUT = PropertyManager.getIntProperty("socket.rfm.timeout");
 
     public String processTxn(String datagram) throws Exception {
+        // 开始执行时间
         long startTime = System.currentTimeMillis();
+        // 定义SOCKET
         Socket socket = new Socket(HOSTIP, HOSTPORT);
         socket.setKeepAlive(true);
         socket.setSoTimeout(TIMEOUT);
         OutputStream os = socket.getOutputStream();
+        // 发送数据包
         os.write(datagram.getBytes("GB2312"));
         os.flush();
 
+        // 接收返回的数据
         InputStream is = socket.getInputStream();
         BufferedInputStream bis = new BufferedInputStream(is);
-
-        byte[] headerBytes = new byte[10];
-        is.read(headerBytes);
-        byte[] lengthBytes = new byte[6];
-        System.arraycopy(headerBytes, 0, lengthBytes, 0, 6);
-        int strLength = Integer.parseInt(new String(lengthBytes).trim());
-        logger.info("RFM报文正文长度: " + strLength);
-        byte[] strBytes = new byte[strLength];
-        int available = 0;
-        int readIndex = 0;
-
-        while (readIndex < strLength) {
-            int toRead = 0;
-            available = is.available();
-            if (available == 0) continue;
-            if (strLength - readIndex >= available) {
-                toRead = available;
-            } else {
-                toRead = strLength - readIndex;
-            }
-//            logger.info("toRead:" + toRead);
-            byte[] buf = new byte[toRead];
-            is.read(buf);
-            System.arraycopy(buf, 0, strBytes, readIndex, buf.length);
-            readIndex += toRead;
-        }
-        String resDatagram = new String(headerBytes) + new String(strBytes);
+        // 输入流读取字节
+        byte[] msgBytes = new byte[5000];
+        bis.read(msgBytes);
+        String resDatagram = new String(msgBytes);
         is.close();
         bis.close();
         socket.close();

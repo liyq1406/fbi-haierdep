@@ -3,6 +3,7 @@ package org.fbi.dep.processor;
 import org.apache.camel.Exchange;
 import org.apache.camel.Message;
 import org.apache.camel.Processor;
+import org.apache.commons.lang.StringUtils;
 import org.fbi.dep.model.base.TIA;
 import org.fbi.dep.transform.Tia9901001Transform;
 import org.fbi.endpoint.tarfm.util.MsgHelper;
@@ -23,16 +24,21 @@ public class Core990Processor implements Processor {
         
         logger.info("------房产中心 核心报文处理------");
         Message inMessage = exchange.getIn();
-        String  msg = inMessage.getBody(String.class);
-        logger.info("[RFM] 请求报文内容： " + msg);
-
-        Tia9901001Transform tia9901001TransformTemp=new Tia9901001Transform();
-        String strTemp=tia9901001TransformTemp.transform((TIA)inMessage.getBody());
-
-        exchange.getOut().setHeader("JMSCorrelationID", inMessage.getHeader("JMSCorrelationID"));
+        String correlationID = inMessage.getHeader("JMSCorrelationID", String.class);
+        if (StringUtils.isEmpty(correlationID)) {
+            exchange.getOut().setHeader("JMSCorrelationID", inMessage.getMessageId());
+            logger.info("AppRouteBuilder JMSCorrelationID : " + inMessage.getMessageId());
+        } else {
+            exchange.getOut().setHeader("JMSCorrelationID", correlationID);
+        }
         exchange.getOut().setHeader("JMSX_APPID", inMessage.getHeader("JMSX_APPID"));
         exchange.getOut().setHeader("JMSX_CHANNELID", inMessage.getHeader("JMSX_CHANNELID"));
         exchange.getOut().setHeader("JMSX_SRCMSGFLAG", inMessage.getHeader("JMSX_SRCMSGFLAG"));
+
+        String  msg = inMessage.getBody(String.class);
+        logger.info("[RFM] 请求报文内容： " + msg);
+        Tia9901001Transform tia9901001TransformTemp=new Tia9901001Transform();
+        String strTemp=tia9901001TransformTemp.transform((TIA)inMessage.getBody());
         exchange.getOut().setBody(strTemp);
     }
 }
