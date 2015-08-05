@@ -2,7 +2,7 @@ package org.fbi.dep.transform;
 
 import org.apache.commons.lang.StringUtils;
 import org.fbi.dep.model.base.TIA;
-import org.fbi.dep.model.txn.TIA9901002;
+import org.fbi.dep.model.txn.Tia9901002;
 
 /**
  * 泰安房产中心资金监管系统—撤销监管
@@ -16,11 +16,11 @@ public class Tia9901002Transform extends AbstractTiaTransform {
 
     @Override
     public String transform(TIA tia) {
-        TIA9901002 tia9901002 = (TIA9901002) tia;
+        Tia9901002 tia9901002 = (Tia9901002) tia;
         return convertBeanToStr(tia9901002);
     }
 
-    private String convertBeanToStr(TIA9901002 tia9901002Para) {
+    private String convertBeanToStr(Tia9901002 tia9901002Para) {
           /*01	交易代码	    4	1002
           02	监管银行代码	2
           03	城市代码	    6
@@ -44,12 +44,12 @@ public class Tia9901002Transform extends AbstractTiaTransform {
                 StringUtils.rightPad(tia9901002Para.body.BRANCH_ID, 30, ' ')+"|"+
                 StringUtils.rightPad(tia9901002Para.header.USER_ID, 30, ' ')+"|"+
                 StringUtils.rightPad(tia9901002Para.body.INITIATOR, 1, ' ');
-        Integer intStrRtnLength=strRtn.length();
+        Integer intStrRtnLength=strRtn.replace("|","").length();
         strRtn= StringUtils.leftPad(intStrRtnLength.toString(),6, '0')+"|"+strRtn;
         return strRtn;
     }
-    private TIA9901002 convertStrToBean(String strPara) {
-        TIA9901002 tia9901002Para=new TIA9901002();
+    private Tia9901002 convertStrToBean(String strPara) {
+        Tia9901002 tia9901002Para=new Tia9901002();
         /*01	交易代码	    4	1002
           02	监管银行代码	2
           03	城市代码	    6

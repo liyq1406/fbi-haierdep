@@ -2,19 +2,7 @@ package org.fbi.dep.transform;
 
 import org.apache.commons.lang.StringUtils;
 import org.fbi.dep.model.base.TIA;
-import org.fbi.dep.model.base.TOA;
-import org.fbi.dep.model.txn.TIA1001001;
-import org.fbi.dep.model.txn.TIA9901001;
-import org.fbi.dep.model.txn.TOA9901001;
-import org.fbi.dep.util.DateUtils;
-import org.fbi.dep.util.PropertyManager;
-import org.fbi.endpoint.unionpay.txn.domain.T100001Tia;
-import org.fbi.endpoint.unionpay.txn.domain.T100004Tia;
-
-import java.math.BigDecimal;
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.List;
+import org.fbi.dep.model.txn.Tia9901001;
 
 /**
  * 泰安房产中心资金监管系统—建立监管
@@ -28,11 +16,11 @@ public class Tia9901001Transform extends AbstractTiaTransform {
 
     @Override
     public String transform(TIA tia) {
-        TIA9901001 tia9901001 = (TIA9901001) tia;
+        Tia9901001 tia9901001 = (Tia9901001) tia;
         return convertBeanToStr(tia9901001);
     }
 
-    private String convertBeanToStr(TIA9901001 tia9901001Para) {
+    private String convertBeanToStr(Tia9901001 tia9901001Para) {
         /*01	交易代码	    4	1001
           02	监管银行代码	2
           03	城市代码	    6
@@ -58,7 +46,7 @@ public class Tia9901001Transform extends AbstractTiaTransform {
                 StringUtils.rightPad(tia9901001Para.body.BRANCH_ID, 30, ' ')+"|"+
                 StringUtils.rightPad(tia9901001Para.header.USER_ID, 30, ' ')+"|"+
                 StringUtils.rightPad(tia9901001Para.body.INITIATOR, 1, ' ');
-        Integer intStrRtnLength=strRtn.length();
+        Integer intStrRtnLength=strRtn.replace("|","").length();
         strRtn= StringUtils.leftPad(intStrRtnLength.toString(),6, '0')+"|"+strRtn;
         return strRtn;
     }

@@ -2,13 +2,12 @@ package org.fbi.dep.route;
 
 import org.apache.camel.Exchange;
 import org.apache.camel.Processor;
-import org.apache.camel.RuntimeCamelException;
 import org.apache.camel.builder.RouteBuilder;
 import org.apache.commons.lang.StringUtils;
 import org.fbi.dep.processor.TOA100Processor;
 import org.fbi.dep.processor.TOA120Processor;
 import org.fbi.dep.processor.TOA900Processor;
-import org.fbi.dep.processor.TOA990Processor;
+import org.fbi.dep.processor.Toa990Processor;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -67,7 +66,7 @@ public class AppRouteBuilder extends RouteBuilder {
                 .process(new TOA120Processor())
                 .to("jms:queue:queue.dep.object.out")
                 .when(simple("${header.JMSX_CHANNELID} == '990'"))
-                .process(new TOA990Processor())
+                .process(new Toa990Processor())
 				.to("jms:queue:queue.dep.core.rfm.out")
                 .when(simple("${header.JMSX_CHANNELID} == '900'"))
                 .process(new TOA900Processor())
