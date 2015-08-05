@@ -19,9 +19,9 @@ import org.slf4j.LoggerFactory;
  * Time: обнГ9:51
  * To change this template use File | Settings | File Templates.
  */
-public class Toa990Processor implements Processor {
+public class TOA990Processor implements Processor {
 
-    private static Logger logger = LoggerFactory.getLogger(Toa990Processor.class);
+    private static Logger logger = LoggerFactory.getLogger(TOA990Processor.class);
 
     @Override
     public void process(Exchange exchange) throws Exception {
