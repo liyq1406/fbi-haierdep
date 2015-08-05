@@ -12,8 +12,7 @@ out/
 .metadata
 bin/
 tmp/
-test/*
-test/java/*
+
 *.tmp
 *.bak
 *.swp
