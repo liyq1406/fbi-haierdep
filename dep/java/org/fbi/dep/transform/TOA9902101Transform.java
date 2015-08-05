@@ -29,7 +29,7 @@ public class Toa9902101Transform extends AbstractToaTransform {
           06	收款单位账号	        30
           07	收款单位户名	        150
           08	项目名称	            128
-          09	开发企业名称	        256
+          09	开发企业名称	        255
           10    预售资金监管平台流水    16
         */
         /*错误返回：
@@ -47,8 +47,8 @@ public class Toa9902101Transform extends AbstractToaTransform {
             toa9902101Para.body.RECV_ACC_ID = strPara.substring(300, 330);
             toa9902101Para.body.RECV_ACC_NAME = strPara.substring(330,480);
             toa9902101Para.body.PROG_NAME = strPara.substring(480, 608);
-            toa9902101Para.body.COMP_NAME = strPara.substring(608, 864);
-            toa9902101Para.header.REQ_SN = strPara.substring(864, 880);
+            toa9902101Para.body.COMP_NAME = strPara.substring(608, 863);
+            toa9902101Para.header.REQ_SN = strPara.substring(863, 879);
         }else{
             toa9902101Para.header.RETURN_MSG = strPara.substring(10, 76);
         }
