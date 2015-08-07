@@ -7,12 +7,12 @@ import org.fbi.dep.model.base.TIAHeader;
 import java.io.Serializable;
 
 /**
- * 泰安房产资金监管：记账结果查询
+ * 泰安房产资金监管：交存记账到SBS
  * User: hanjianlong
  * Date: 2015-07-16
  */
 
-public class Tia9902501 extends TIA implements Serializable {
+public class Tia900012002 extends TIA implements Serializable {
     public  Header header = new Header();
     public  Body body = new Body();
 
@@ -31,16 +31,17 @@ public class Tia9902501 extends TIA implements Serializable {
     }
 
     public static class Body extends TIABody {
-        /*01	交易代码	    4	2102
-          02	监管银行代码	2
-          03	城市代码	    6
-          04	业务编号	    14 交存申请号 划拨业务编号 退还业务编号
-          05	查询网点	    30
-          06	查询人员	    30
-          07	发起方	        1 1_监管银行*/
-        public String BANK_ID;            // 监管银行代码	  2
-        public String CITY_ID;            // 城市代码	      6
-        public String BRANCH_ID;          // 网点号         30
-        public String INITIATOR;          // 发起方         1   1_监管银行
+        /*
+          01    外围系统流水号
+          02    付款账号
+          03	交易日期
+          04	交易时间
+          05    收款账号
+          06	交易金额*/
+        public String ACTNUM; // 付款账号
+        public String STMDAT; // 交易日期
+        public String ERYTIM; // 交易时间
+        public String BENACT; // 收款账号
+        public String TXNAMT; // 交易金额
     }
 }

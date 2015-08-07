@@ -38,6 +38,8 @@ public class ObjectRouteBuilder extends RouteBuilder {
                 .to("jms:queue:queue.dep.app.in")
                 .when(simple("${header.JMSX_CHANNELID} == '910'"))
                 .to("jms:queue:queue.dep.app.in")
+                .when(simple("${header.JMSX_CHANNELID} == '990'"))
+                .to("jms:queue:queue.dep.app.in")
                 .when(simple("${header.JMSX_CHANNELID} == '91001'"))
                 .to("jms:queue:queue.dep.app.in");
 
@@ -51,6 +53,8 @@ public class ObjectRouteBuilder extends RouteBuilder {
                 .to("jms:queue:queue.dep.fcdep.qdzzjs")
                 .when(simple("${header.JMSX_SRCMSGFLAG} == 'haierfip.object'"))
                 .to("jms:queue:queue.dep.fcdep.haierfip")
+                .when(simple("${header.JMSX_SRCMSGFLAG} == 'haierrfm.object'"))
+                .to("jms:queue:queue.dep.fcdep.haierrfm")
                 .when(simple("${header.JMSX_SRCMSGFLAG} == 'fcdep.object'"))
                 .to("jms:queue:queue.dep.out.fcdep.object")
 

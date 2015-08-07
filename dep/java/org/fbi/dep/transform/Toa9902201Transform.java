@@ -3,11 +3,11 @@ package org.fbi.dep.transform;
 import org.fbi.dep.model.txn.Toa9902201;
 
 /**
- * æ³°å®‰æˆ¿äº§èµ„é‡‘ç›‘ç®¡ç³»ç»Ÿï¼Œè¿”è¿˜éªŒè¯ç¿»è¯‘
+ * Ì©°²·¿²ú×Ê½ğ¼à¹ÜÏµÍ³£¬·µ»¹ÑéÖ¤·­Òë
  * Created by IntelliJ IDEA.
  * User: hanjianlong
  * Date: 15-6-30
- * Time: ä¸‹åˆ2:12
+ * Time: ÏÂÎç2:12
  * To change this template use File | Settings | File Templates.
  */
 public class Toa9902201Transform extends AbstractToaTransform {
@@ -20,19 +20,19 @@ public class Toa9902201Transform extends AbstractToaTransform {
 
     private Toa9902201 convertStrToBean(String strPara) {
         Toa9902201 toa9902201Para=new Toa9902201();
-        /*æ­£ç¡®è¿”å›ï¼š
-          01	ç»“æœ	                4   0000è¡¨ç¤ºæˆåŠŸ
-          02	ç›‘ç®¡è´¦å·                30
-          03    ç›‘ç®¡è´¦æˆ·æˆ·å            150
-          04	è¿”è¿˜é‡‘é¢	            20  ä»¥åˆ†ä¸ºå•ä½
-          05	ä¸šä¸»å§“å	            80
-          06	è¯ä»¶ç±»å‹    	        30
-          07	è¯ä»¶å·ç                 255
-          08    é¢„å”®èµ„é‡‘ç›‘ç®¡å¹³å°æµæ°´    16
+        /*ÕıÈ··µ»Ø£º
+          01	½á¹û	                4   0000±íÊ¾³É¹¦
+          02	¼à¹ÜÕËºÅ                30
+          03    ¼à¹ÜÕË»§»§Ãû            150
+          04	·µ»¹½ğ¶î	            20  ÒÔ·ÖÎªµ¥Î»
+          05	ÒµÖ÷ĞÕÃû	            80
+          06	Ö¤¼şÀàĞÍ    	        30
+          07	Ö¤¼şºÅÂë                255
+          08    Ô¤ÊÛ×Ê½ğ¼à¹ÜÆ½Ì¨Á÷Ë®    16
         */
-        /*é”™è¯¯è¿”å›ï¼š
-          01    è¿”å›ç»“æœ                4   0000è¡¨ç¤ºæˆåŠŸ
-          02    é”™è¯¯åŸå› æè¿°	        60
+        /*´íÎó·µ»Ø£º
+          01    ·µ»Ø½á¹û                4   0000±íÊ¾³É¹¦
+          02    ´íÎóÔ­ÒòÃèÊö	        60
         */
         strPara=strPara.replace("|","");
         String strRtnCode=strPara.substring(6,10);

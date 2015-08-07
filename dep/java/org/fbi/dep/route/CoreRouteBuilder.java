@@ -81,12 +81,11 @@ public class CoreRouteBuilder extends RouteBuilder {
          */
         from("jms:queue:queue.dep.core.fip.out").to("jms:queue:queue.dep.core.out");
 
-        from("jms:queue:queue.dep.core.out").to("jms:queue:queue.dep.app.out");
-
         // rfm
         from("jms:queue:queue.dep.core.rfm.in")
-                .process(new Core990Processor())
-                .to("jms:queue:queue.dep.app.out");
-    }
+                .process(new Core990Processor()) .to("jms:queue:queue.dep.core.rfm.out");
+        from("jms:queue:queue.dep.core.rfm.out").to("jms:queue:queue.dep.core.out");
 
+        from("jms:queue:queue.dep.core.out").to("jms:queue:queue.dep.app.out");
+    }
 }

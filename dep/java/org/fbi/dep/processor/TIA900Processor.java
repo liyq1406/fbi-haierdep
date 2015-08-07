@@ -3,6 +3,7 @@ package org.fbi.dep.processor;
 import org.apache.camel.Exchange;
 import org.apache.camel.Processor;
 import org.apache.commons.lang.StringUtils;
+import org.fbi.dep.enums.EnuSysTypeCode;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -24,10 +25,12 @@ public class TIA900Processor implements Processor {
         if (StringUtils.isEmpty(correlationID)) {
             exchange.getOut().setHeader("JMSCorrelationID", exchange.getIn().getMessageId());
             logger.info("TIA JMSCorrelationID : " + exchange.getIn().getMessageId());
-
         } else {
             exchange.getOut().setHeader("JMSCorrelationID", correlationID);
             logger.info("TIA JMSCorrelationID : " + correlationID);
+            if(EnuSysTypeCode.TA_FDC.getCode().equals(correlationID)){
+
+            }
         }
     }
 }

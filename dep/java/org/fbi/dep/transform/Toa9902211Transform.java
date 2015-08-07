@@ -3,11 +3,11 @@ package org.fbi.dep.transform;
 import org.fbi.dep.model.txn.Toa9902211;
 
 /**
- * æ³°å®‰æˆ¿äº§èµ„é‡‘ç›‘ç®¡ç³»ç»Ÿï¼Œè¿”è¿˜å†²æ­£ç¿»è¯‘
+ * Ì©°²·¿²ú×Ê½ğ¼à¹ÜÏµÍ³£¬·µ»¹³åÕı·­Òë
  * Created by IntelliJ IDEA.
  * User: hanjianlong
  * Date: 15-6-30
- * Time: ä¸‹åˆ2:12
+ * Time: ÏÂÎç2:12
  * To change this template use File | Settings | File Templates.
  */
 public class Toa9902211Transform extends AbstractToaTransform {
@@ -20,13 +20,13 @@ public class Toa9902211Transform extends AbstractToaTransform {
 
     private Toa9902211 convertStrToBean(String strPara) {
         Toa9902211 toa9902211Para=new Toa9902211();
-        /*æ­£ç¡®è¿”å›ï¼š
-          01    ç»“æœ	                4   0000è¡¨ç¤ºæˆåŠŸ
-          02    é¢„å”®èµ„é‡‘ç›‘ç®¡å¹³å°æµæ°´	16
+        /*ÕıÈ··µ»Ø£º
+          01    ½á¹û	                4   0000±íÊ¾³É¹¦
+          02    Ô¤ÊÛ×Ê½ğ¼à¹ÜÆ½Ì¨Á÷Ë®	16
         */
-        /*é”™è¯¯è¿”å›ï¼š
-          01    è¿”å›ç»“æœ                4   0000è¡¨ç¤ºæˆåŠŸ
-          02    é”™è¯¯åŸå› æè¿°	        60
+        /*´íÎó·µ»Ø£º
+          01    ·µ»Ø½á¹û                4   0000±íÊ¾³É¹¦
+          02    ´íÎóÔ­ÒòÃèÊö	        60
         */
         strPara=strPara.replace("|","");
         String strRtnCode=strPara.substring(6,10);
