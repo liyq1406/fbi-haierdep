@@ -7,7 +7,6 @@ import org.apache.commons.lang.StringUtils;
 import org.fbi.dep.enums.EnuTaTxCode;
 import org.fbi.dep.model.base.TIA;
 import org.fbi.dep.transform.*;
-import org.fbi.endpoint.tarfm.util.MsgHelper;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -16,9 +15,9 @@ import org.slf4j.LoggerFactory;
  * User: hanjianlong
  * Date: 2015-07-16
  */
-public class Core990Processor implements Processor {
+public class Tia990Processor implements Processor {
 
-    private static Logger logger = LoggerFactory.getLogger(Core990Processor.class);
+    private static Logger logger = LoggerFactory.getLogger(Tia990Processor.class);
 
     @Override
     public void process(Exchange exchange) throws Exception {

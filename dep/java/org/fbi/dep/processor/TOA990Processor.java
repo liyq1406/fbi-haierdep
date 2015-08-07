@@ -3,7 +3,7 @@ package org.fbi.dep.processor;
 import org.apache.camel.Exchange;
 import org.apache.camel.Message;
 import org.apache.camel.Processor;
-import org.fbi.dep.component.RfmSktClient;
+import org.fbi.dep.component.jms.JmsRfmSktClient;
 import org.fbi.dep.enums.EnuTaTxCode;
 import org.fbi.dep.model.txn.*;
 import org.fbi.dep.transform.*;
@@ -25,7 +25,8 @@ public class Toa990Processor implements Processor {
     public void process(Exchange exchange) throws Exception {
         Message inMessage = exchange.getIn();
         String strMsg= (String) inMessage.getBody();
-        String rtnmsg = new RfmSktClient().processTxn(strMsg);
+        // 发送到泰安房地产中心查询所求数据（利用Socket协议）
+        String rtnmsg = new JmsRfmSktClient().processTxn(strMsg);
         System.out.println(rtnmsg);
 
         exchange.getOut().setHeader("JMSCorrelationID", inMessage.getHeader("JMSCorrelationID"));

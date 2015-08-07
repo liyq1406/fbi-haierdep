@@ -23,8 +23,10 @@ public class CoreRouteBuilder extends RouteBuilder {
                 .to("jms:queue:queue.dep.core.sbs.in")
                 .when(simple("${header.JMSX_CHANNELID} == '910'"))
                 .to("jms:queue:queue.dep.core.fip.in")
-                .when(simple("${header.JMSX_CHANNELID} == '990'"))
+                .when(simple("${header.JMSX_CHANNELID} == '91001'"))
                 .to("jms:queue:queue.dep.core.rfm.in")
+                .when(simple("${header.JMSX_CHANNELID} == '990'"))
+                .to("jms:queue:queue.dep.core.rfm.fdc.in")
                 .when(simple("${header.JMSX_CHANNELID} == '100'"))
                 .to("jms:queue:queue.dep.core.unionpay.in")
                 .when(simple("${header.JMSX_CHANNELID} == '120'"))
@@ -82,8 +84,11 @@ public class CoreRouteBuilder extends RouteBuilder {
         from("jms:queue:queue.dep.core.fip.out").to("jms:queue:queue.dep.core.out");
 
         // rfm
-        from("jms:queue:queue.dep.core.rfm.in")
-                .process(new Core990Processor()) .to("jms:queue:queue.dep.core.rfm.out");
+         /*
+        rfm监听queue.dep.core.rfm.in队列，返回queue.dep.core.rfm.out队列
+        rfm充当Core990Processor的角色
+         */
+        from("jms:queue:queue.dep.core.rfm.fdc.in").to("jms:queue:queue.dep.core.rfm.out");
         from("jms:queue:queue.dep.core.rfm.out").to("jms:queue:queue.dep.core.out");
 
         from("jms:queue:queue.dep.core.out").to("jms:queue:queue.dep.app.out");

@@ -3,8 +3,7 @@ package org.fbi.dep.txn;
 import com.thoughtworks.xstream.converters.ConversionException;
 import org.fbi.dep.component.jms.JmsBytesClient;
 import org.fbi.dep.component.jms.JmsObjMsgClient;
-import org.fbi.dep.model.txn.TiaXml910012001;
-import org.fbi.dep.model.txn.TiaXml9101104;
+import org.fbi.dep.model.txn.*;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import java.io.IOException;
@@ -20,16 +19,32 @@ public class Txn910012001Processor extends AbstractTxnProcessor  {
         TiaXml910012001 tia = (TiaXml910012001) (new TiaXml910012001().getTia(msgData));
 
         // rfm-ta
-        Object toa = null;
+        Tia9902001 tia9902001=new Tia9902001();
+        Toa9902001 toa9902001=new Toa9902001();
         try {
-            toa = new JmsObjMsgClient().sendRecivMsg("91001", "910012001", "fcdep",
-                    "queue.dep.in.fcdep.object", "queue.dep.out.fcdep.object", tia);
+            tia9902001.header.TX_CODE="2001";
+            tia9902001.header.BIZ_ID=tia.body.originid;
+            tia9902001.body.BRANCH_ID=tia.info.bankbranchid;
+            tia9902001.header.USER_ID=tia.info.bankoperid;
+            tia9902001.header.REQ_SN=tia.info.reqsn;
+            Object toa = new JmsObjMsgClient().sendRecivMsg("91001",tia.info.txncode, "fcdep",
+                    "queue.dep.in.fcdep.object", "queue.dep.out.fcdep.object", tia9902001);
+            toa9902001=(Toa9902001)toa;
         } catch (Exception e) {
             logger.error("rfm-ta½»Ò×Òì³£.", e);
             throw new RuntimeException(e);
         }
+        ToaXml910012001 toaXml910012001=new ToaXml910012001();
+        toaXml910012001.Body.accountcode=toa9902001.body.ACC_ID;
+        toaXml910012001.Body.accountname=toa9902001.body.ACC_NAME;
+        toaXml910012001.Body.tradeamt=toa9902001.body.TX_AMT;
+        toaXml910012001.Body.accounttype=toa9902001.body.ACC_TYPE;
+        toaXml910012001.info.rtncode=toa9902001.header.RETURN_CODE;
+        toaXml910012001.info.rtnmsg=toa9902001.header.RETURN_MSG;
+        toaXml910012001.info.reqsn=toa9902001.header.REQ_SN;
+        toaXml910012001.info.txncode=toa9902001.header.TX_CODE;
 
-        return toa.toString();
+        return toaXml910012001.toString();
     }
 }
 

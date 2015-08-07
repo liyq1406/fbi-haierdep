@@ -1,4 +1,4 @@
-package org.fbi.dep.component;
+package org.fbi.dep.component.jms;
 
 import org.fbi.dep.util.PropertyManager;
 import org.slf4j.Logger;
@@ -11,8 +11,8 @@ import java.net.Socket;
  * Created by Lichao.W At 2015/7/22 11:44
  * wanglichao@163.com
  */
-public class RfmSktClient {
-    private static Logger logger = LoggerFactory.getLogger(RfmSktClient.class);
+public class JmsRfmSktClient {
+    private static Logger logger = LoggerFactory.getLogger(JmsRfmSktClient.class);
 
     public static final String HOSTIP = PropertyManager.getProperty("socket.rfm.ip");
     public static final int HOSTPORT = PropertyManager.getIntProperty("socket.rfm.port");
@@ -47,7 +47,7 @@ public class RfmSktClient {
 
     public static void main(String[] args) throws Exception{
         String reqmsg = "0000350000|9988|555555     |汉字会不会乱码99|";
-        String rtnmsg = new RfmSktClient().processTxn(reqmsg);
+        String rtnmsg = new JmsRfmSktClient().processTxn(reqmsg);
         System.out.println("房产中心返回报文："+rtnmsg);
     }
 }
