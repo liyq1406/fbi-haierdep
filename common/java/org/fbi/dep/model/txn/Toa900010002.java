@@ -7,11 +7,11 @@ import org.fbi.dep.model.base.TOAHeader;
 import java.io.Serializable;
 
 /**
- * 泰安房产资金监管：返还记账到SBS
+ * 泰安房产资金监管：交存记账到SBS
  * User: hanjianlong
  * Date: 2015-07-16
  */
-public class Toa900012202 extends TOA implements Serializable {
+public class Toa900010002 extends TOA implements Serializable {
     public Header header = new Header();
     public Body body = new Body();
 
@@ -33,7 +33,7 @@ public class Toa900012202 extends TOA implements Serializable {
         /*01	外围系统流水号
           02	交易金额
         */
-        public String MPCSEQ;
-        public String TXNAMT;
+        public String RTN_REQ_SN;
+        public String RTN_TX_AMT;
     }
 }
