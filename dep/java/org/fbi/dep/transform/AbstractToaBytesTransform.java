@@ -34,7 +34,6 @@ public abstract class AbstractToaBytesTransform {
 
     abstract String transform(byte[] bytes);
 
-
     protected void copyFormBodyToToa(SOFFormBody formBody, ToaXml toa) {
         try {
             Field[] fields = formBody.getClass().getFields();

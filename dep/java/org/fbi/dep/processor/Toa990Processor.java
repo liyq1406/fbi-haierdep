@@ -14,7 +14,7 @@ import org.slf4j.LoggerFactory;
  * Created by IntelliJ IDEA.
  * User: zhangxiaobo
  * Date: 12-2-13
- * Time: ä¸‹åˆ9:51
+ * Time: ÏÂÎç9:51
  * To change this template use File | Settings | File Templates.
  */
 public class Toa990Processor implements Processor {
@@ -25,7 +25,7 @@ public class Toa990Processor implements Processor {
     public void process(Exchange exchange) throws Exception {
         Message inMessage = exchange.getIn();
         String strMsg= (String) inMessage.getBody();
-        // å‘é€åˆ°æ³°å®‰æˆ¿åœ°äº§ä¸­å¿ƒæŸ¥è¯¢æ‰€æ±‚æ•°æ®ï¼ˆåˆ©ç”¨Socketåè®®ï¼‰
+        // ·¢ËÍµ½Ì©°²·¿µØ²úÖĞĞÄ²éÑ¯ËùÇóÊı¾İ£¨ÀûÓÃSocketĞ­Òé£©
         String rtnmsg = new JmsRfmSktClient().processTxn(strMsg);
         System.out.println(rtnmsg);
 

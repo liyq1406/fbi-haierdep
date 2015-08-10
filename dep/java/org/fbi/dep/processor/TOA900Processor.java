@@ -5,6 +5,9 @@ import org.apache.camel.Message;
 import org.apache.camel.Processor;
 import org.fbi.dep.model.base.TOA;
 import org.fbi.dep.transform.TOA9008119Transform;
+import org.fbi.dep.transform.Tia900010002Transform;
+import org.fbi.dep.transform.Toa900010002Transform;
+import org.fbi.endpoint.sbs.CtgManager;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -41,6 +44,18 @@ public class TOA900Processor implements Processor {
             default:
                 break;
         }*/
-        exchange.getOut().setBody(toa);
+        String strJMSXSRCMSGFLAG=inMessage.getHeaders().get("JMSX_SRCMSGFLAG").toString();
+        if("haierrfm.object".equals(strJMSXSRCMSGFLAG)){
+            TOA tiaTemp=(TOA)inMessage.getBody();
+            exchange.getOut().setHeader("JMSX_APPID", inMessage.getHeader("JMSX_APPID"));
+            exchange.getOut().setHeader("JMSX_CHANNELID", inMessage.getHeader("JMSX_CHANNELID"));
+            exchange.getOut().setHeader("JMSX_SRCMSGFLAG", inMessage.getHeader("JMSX_SRCMSGFLAG"));
+            // ±¨ÎÄÌåÌî³ä
+            Toa900010002Transform toa900010002TransformTemp = new Toa900010002Transform();
+            TOA toaTemp = toa900010002TransformTemp.transform(datagram);
+            exchange.getOut().setBody(toaTemp);
+        }else {
+            exchange.getOut().setBody(toa);
+        }
     }
 }

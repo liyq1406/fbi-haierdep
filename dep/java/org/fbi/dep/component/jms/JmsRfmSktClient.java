@@ -7,6 +7,10 @@ import org.slf4j.LoggerFactory;
 import java.io.*;
 import java.net.Socket;
 
+/**
+ * Created by Lichao.W At 2015/7/22 11:44
+ * wanglichao@163.com
+ */
 public class JmsRfmSktClient {
     private static Logger logger = LoggerFactory.getLogger(JmsRfmSktClient.class);
 

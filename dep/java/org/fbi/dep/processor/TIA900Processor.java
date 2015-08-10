@@ -4,11 +4,8 @@ import org.apache.camel.Exchange;
 import org.apache.camel.Message;
 import org.apache.camel.Processor;
 import org.apache.commons.lang.StringUtils;
-import org.fbi.dep.enums.EnuSysTypeCode;
 import org.fbi.dep.model.base.TIA;
-import org.fbi.dep.model.txn.Tia900010002;
-import org.fbi.dep.transform.SbsTxnDataTransform;
-import org.fbi.dep.transform.Tia900012002Transform;
+import org.fbi.dep.transform.Tia900010002Transform;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -43,8 +40,8 @@ public class TIA900Processor implements Processor {
                 exchange.getOut().setHeader("JMSX_CHANNELID", inMessage.getHeader("JMSX_CHANNELID"));
                 exchange.getOut().setHeader("JMSX_SRCMSGFLAG", inMessage.getHeader("JMSX_SRCMSGFLAG"));
                 // ±¨ÎÄÌåÌî³ä
-                Tia900012002Transform tia900012002TransformTemp = new Tia900012002Transform();
-                byte[] sbsReqMsg = tia900012002TransformTemp.transform(tiaTemp);
+                Tia900010002Transform tia900010002TransformTemp = new Tia900010002Transform();
+                byte[] sbsReqMsg = tia900010002TransformTemp.transform(tiaTemp);
                 exchange.getOut().setBody(sbsReqMsg);
             }
         }
