@@ -64,7 +64,6 @@ public class T925 extends SOFFormBody {
 
     }
 
-
     public class Bean extends AssembleModel {
         {
             fieldTypes = new int[]{1, 1, 1, 1, 1, 1, 1, 1, 1, 1};

@@ -50,35 +50,4 @@ public class Tia9902202Transform extends AbstractTiaTransform {
         strRtn= StringUtils.leftPad(intStrRtnLength.toString(),6, '0')+"|"+strRtn;
         return strRtn;
     }
-    private Tia9902202 convertStrToBean(String strPara) {
-        Tia9902202 tia9902202Para=new Tia9902202();
-        /*01	交易代码	    4	2202
-          02	监管银行代码	2
-          03	城市代码	    6
-          04	返还业务编号	14
-          05	返还密码	    32	MD5
-          06	监管账号	    30
-          07	返还资金	    20
-          08	银行记账流水	30
-          09	记账日期	    10	送系统日期即可
-          10	记账网点	    30
-          11	记账人员	    30
-          12	发起方	        1	1_监管银行*/
-        strPara=strPara.replace("|","");
-          if(strPara.length()>209) {
-              tia9902202Para.header.TX_CODE = strPara.substring(0,4);
-              tia9902202Para.body.BANK_ID= strPara.substring(4,2);
-              tia9902202Para.body.CITY_ID= strPara.substring(6,6);
-              tia9902202Para.header.BIZ_ID= strPara.substring(12,14);
-              tia9902202Para.header.PASSWORD= strPara.substring(26,32);
-              tia9902202Para.body.ACC_ID= strPara.substring(58,30);
-              tia9902202Para.body.TX_AMT= strPara.substring(88,20);
-              tia9902202Para.header.REQ_SN= strPara.substring(108,30);
-              tia9902202Para.body.TX_DATE= strPara.substring(138,10);
-              tia9902202Para.body.BRANCH_ID= strPara.substring(148,30);
-              tia9902202Para.header.USER_ID= strPara.substring(178,30);
-              tia9902202Para.body.INITIATOR= strPara.substring(208,1);
-          }
-        return tia9902202Para;
-    }
 }

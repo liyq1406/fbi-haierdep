@@ -73,7 +73,17 @@ public class RfmServerTest {
             }else if("2011".equals(strSBstrSB)){
                 rtnmsg = "000020|0000|1000000000000009|";
             }else if("2101".equals(strSBstrSB)){
-                rtnmsg = "000873|0000|jianguanzhanghao12345678900014|"+
+                rtnmsg = "000873|0000|" +
+                        StringUtils.rightPad("801000241502012001",30," ") +"|"+
+                        StringUtils.rightPad("jianguanzhanghao12345678900014户名", 150, " ")+"|" +
+                        StringUtils.rightPad("208", 20, " ")+"|" +
+                        StringUtils.rightPad("shoukuanyinhang", 90, " ")+"|" +
+                        StringUtils.rightPad("801000593102027001",30," ") +"|"+
+                        StringUtils.rightPad("shoukuanzhanghao12345678900014户名", 150, " ")+"|" +
+                        StringUtils.rightPad("项目名称", 128, " ")+"|" +
+                        StringUtils.rightPad("开发企业名称", 255, " ")+"|" +
+                        "1000000000000009";
+                /*rtnmsg = "000873|0000|jianguanzhanghao12345678900014|"+
                         StringUtils.rightPad("jianguanzhanghao12345678900014户名", 150, " ")+"|" +
                         StringUtils.rightPad("20800001", 20, " ")+"|" +
                         StringUtils.rightPad("shoukuanyinhang", 90, " ")+"|" +
@@ -81,7 +91,7 @@ public class RfmServerTest {
                         StringUtils.rightPad("shoukuanzhanghao12345678900014户名", 150, " ")+"|" +
                         StringUtils.rightPad("项目名称", 128, " ")+"|" +
                         StringUtils.rightPad("开发企业名称", 255, " ")+"|" +
-                        "1000000000000009";
+                        "1000000000000009";*/
             }else if("2102".equals(strSBstrSB)){
                 rtnmsg = "000020|0000|1000000000000009";
             }else if("2111".equals(strSBstrSB)){

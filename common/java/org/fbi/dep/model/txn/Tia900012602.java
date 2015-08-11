@@ -7,12 +7,12 @@ import org.fbi.dep.model.base.TIAHeader;
 import java.io.Serializable;
 
 /**
- * 泰安房产资金监管：日间总数对账请求报文（面向SBS发起）
+ * 泰安房产资金监管：日间明细对账请求报文（面向SBS发起）
  * User: hanjianlong
  * Date: 2015-07-16
  */
 
-public class Tia900012601 extends TIA implements Serializable {
+public class Tia900012602 extends TIA implements Serializable {
     public  Header header = new Header();
     public  Body body = new Body();
 

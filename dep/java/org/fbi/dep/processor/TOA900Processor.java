@@ -46,7 +46,6 @@ public class TOA900Processor implements Processor {
         }*/
         String strJMSXSRCMSGFLAG=inMessage.getHeaders().get("JMSX_SRCMSGFLAG").toString();
         if("haierrfm.object".equals(strJMSXSRCMSGFLAG)){
-            TOA tiaTemp=(TOA)inMessage.getBody();
             exchange.getOut().setHeader("JMSX_APPID", inMessage.getHeader("JMSX_APPID"));
             exchange.getOut().setHeader("JMSX_CHANNELID", inMessage.getHeader("JMSX_CHANNELID"));
             exchange.getOut().setHeader("JMSX_SRCMSGFLAG", inMessage.getHeader("JMSX_SRCMSGFLAG"));

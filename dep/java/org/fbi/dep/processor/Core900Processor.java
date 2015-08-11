@@ -25,7 +25,6 @@ public class Core900Processor implements Processor {
         logger.info("SBS的报文发送包： " + new String(bytesDatagram).trim());
         long startM = System.currentTimeMillis();
 
-
         CtgManager ctgManager = new CtgManager();
         byte[] rtnBytesDatagram = ctgManager.processTxn(bytesDatagram);
         long endM = System.currentTimeMillis();

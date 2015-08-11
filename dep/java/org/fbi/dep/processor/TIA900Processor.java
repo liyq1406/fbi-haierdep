@@ -35,15 +35,13 @@ public class TIA900Processor implements Processor {
         String strJMSXSRCMSGFLAG=inMessage.getHeaders().get("JMSX_SRCMSGFLAG").toString();
         if("haierrfm.object".equals(strJMSXSRCMSGFLAG)){
             TIA tiaTemp=(TIA)inMessage.getBody();
-            if("2102".equals(tiaTemp.getHeader().TX_CODE)) {
-                exchange.getOut().setHeader("JMSX_APPID", inMessage.getHeader("JMSX_APPID"));
-                exchange.getOut().setHeader("JMSX_CHANNELID", inMessage.getHeader("JMSX_CHANNELID"));
-                exchange.getOut().setHeader("JMSX_SRCMSGFLAG", inMessage.getHeader("JMSX_SRCMSGFLAG"));
-                // 报文体填充
-                Tia900010002Transform tia900010002TransformTemp = new Tia900010002Transform();
-                byte[] sbsReqMsg = tia900010002TransformTemp.transform(tiaTemp);
-                exchange.getOut().setBody(sbsReqMsg);
-            }
+            exchange.getOut().setHeader("JMSX_APPID", inMessage.getHeader("JMSX_APPID"));
+            exchange.getOut().setHeader("JMSX_CHANNELID", inMessage.getHeader("JMSX_CHANNELID"));
+            exchange.getOut().setHeader("JMSX_SRCMSGFLAG", inMessage.getHeader("JMSX_SRCMSGFLAG"));
+            // 报文体填充
+            Tia900010002Transform tia900010002TransformTemp = new Tia900010002Transform();
+            byte[] sbsReqMsg = tia900010002TransformTemp.transform(tiaTemp);
+            exchange.getOut().setBody(sbsReqMsg);
         }
     }
 }

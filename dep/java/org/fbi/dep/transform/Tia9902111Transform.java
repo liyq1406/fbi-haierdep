@@ -44,29 +44,4 @@ public class Tia9902111Transform extends AbstractTiaTransform {
         strRtn= StringUtils.leftPad(intStrRtnLength.toString(),6, '0')+"|"+strRtn;
         return strRtn;
     }
-    private Tia9902111 convertStrToBean(String strPara) {
-        Tia9902111 tia9902111Para=new Tia9902111();
-         /*01	交易代码	    4	2111
-          02	监管银行代码	2
-          03	城市代码	    6
-          04	划拨业务编号	14
-          05	银行冲正流水	30
-          06	记账日期	    10	送系统日期即可
-          07	记账网点	    30
-          08	记账人员	    30
-          09	发起方	        1	1_监管银行*/
-        strPara=strPara.replace("|","");
-          if(strPara.length()>127) {
-              tia9902111Para.header.TX_CODE = strPara.substring(0,4);
-              tia9902111Para.body.BANK_ID= strPara.substring(4,2);
-              tia9902111Para.body.CITY_ID= strPara.substring(6,6);
-              tia9902111Para.header.BIZ_ID= strPara.substring(12,14);
-              tia9902111Para.header.REQ_SN= strPara.substring(26,30);
-              tia9902111Para.body.TX_DATE= strPara.substring(56,10);
-              tia9902111Para.body.BRANCH_ID= strPara.substring(66,30);
-              tia9902111Para.header.USER_ID= strPara.substring(96,30);
-              tia9902111Para.body.INITIATOR= strPara.substring(126,1);
-          }
-        return tia9902111Para;
-    }
 }
