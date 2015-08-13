@@ -6,6 +6,8 @@ import org.apache.camel.Processor;
 import org.apache.commons.lang.StringUtils;
 import org.fbi.dep.model.base.TIA;
 import org.fbi.dep.transform.Tia900010002Transform;
+import org.fbi.dep.transform.Tia900012601Transform;
+import org.fbi.dep.transform.Tia900012602Transform;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -38,9 +40,20 @@ public class TIA900Processor implements Processor {
             exchange.getOut().setHeader("JMSX_APPID", inMessage.getHeader("JMSX_APPID"));
             exchange.getOut().setHeader("JMSX_CHANNELID", inMessage.getHeader("JMSX_CHANNELID"));
             exchange.getOut().setHeader("JMSX_SRCMSGFLAG", inMessage.getHeader("JMSX_SRCMSGFLAG"));
+            // hanjianlong 此处需要添加TX_CODE交易号，区分执行流程
+            exchange.getOut().setHeader("REQ_TXN_CODE",tiaTemp.getHeader().TX_CODE);
+            byte[] sbsReqMsg=null;
             // 报文体填充
-            Tia900010002Transform tia900010002TransformTemp = new Tia900010002Transform();
-            byte[] sbsReqMsg = tia900010002TransformTemp.transform(tiaTemp);
+            if(tiaTemp.getHeader().TX_CODE.equals("0002")) {
+                Tia900010002Transform tia900010002TransformTemp = new Tia900010002Transform();
+                sbsReqMsg = tia900010002TransformTemp.transform(tiaTemp);
+            }else if(tiaTemp.getHeader().TX_CODE.equals("2601")) {
+                Tia900012601Transform tia900012601TransformTemp = new Tia900012601Transform();
+                sbsReqMsg = tia900012601TransformTemp.transform(tiaTemp);
+            }else if(tiaTemp.getHeader().TX_CODE.equals("2602")) {
+                Tia900012602Transform tia900012602TransformTemp = new Tia900012602Transform();
+                sbsReqMsg = tia900012602TransformTemp.transform(tiaTemp);
+            }
             exchange.getOut().setBody(sbsReqMsg);
         }
     }

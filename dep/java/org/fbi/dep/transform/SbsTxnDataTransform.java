@@ -107,6 +107,26 @@ public class SbsTxnDataTransform {
         return convert("8124", termId, assembleT8124Param(tia));
     }
 
+    public static byte[] convertToTxn8872(Tia900012601 tia, String termId) {
+        return convert("8872", termId, assembleT8872Param(tia));
+    }
+
+    public static byte[] convertToTxn8874(Tia900012602 tia, String termId) {
+        return convert("8874", termId, assembleT8874Param(tia));
+    }
+
+    private static List<String> assembleT8872Param(Tia900012601 tia) {
+        List<String> paramList = new ArrayList<String>();
+        paramList.add(tia.body.TX_DATE);
+        return paramList;
+    }
+
+    private static List<String> assembleT8874Param(Tia900012602 tia) {
+        List<String> paramList = new ArrayList<String>();
+        paramList.add(tia.body.TX_DATE);
+        return paramList;
+    }
+
     private static List<String> assembleT8124Param(TiaXml9009401 tia) {
         List<String> paramList = new ArrayList<String>();
         paramList.add(tia.BODY.CUSIDT);

@@ -33,6 +33,8 @@ public class Core900Processor implements Processor {
         exchange.getOut().setHeader("JMSX_APPID", inMessage.getHeader("JMSX_APPID"));
         exchange.getOut().setHeader("JMSX_CHANNELID", inMessage.getHeader("JMSX_CHANNELID"));
         exchange.getOut().setHeader("JMSX_SRCMSGFLAG", inMessage.getHeader("JMSX_SRCMSGFLAG"));
+        // hanjianlong 此处需要添加TX_CODE交易号，区分执行流程
+        exchange.getOut().setHeader("REQ_TXN_CODE", inMessage.getHeader("REQ_TXN_CODE"));
         exchange.getOut().setBody(rtnBytesDatagram);
     }
 }

@@ -4,9 +4,7 @@ import org.apache.camel.Exchange;
 import org.apache.camel.Message;
 import org.apache.camel.Processor;
 import org.fbi.dep.model.base.TOA;
-import org.fbi.dep.transform.TOA9008119Transform;
-import org.fbi.dep.transform.Tia900010002Transform;
-import org.fbi.dep.transform.Toa900010002Transform;
+import org.fbi.dep.transform.*;
 import org.fbi.endpoint.sbs.CtgManager;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -45,16 +43,25 @@ public class TOA900Processor implements Processor {
                 break;
         }*/
         String strJMSXSRCMSGFLAG=inMessage.getHeaders().get("JMSX_SRCMSGFLAG").toString();
-        if("haierrfm.object".equals(strJMSXSRCMSGFLAG)){
+        if("haierrfm.object".equals(strJMSXSRCMSGFLAG)) {
             exchange.getOut().setHeader("JMSX_APPID", inMessage.getHeader("JMSX_APPID"));
             exchange.getOut().setHeader("JMSX_CHANNELID", inMessage.getHeader("JMSX_CHANNELID"));
             exchange.getOut().setHeader("JMSX_SRCMSGFLAG", inMessage.getHeader("JMSX_SRCMSGFLAG"));
-            // 报文体填充
-            Toa900010002Transform toa900010002TransformTemp = new Toa900010002Transform();
-            TOA toaTemp = toa900010002TransformTemp.transform(datagram);
-            exchange.getOut().setBody(toaTemp);
-        }else {
-            exchange.getOut().setBody(toa);
+            String strReqTxnCode=inMessage.getHeader("REQ_TXN_CODE").toString();
+            if (strReqTxnCode.equals("0002")) {
+                // 报文体填充
+                Toa900010002Transform toa900010002TransformTemp = new Toa900010002Transform();
+                toa = toa900010002TransformTemp.transform(datagram);
+            } else if (strReqTxnCode.equals("2601")) {
+                // 报文体填充
+                Toa900012601Transform toa900012601TransformTemp = new Toa900012601Transform();
+                toa = toa900012601TransformTemp.transform(datagram);
+            } else if (strReqTxnCode.equals("2602")) {
+                // 报文体填充
+                Toa900012602Transform toa900012602TransformTemp = new Toa900012602Transform();
+                toa = toa900012602TransformTemp.transform(datagram);
+            }
         }
+        exchange.getOut().setBody(toa);
     }
 }
