@@ -44,7 +44,9 @@ public class TIA900Processor implements Processor {
             exchange.getOut().setHeader("REQ_TXN_CODE",tiaTemp.getHeader().TX_CODE);
             byte[] sbsReqMsg=null;
             // ±¨ÎÄÌåÌî³ä
-            if(tiaTemp.getHeader().TX_CODE.equals("0002")) {
+            if(tiaTemp.getHeader().TX_CODE.equals("2002")||tiaTemp.getHeader().TX_CODE.equals("2011")||
+                tiaTemp.getHeader().TX_CODE.equals("2102")||tiaTemp.getHeader().TX_CODE.equals("2111")||
+                tiaTemp.getHeader().TX_CODE.equals("2202")||tiaTemp.getHeader().TX_CODE.equals("2211")) {
                 Tia900010002Transform tia900010002TransformTemp = new Tia900010002Transform();
                 sbsReqMsg = tia900010002TransformTemp.transform(tiaTemp);
             }else if(tiaTemp.getHeader().TX_CODE.equals("2601")) {
@@ -53,6 +55,9 @@ public class TIA900Processor implements Processor {
             }else if(tiaTemp.getHeader().TX_CODE.equals("2602")) {
                 Tia900012602Transform tia900012602TransformTemp = new Tia900012602Transform();
                 sbsReqMsg = tia900012602TransformTemp.transform(tiaTemp);
+            }else if(tiaTemp.getHeader().TX_CODE.equals("2701")) {
+                Tia900012601Transform tia900012601TransformTemp = new Tia900012601Transform();
+                sbsReqMsg = tia900012601TransformTemp.transform(tiaTemp);
             }
             exchange.getOut().setBody(sbsReqMsg);
         }

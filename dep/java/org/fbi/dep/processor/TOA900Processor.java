@@ -60,6 +60,10 @@ public class TOA900Processor implements Processor {
                 // 报文体填充
                 Toa900012602Transform toa900012602TransformTemp = new Toa900012602Transform();
                 toa = toa900012602TransformTemp.transform(datagram);
+            }else if (strReqTxnCode.equals("2701")) {
+                // 报文体填充
+                Toa900012701Transform toa900012701TransformTemp = new Toa900012701Transform();
+                toa = toa900012701TransformTemp.transform(datagram);
             }
         }
         exchange.getOut().setBody(toa);
