@@ -97,7 +97,8 @@ public class RfmServerTest {
             }else if("2111".equals(strSBstrSB)){
                 rtnmsg = "000020|0000|1000000000000009";
             }else if("2201".equals(strSBstrSB)){
-                rtnmsg = "000585|0000|jianguanzhanghao12345678900014|"+
+                rtnmsg = "000585|0000|"+
+                        StringUtils.rightPad("801000241502012001",30," ") +"|"+
                         StringUtils.rightPad("jianguanzhanghao12345678900014»§Ãû", 150, " ")+"|" +
                         StringUtils.rightPad("20800001", 20, " ")+"|" +
                         StringUtils.rightPad("yezhuxingming", 80, " ")+"|" +
