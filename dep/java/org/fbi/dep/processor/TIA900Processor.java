@@ -8,6 +8,7 @@ import org.fbi.dep.model.base.TIA;
 import org.fbi.dep.transform.Tia900010002Transform;
 import org.fbi.dep.transform.Tia900012601Transform;
 import org.fbi.dep.transform.Tia900012602Transform;
+import org.fbi.dep.transform.Tia900012701Transform;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
