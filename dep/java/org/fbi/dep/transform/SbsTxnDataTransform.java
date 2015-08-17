@@ -134,6 +134,7 @@ public class SbsTxnDataTransform {
     private static List<String> assembleT8874Param(Tia900012602 tia) {
         List<String> paramList = new ArrayList<String>();
         paramList.add(tia.body.TX_DATE);
+        paramList.add(tia.body.BEGNUM);
         return paramList;
     }
 

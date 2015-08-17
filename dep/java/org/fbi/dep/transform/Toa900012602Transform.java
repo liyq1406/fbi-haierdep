@@ -28,6 +28,7 @@ public class Toa900012602Transform{
         Toa900012602 toa = new Toa900012602();
         toa.header.RETURN_CODE = formCode;
         if ("T846".equalsIgnoreCase(formCode)) {
+            toa.header.RETURN_CODE="0000";
             toa.header.RETURN_MSG = "交易成功";
             SOFForm form = response.getSofForms().get(0);
             T929 t929 = (T929) form.getFormBody();

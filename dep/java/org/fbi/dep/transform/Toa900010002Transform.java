@@ -41,6 +41,7 @@ public class Toa900010002Transform {
         toa.header.RETURN_CODE = response.getFormcode();
 
         if ("T531".equalsIgnoreCase(response.getFormcode())) {
+            toa.header.RETURN_CODE="0000";
             toa.header.RETURN_MSG = "交易成功";
         } else {
             try {
