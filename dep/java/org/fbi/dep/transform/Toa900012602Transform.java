@@ -27,7 +27,7 @@ public class Toa900012602Transform{
         // bean -> txn bean
         Toa900012602 toa = new Toa900012602();
         toa.header.RETURN_CODE = formCode;
-        if ("T846".equalsIgnoreCase(formCode)) {
+        if ("T929".equalsIgnoreCase(formCode)) {
             toa.header.RETURN_CODE="0000";
             toa.header.RETURN_MSG = "交易成功";
             SOFForm form = response.getSofForms().get(0);
@@ -35,8 +35,9 @@ public class Toa900012602Transform{
             toa.body.FLOFLG = t929.getFormBodyHeader().getFLOFLG();
             toa.body.TOTCNT = t929.getFormBodyHeader().getTOTCNT();
             toa.body.CURCNT = t929.getFormBodyHeader().getCURCNT();
+            toa.body.DETAILS = new ArrayList<>();
             for (T929.Bean bean : t929.getBeanList()) {
-                Toa900012602.BodyDetail detail = new Toa900012602.BodyDetail();
+                Toa900012602.Body.BodyDetail detail = new Toa900012602.Body.BodyDetail();
                 detail.ACTNUM = bean.getACTNUM();
                 detail.BENACT = bean.getBENACT();
                 detail.ERYTIM = bean.getERYTIM();

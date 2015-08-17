@@ -27,6 +27,7 @@ public class Core900Processor implements Processor {
 
         CtgManager ctgManager = new CtgManager();
         byte[] rtnBytesDatagram = ctgManager.processTxn(bytesDatagram);
+        logger.info("SBS的报文发送包： " + new String(rtnBytesDatagram).trim());
         long endM = System.currentTimeMillis();
         logger.info(msgID + " --SBS交易处理耗时--：" + (endM - startM) + " mm.");
         exchange.getOut().setHeader("JMSCorrelationID", msgID);
