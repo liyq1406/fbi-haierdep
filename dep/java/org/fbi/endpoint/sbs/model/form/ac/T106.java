@@ -22,8 +22,8 @@ public class T106 extends SOFFormBody {
     @Override
     public void assembleFields(int offset, byte[] buffer) {
         formBodyHeader.assembleFields(offset,buffer);
-        int index = offset + 13;
-        int beanLength = 129;
+        int index = offset + 12;
+        int beanLength = 131;
         int i=0;
         int b=0;
         do {
@@ -37,21 +37,12 @@ public class T106 extends SOFFormBody {
 
     public class FormBodyHeader extends AssembleModel {
         {
-            fieldTypes = new int[]{1, 1, 1};
-            fieldLengths = new int[]{1, 6, 6};
+            fieldTypes = new int[]{1, 1};
+            fieldLengths = new int[]{6, 6};
         }
 
-        private String FLOFLG;   //后续标识
         private String TOTCNT;   //总记录数
         private String CURCNT;   //本包内记录数
-
-        public String getFLOFLG() {
-            return FLOFLG;
-        }
-
-        public void setFLOFLG(String FLOFLG) {
-            this.FLOFLG = FLOFLG;
-        }
 
         public String getTOTCNT() {
             return TOTCNT;
@@ -73,24 +64,16 @@ public class T106 extends SOFFormBody {
     public class Bean extends AssembleModel {
         {
             fieldTypes = new int[]{1, 1, 1, 1, 1, 1, 1};
-            fieldLengths = new int[]{18, 22, 16, 16, 16, 35, 6};
+            fieldLengths = new int[]{22, 72, 17, 17, 1, 1, 1};
         }
 
-        private String FBTIDX;          // 外围系统流水号
-        private String ACTNUM;          // 付款账号
-        private String TXNAMT;          // 交易金额（贷款交易时，本金）
-        private String INTAMT;          // 利息金额
-        private String FEEAMT;          // 手续费金额
-        private String BENACT;          // 对方账号
-        private String ERYTIM;          // 交易时间
-
-        public String getFBTIDX() {
-            return FBTIDX;
-        }
-
-        public void setFBTIDX(String FBTIDX) {
-            this.FBTIDX = FBTIDX;
-        }
+        private String ACTNUM;          // 帐号
+        private String ACTNAM;          // 帐户名
+        private String BOKBAL;          // 帐户余额
+        private String AVABAL;          // 有效余额
+        private String FRZSTS;          // 冻结状态
+        private String ACTSTS;          // 帐户状态
+        private String RECSTS;          // 记录状态
 
         public String getACTNUM() {
             return ACTNUM;
@@ -100,44 +83,52 @@ public class T106 extends SOFFormBody {
             this.ACTNUM = ACTNUM;
         }
 
-        public String getTXNAMT() {
-            return TXNAMT;
+        public String getACTNAM() {
+            return ACTNAM;
         }
 
-        public void setTXNAMT(String TXNAMT) {
-            this.TXNAMT = TXNAMT;
+        public void setACTNAM(String ACTNAM) {
+            this.ACTNAM = ACTNAM;
         }
 
-        public String getINTAMT() {
-            return INTAMT;
+        public String getBOKBAL() {
+            return BOKBAL;
         }
 
-        public void setINTAMT(String INTAMT) {
-            this.INTAMT = INTAMT;
+        public void setBOKBAL(String BOKBAL) {
+            this.BOKBAL = BOKBAL;
         }
 
-        public String getFEEAMT() {
-            return FEEAMT;
+        public String getAVABAL() {
+            return AVABAL;
         }
 
-        public void setFEEAMT(String FEEAMT) {
-            this.FEEAMT = FEEAMT;
+        public void setAVABAL(String AVABAL) {
+            this.AVABAL = AVABAL;
         }
 
-        public String getBENACT() {
-            return BENACT;
+        public String getFRZSTS() {
+            return FRZSTS;
         }
 
-        public void setBENACT(String BENACT) {
-            this.BENACT = BENACT;
+        public void setFRZSTS(String FRZSTS) {
+            this.FRZSTS = FRZSTS;
         }
 
-        public String getERYTIM() {
-            return ERYTIM;
+        public String getACTSTS() {
+            return ACTSTS;
         }
 
-        public void setERYTIM(String ERYTIM) {
-            this.ERYTIM = ERYTIM;
+        public void setACTSTS(String ACTSTS) {
+            this.ACTSTS = ACTSTS;
+        }
+
+        public String getRECSTS() {
+            return RECSTS;
+        }
+
+        public void setRECSTS(String RECSTS) {
+            this.RECSTS = RECSTS;
         }
     }
 

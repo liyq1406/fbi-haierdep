@@ -119,9 +119,13 @@ public class SbsTxnDataTransform {
     }
 
     private static List<String> assembleT8119Param(Tia900012701 tia) {
-        List<String> paramList = new ArrayList<String>();
+        List<String> paramList = new ArrayList<>();
         paramList.add(tia.body.TOTCNT);
-        //paramList.add(tia.body.DETAILS);
+        String strTemp="";
+        for (Tia900012701.BodyDetail bdUnit: tia.body.DETAILS){
+            strTemp+=bdUnit.ACTNM+"    ";
+        }
+        paramList.add(strTemp);
         return paramList;
     }
 
@@ -310,8 +314,6 @@ public class SbsTxnDataTransform {
                                                    String inActName, String txnAmt,
                                                    String toAcct2, String inActName2,
                                                    String txnAmt2, String remark) {
-
-
 //        DecimalFormat df = new DecimalFormat("#############0.00");
         List<String> txnparamList = new ArrayList<String>();
         String txndate = new SimpleDateFormat("yyyyMMdd").format(new Date());

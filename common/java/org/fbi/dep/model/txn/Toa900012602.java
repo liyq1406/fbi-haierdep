@@ -1,15 +1,10 @@
 package org.fbi.dep.model.txn;
 
-import com.thoughtworks.xstream.XStream;
-import com.thoughtworks.xstream.annotations.XStreamAlias;
-import com.thoughtworks.xstream.io.HierarchicalStreamDriver;
-import com.thoughtworks.xstream.io.xml.DomDriver;
-import com.thoughtworks.xstream.io.xml.XmlFriendlyReplacer;
-import com.thoughtworks.xstream.io.xml.XppDriver;
-import org.fbi.dep.model.base.*;
+import org.fbi.dep.model.base.TOA;
+import org.fbi.dep.model.base.TOABody;
+import org.fbi.dep.model.base.TOAHeader;
 
 import java.io.Serializable;
-import java.util.ArrayList;
 import java.util.List;
 
 /**

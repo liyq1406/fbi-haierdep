@@ -76,7 +76,7 @@ public class RfmServerTest {
                 rtnmsg = "000873|0000|" +
                         StringUtils.rightPad("801000241502012001",30," ") +"|"+
                         StringUtils.rightPad("jianguanzhanghao12345678900014户名", 150, " ")+"|" +
-                        StringUtils.rightPad("208", 20, " ")+"|" +
+                        StringUtils.rightPad("21", 20, " ")+"|" +
                         StringUtils.rightPad("shoukuanyinhang", 90, " ")+"|" +
                         StringUtils.rightPad("801000593102027001",30," ") +"|"+
                         StringUtils.rightPad("shoukuanzhanghao12345678900014户名", 150, " ")+"|" +
@@ -100,7 +100,7 @@ public class RfmServerTest {
                 rtnmsg = "000585|0000|"+
                         StringUtils.rightPad("801000241502012001",30," ") +"|"+
                         StringUtils.rightPad("jianguanzhanghao12345678900014户名", 150, " ")+"|" +
-                        StringUtils.rightPad("20800001", 20, " ")+"|" +
+                        StringUtils.rightPad("20", 20, " ")+"|" +
                         StringUtils.rightPad("yezhuxingming", 80, " ")+"|" +
                         StringUtils.rightPad("zhengjianleixing", 30, " ")+"|" +
                         StringUtils.rightPad("开发企业名称", 255, " ")+"|" +
