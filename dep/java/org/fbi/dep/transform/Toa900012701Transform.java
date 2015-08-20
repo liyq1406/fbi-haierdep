@@ -6,6 +6,7 @@ import org.fbi.dep.model.base.TOA;
 import org.fbi.dep.model.txn.Toa900012701;
 import org.fbi.endpoint.sbs.core.FebResponse;
 import org.fbi.endpoint.sbs.domain.SOFForm;
+import org.fbi.endpoint.sbs.model.form.ac.M000;
 import org.fbi.endpoint.sbs.model.form.ac.T106;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -47,7 +48,18 @@ public class Toa900012701Transform {
                 toa.body.DETAILS.add(detail);
             }
         } else {
-            toa.header.RETURN_MSG = SBSFormCode.valueOfAlias(formCode).getTitle();
+            SOFForm form = response.getSofForms().get(0);
+            if(form.getFormHeader().getFormCode().startsWith("M")){
+                M000 m000 = (M000)form.getFormBody();
+                if(m000.getRTNMSG() != null) {
+                    toa.header.RETURN_MSG = SBSFormCode.valueOfAlias(formCode).getTitle() + m000.getRTNMSG();
+                } else {
+                    toa.header.RETURN_MSG = SBSFormCode.valueOfAlias(formCode).getTitle();
+                }
+            } else {
+                toa.header.RETURN_MSG = SBSFormCode.valueOfAlias(formCode).getTitle();
+            }
+
             if (StringUtils.isEmpty(toa.header.RETURN_MSG)) {
                 toa.header.RETURN_MSG = "½»Ò×Ê§°Ü";
             }

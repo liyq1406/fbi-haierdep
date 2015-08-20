@@ -53,6 +53,23 @@ public class SOFForm {
                     logger.error("Form解析错误", e);
                     throw new RuntimeException(formHeader.getFormCode() + "|SBS返回码：" + formHeader.getFormCode());
                 }
+            } else {
+                try {
+                    if(formHeader.getFormCode().startsWith("M")){
+                        // 实例化Form体
+                        // 新增系统别判断
+                        Class clazz = Class.forName("org.fbi.endpoint.sbs.model.form.ac.M000");
+                        formBody = (SOFFormBody) clazz.newInstance();
+                        // 截取Form体字节数据
+                        byte[] bodyBytes = new byte[formBodyLength];
+                        System.arraycopy(buffer, offset + formHeaderLength + formBodyFieldLength, bodyBytes, 0, formBodyLength);
+                        // 装配Form体
+                        formBody.assembleFields(0, bodyBytes);
+                    }
+                } catch (Exception e) {
+                    logger.error("Form解析错误", e);
+                    throw new RuntimeException(formHeader.getFormCode() + "|SBS返回码：" + formHeader.getFormCode());
+                }
             }
         }
     }
