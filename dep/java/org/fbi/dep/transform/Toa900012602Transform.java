@@ -35,7 +35,7 @@ public class Toa900012602Transform{
             toa.body.FLOFLG = t929.getFormBodyHeader().getFLOFLG();
             toa.body.TOTCNT = t929.getFormBodyHeader().getTOTCNT();
             toa.body.CURCNT = t929.getFormBodyHeader().getCURCNT();
-            toa.body.DETAILS = new ArrayList<>();
+            toa.body.DETAILS = new ArrayList<Toa900012602.Body.BodyDetail>();
             for (T929.Bean bean : t929.getBeanList()) {
                 Toa900012602.Body.BodyDetail detail = new Toa900012602.Body.BodyDetail();
                 detail.ACTNUM = bean.getACTNUM();

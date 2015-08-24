@@ -119,7 +119,7 @@ public class SbsTxnDataTransform {
     }
 
     private static List<String> assembleT8119Param(Tia900012701 tia) {
-        List<String> paramList = new ArrayList<>();
+        List<String> paramList = new ArrayList<String>();
         paramList.add(tia.body.TOTCNT);
         String strTemp="";
         for (Tia900012701.BodyDetail bdUnit: tia.body.DETAILS){
