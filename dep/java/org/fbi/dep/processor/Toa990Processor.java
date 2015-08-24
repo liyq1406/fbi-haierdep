@@ -34,7 +34,7 @@ public class Toa990Processor implements Processor {
         exchange.getOut().setHeader("JMSX_CHANNELID", inMessage.getHeader("JMSX_CHANNELID"));
         exchange.getOut().setHeader("JMSX_SRCMSGFLAG", inMessage.getHeader("JMSX_SRCMSGFLAG"));
 
-        String strRtnTxCode=strMsg.substring(7,11);
+        String strRtnTxCode=strMsg.substring(6,10);
         if(EnuTaTxCode.TRADE_1001.getCode().equals(strRtnTxCode)){
             Toa9901001Transform toa9901001TransformTemp =new Toa9901001Transform();
             Toa9901001 toa9901001= toa9901001TransformTemp.transform(rtnmsg,"");

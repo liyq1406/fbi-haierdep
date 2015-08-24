@@ -39,9 +39,9 @@ public class Tia9902211Transform extends AbstractTiaTransform {
                 StringUtils.rightPad(tia9902211Para.body.TX_DATE,   10, ' ')+"|"+
                 StringUtils.rightPad(tia9902211Para.body.BRANCH_ID, 30, ' ')+"|"+
                 StringUtils.rightPad(tia9902211Para.header.USER_ID, 30, ' ')+"|"+
-                StringUtils.rightPad(tia9902211Para.body.INITIATOR, 1, ' ');
-        Integer intStrRtnLength=strRtn.replace("|","").length();
-        strRtn= StringUtils.leftPad(intStrRtnLength.toString(),6, '0')+"|"+strRtn;
+                StringUtils.rightPad(tia9902211Para.body.INITIATOR, 1, ' ')+"|";
+        Integer intStrRtnLength=strRtn.length();
+        strRtn= StringUtils.leftPad(intStrRtnLength.toString(),6, '0')+strRtn;
         return strRtn;
     }
 }
