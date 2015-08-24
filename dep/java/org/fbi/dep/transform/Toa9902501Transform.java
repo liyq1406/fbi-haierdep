@@ -31,16 +31,17 @@ public class Toa9902501Transform extends AbstractToaTransform {
           01    返回结果                4   0000表示成功
           02    错误原因描述	        60
         */
-        strPara=strPara.replace("|","");
-        String strRtnCode=strPara.substring(6,10);
+        String[] sourceStrArray = strPara.split("|");
+
+        String strRtnCode=sourceStrArray[0].substring(6,10);
         toa9902501Para.header.RETURN_CODE = strRtnCode;
         if("0000".equals(strRtnCode)) {
-            toa9902501Para.body.ACT_RSTL = strPara.substring(10, 11);
-            toa9902501Para.body.FDC_ACT_SN = strPara.substring(11, 27);
-            toa9902501Para.body.FDC_BANK_ACT_SN = strPara.substring(27, 57);
-            toa9902501Para.header.REQ_SN = strPara.substring(57, 73);
+            toa9902501Para.body.ACT_RSTL = sourceStrArray[1];
+            toa9902501Para.body.FDC_ACT_SN = sourceStrArray[2];
+            toa9902501Para.body.FDC_BANK_ACT_SN = sourceStrArray[3];
+            toa9902501Para.header.REQ_SN = sourceStrArray[4];
         }else{
-            toa9902501Para.header.RETURN_MSG = strPara.substring(10, 76);
+            toa9902501Para.header.RETURN_MSG = sourceStrArray[1];
         }
         return toa9902501Para;
     }

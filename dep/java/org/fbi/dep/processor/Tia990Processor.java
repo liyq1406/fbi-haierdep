@@ -22,7 +22,7 @@ public class Tia990Processor implements Processor {
     @Override
     public void process(Exchange exchange) throws Exception {
         
-        logger.info("------房产中心 核心报文处理------");
+        logger.info("------往房产中心 请求报文处理------");
         Message inMessage = exchange.getIn();
         String correlationID = inMessage.getHeader("JMSCorrelationID", String.class);
         if (StringUtils.isEmpty(correlationID)) {

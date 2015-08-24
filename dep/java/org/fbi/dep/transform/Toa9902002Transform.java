@@ -28,13 +28,14 @@ public class Toa9902002Transform extends AbstractToaTransform {
           01    返回结果                4   0000表示成功
           02    错误原因描述	        60
         */
-        strPara=strPara.replace("|","");
-        String strRtnCode=strPara.substring(6,10);
+        String[] sourceStrArray = strPara.split("|");
+
+        String strRtnCode=sourceStrArray[0].substring(6,10);
         toa9902002Para.header.RETURN_CODE = strRtnCode;
         if("0000".equals(strRtnCode)) {
-            toa9902002Para.header.REQ_SN = strPara.substring(10, 26);
+            toa9902002Para.header.REQ_SN = sourceStrArray[1];
         }else{
-            toa9902002Para.header.RETURN_MSG = strPara.substring(10, 76);
+            toa9902002Para.header.RETURN_MSG = sourceStrArray[1];
         }
         return toa9902002Para;
     }

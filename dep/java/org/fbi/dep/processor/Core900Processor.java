@@ -22,12 +22,12 @@ public class Core900Processor implements Processor {
         logger.info(msgID + "  --SBS核心报文处理--");
 
         byte[] bytesDatagram = (byte[]) inMessage.getBody();
-        logger.info("SBS的报文发送包： " + new String(bytesDatagram).trim());
+        logger.info("往SBS发送报文： " + new String(bytesDatagram).trim());
         long startM = System.currentTimeMillis();
 
         CtgManager ctgManager = new CtgManager();
         byte[] rtnBytesDatagram = ctgManager.processTxn(bytesDatagram);
-        logger.info("SBS的报文发送包： " + new String(rtnBytesDatagram).trim());
+        logger.info("从SBS的响应报文： " + new String(rtnBytesDatagram).trim());
         long endM = System.currentTimeMillis();
         logger.info(msgID + " --SBS交易处理耗时--：" + (endM - startM) + " mm.");
         exchange.getOut().setHeader("JMSCorrelationID", msgID);

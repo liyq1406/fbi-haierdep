@@ -59,6 +59,9 @@ public class TIA900Processor implements Processor {
                 sbsReqMsg = tia900012701TransformTemp.transform(tiaTemp);
             }
             exchange.getOut().setBody(sbsReqMsg);
+            if(sbsReqMsg!=null) {
+                logger.info("ÍùSBS·¢ËÍ±¨ÎÄ : " + new String(sbsReqMsg));
+            }
         }
     }
 }

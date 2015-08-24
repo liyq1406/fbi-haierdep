@@ -36,21 +36,22 @@ public class Toa9902101Transform extends AbstractToaTransform {
           01    返回结果                4   0000表示成功
           02    错误原因描述	        60
         */
-        strPara=strPara.replace("|","");
-        String strRtnCode=strPara.substring(6,10);
+        String[] sourceStrArray = strPara.split("|");
+
+        String strRtnCode=sourceStrArray[0].substring(6,10);
         toa9902101Para.header.RETURN_CODE = strRtnCode;
         if("0000".equals(strRtnCode)) {
-            toa9902101Para.body.ACC_ID = strPara.substring(10, 40);
-            toa9902101Para.body.ACC_NAME = strPara.substring(40, 190);
-            toa9902101Para.body.TX_AMT = strPara.substring(190, 210);
-            toa9902101Para.body.RECV_BANK = strPara.substring(210, 300);
-            toa9902101Para.body.RECV_ACC_ID = strPara.substring(300, 330);
-            toa9902101Para.body.RECV_ACC_NAME = strPara.substring(330,480);
-            toa9902101Para.body.PROG_NAME = strPara.substring(480, 608);
-            toa9902101Para.body.COMP_NAME = strPara.substring(608, 863);
-            toa9902101Para.header.REQ_SN = strPara.substring(863, 879);
+            toa9902101Para.body.ACC_ID = sourceStrArray[1];
+            toa9902101Para.body.ACC_NAME = sourceStrArray[2];
+            toa9902101Para.body.TX_AMT = sourceStrArray[3];
+            toa9902101Para.body.RECV_BANK = sourceStrArray[4];
+            toa9902101Para.body.RECV_ACC_ID = sourceStrArray[5];
+            toa9902101Para.body.RECV_ACC_NAME = sourceStrArray[6];
+            toa9902101Para.body.PROG_NAME = sourceStrArray[7];
+            toa9902101Para.body.COMP_NAME = sourceStrArray[8];
+            toa9902101Para.header.REQ_SN = sourceStrArray[9];
         }else{
-            toa9902101Para.header.RETURN_MSG = strPara.substring(10, 76);
+            toa9902101Para.header.RETURN_MSG = sourceStrArray[1];
         }
         return toa9902101Para;
     }
