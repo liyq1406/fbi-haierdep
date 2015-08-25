@@ -58,24 +58,24 @@ public class RfmServerTest {
             String strSBstrSB=sb.toString().replace("|", "").substring(6, 10);
             String rtnmsg;
             if("1001".equals(strSBstrSB)){
-                rtnmsg = "000531|0000|1000000000000009|"+
+                rtnmsg = "0005360000|1000000000000009|"+
                         StringUtils.rightPad("prePerName", 255, " ")+"|" +
                         StringUtils.rightPad("preProAddr", 128, " ")+"|" +
-                        StringUtils.rightPad("preProName", 128, " ");
+                        StringUtils.rightPad("preProName", 128, " ")+"|";
             }else if("1002".equals(strSBstrSB)){
-                rtnmsg = "000020|0000|1000000000000009|";
+                rtnmsg = "0000220000|1000000000000009|";
             }else if("2001".equals(strSBstrSB)){
-                rtnmsg = "000020|0000|0|"+
+                rtnmsg = "0002270000|0|"+
                         StringUtils.rightPad("23400", 20, " ")+"|" +
                         "jianguanzhanghao12345678900014|" +
                         StringUtils.rightPad("jianguanzhanghao12345678900014户名", 150, " ")+"|"+
-                        "1000000000000009";
+                        "1000000000000009|";
             }else if("2002".equals(strSBstrSB)){
-                rtnmsg = "000020|0000|1000000000000009|";
+                rtnmsg = "0000220000|1000000000000009|";
             }else if("2011".equals(strSBstrSB)){
-                rtnmsg = "000020|0000|1000000000000009|";
+                rtnmsg = "0000220000|1000000000000009|";
             }else if("2101".equals(strSBstrSB)){
-                rtnmsg = "000873|0000|" +
+                rtnmsg = "0008830000|" +
                         StringUtils.rightPad("801000241502012001",30," ") +"|"+
                         StringUtils.rightPad("jianguanzhanghao12345678900014户名", 150, " ")+"|" +
                         StringUtils.rightPad("21", 20, " ")+"|" +
@@ -84,7 +84,7 @@ public class RfmServerTest {
                         StringUtils.rightPad("shoukuanzhanghao12345678900014户名", 150, " ")+"|" +
                         StringUtils.rightPad("项目名称", 128, " ")+"|" +
                         StringUtils.rightPad("开发企业名称", 255, " ")+"|" +
-                        "1000000000000009";
+                        "1000000000000009|";
                 /*rtnmsg = "000873|0000|jianguanzhanghao12345678900014|"+
                         StringUtils.rightPad("jianguanzhanghao12345678900014户名", 150, " ")+"|" +
                         StringUtils.rightPad("20800001", 20, " ")+"|" +
@@ -95,24 +95,24 @@ public class RfmServerTest {
                         StringUtils.rightPad("开发企业名称", 255, " ")+"|" +
                         "1000000000000009";*/
             }else if("2102".equals(strSBstrSB)){
-                rtnmsg = "000020|0000|1000000000000009";
+                rtnmsg = "0000220000|1000000000000009|";
             }else if("2111".equals(strSBstrSB)){
-                rtnmsg = "000020|0000|1000000000000009";
+                rtnmsg = "0000220000|1000000000000009|";
             }else if("2201".equals(strSBstrSB)){
-                rtnmsg = "000585|0000|"+
+                rtnmsg = "0005930000|"+
                         StringUtils.rightPad("801000241502012001",30," ") +"|"+
                         StringUtils.rightPad("jianguanzhanghao12345678900014户名", 150, " ")+"|" +
                         StringUtils.rightPad("20", 20, " ")+"|" +
                         StringUtils.rightPad("yezhuxingming", 80, " ")+"|" +
                         StringUtils.rightPad("zhengjianleixing", 30, " ")+"|" +
                         StringUtils.rightPad("开发企业名称", 255, " ")+"|" +
-                        "1000000000000009";
+                        "1000000000000009|";
             }else if("2202".equals(strSBstrSB)){
-                rtnmsg = "000020|0000|1000000000000009|";
+                rtnmsg = "0000220000|1000000000000009|";
             }else if("2211".equals(strSBstrSB)){
-                rtnmsg = "000020|0000|1000000000000009|";
+                rtnmsg = "0000220000|1000000000000009|";
             }else if("2501".equals(strSBstrSB)){
-                rtnmsg = "000067|0000|0|pingtaijizhang12|jianguanyinhangjizhangliushui1|1000000000000009|";
+                rtnmsg = "0000720000|0|pingtaijizhang12|jianguanyinhangjizhangliushui1|1000000000000009|";
             }else{
                 rtnmsg = "1234567890111213141516171819202122232425262728293031323334353637383940414243454647484950";
             }
