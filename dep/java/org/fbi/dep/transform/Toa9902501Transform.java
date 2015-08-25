@@ -31,8 +31,7 @@ public class Toa9902501Transform extends AbstractToaTransform {
           01    返回结果                4   0000表示成功
           02    错误原因描述	        60
         */
-        String[] sourceStrArray = strPara.split("|");
-
+        String[] sourceStrArray = strPara.split("\\|");
         String strRtnCode=sourceStrArray[0].substring(6,10);
         toa9902501Para.header.RETURN_CODE = strRtnCode;
         if("0000".equals(strRtnCode)) {
