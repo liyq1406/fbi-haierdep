@@ -7,7 +7,7 @@ import org.fbi.dep.model.base.TIAHeader;
 import java.io.Serializable;
 
 /**
- * 泰安房产资金监管：交存记账到SBS
+ * 泰安房产资金监管：记账到SBS
  * User: hanjianlong
  * Date: 2015-07-16
  */

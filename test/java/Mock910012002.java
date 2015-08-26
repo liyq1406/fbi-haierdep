@@ -18,7 +18,7 @@ import java.io.*;
 /**
  * Created by XIANGYANG on 2015-7-3.
  */
-public class Mock910012001 {
+public class Mock910012002 {
     private Log logger = LogFactory.getLog(this.getClass());
 
     private String serverUrl;
@@ -29,23 +29,24 @@ public class Mock910012001 {
             String xmlmsg = "<?xml version=\"1.0\" encoding=\"GBK\"?>" +
                     "<root>" +
                     "<info>" +
-                    "<txncode>910012001</txncode>" +
+                    "<reqsn>afa0462b2fc946cfadcce8dc2debc9fe</reqsn>" +
                     "<userid>HFNBAPP001</userid>" +
-                    "<reqsn>HFNB115011500000207</reqsn>" +
+                    "<txndate>20150826</txndate>"+
+                    "<txntime>133931</txntime>"+
+                    "<txncode>910012002</txncode>" +
                     "<version>1.0</version>" +
-                    "<txndate>20150609</txndate>" +
-                    "<txntime>142626</txntime>" +
-                    "<bankbranchid>142626</bankbranchid>" +
-                    "<bankoperid>142626</bankoperid>" +
                     "</info>" +
                     "<body>" +
-                    "<originid>12345678901234</originid>" +
+                    "<accountoutcode>801000250902012001</accountoutcode>" +
+                    "<tradeamt>10</tradeamt>" +
+                    "<accountcode>801000016502013</accountcode>" +
+                    "<originid>03150825042882</originid>" +
                     "</body>" +
                     "</root>";
             // crypt-MD5:e9baa4c4d7787f4c752a0b05122d15e
             String mac = helper.MD5Helper.getMD5String("HFNBAPP001HFNB20150623001" + xmlmsg);
             String reqmsg = "Encrypt-MD5:" + mac + "\n" + xmlmsg;
-            Mock910012001 client = new Mock910012001();
+            Mock910012002 client = new Mock910012002();
             String serverUrl = "http://localhost:62080/depService";
             String rtnDatagram = client.doPost(serverUrl, reqmsg, "GBK");
         } catch (Exception e) {

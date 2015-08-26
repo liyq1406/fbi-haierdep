@@ -35,17 +35,22 @@ public class Txn910012001Processor extends AbstractTxnProcessor  {
             throw new RuntimeException(e);
         }
         ToaXml910012001 toaXml910012001=new ToaXml910012001();
-        toaXml910012001.info.rtncode=toa9902001.header.RETURN_CODE;
-        toaXml910012001.info.rtnmsg=toa9902001.header.RETURN_MSG;
-        toaXml910012001.info.reqsn=toa9902001.header.REQ_SN;
-        toaXml910012001.info.txncode=toa9902001.header.TX_CODE;
+        toaXml910012001.info.rtncode=toa9902001.header.RETURN_CODE.trim();
+        if(toa9902001.header.RETURN_MSG!=null) {
+            toaXml910012001.info.rtnmsg = toa9902001.header.RETURN_MSG.trim();
+        }else{
+            toaXml910012001.info.rtnmsg="";
+        }
+        toaXml910012001.info.reqsn=toa9902001.header.REQ_SN.trim();
+        toaXml910012001.info.txncode=tia.info.txncode;
 
-        toaXml910012001.Body.rtncode=toa9902001.header.RETURN_CODE;
-        toaXml910012001.Body.rtnmsg=toa9902001.header.RETURN_MSG;
-        toaXml910012001.Body.accountcode=toa9902001.body.ACC_ID;
-        toaXml910012001.Body.accountname=toa9902001.body.ACC_NAME;
-        toaXml910012001.Body.tradeamt=toa9902001.body.TX_AMT;
-        toaXml910012001.Body.accounttype=toa9902001.body.ACC_TYPE;
+        toaXml910012001.Body.rtncode=toaXml910012001.info.rtncode;
+        toaXml910012001.Body.rtnmsg=toaXml910012001.info.rtnmsg;
+        toaXml910012001.Body.accountcode=toa9902001.body.ACC_ID.trim();
+        toaXml910012001.Body.accountname=toa9902001.body.ACC_NAME.trim();
+        toaXml910012001.Body.tradeamt=toa9902001.body.TX_AMT.trim();
+        toaXml910012001.Body.accounttype=toa9902001.body.ACC_TYPE.trim();
+        toaXml910012001.Body.fdcserial=toaXml910012001.info.reqsn;
 
         return toaXml910012001.toString();
     }
