@@ -33,7 +33,7 @@ public class Tia9902201Transform extends AbstractTiaTransform {
           10	发起方	        1	1_监管银行*/
         String strRtn=
                 StringUtils.rightPad(tia9902201Para.header.TX_CODE, 4, ' ')+"|"+
-                StringUtils.rightPad(tia9902201Para.body.BANK_ID,   2, ' ')+"|"+
+                StringUtils.rightPad(tia9902201Para.body.SPVSN_BANK_ID,   2, ' ')+"|"+
                 StringUtils.rightPad(tia9902201Para.body.CITY_ID,   6, ' ')+"|"+
                 StringUtils.rightPad(tia9902201Para.header.BIZ_ID,  14, ' ')+"|"+
                 StringUtils.rightPad(tia9902201Para.header.PASSWORD,  32, ' ')+"|"+

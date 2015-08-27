@@ -46,10 +46,10 @@ public class Txn910012001Processor extends AbstractTxnProcessor  {
 
         toaXml910012001.Body.rtncode=toaXml910012001.info.rtncode;
         toaXml910012001.Body.rtnmsg=toaXml910012001.info.rtnmsg;
-        toaXml910012001.Body.accountcode=toa9902001.body.ACC_ID.trim();
-        toaXml910012001.Body.accountname=toa9902001.body.ACC_NAME.trim();
+        toaXml910012001.Body.accounttype=toa9902001.body.SPVSN_ACC_TYPE.trim();
+        toaXml910012001.Body.accountcode=toa9902001.body.SPVSN_ACC_ID.trim();
+        toaXml910012001.Body.accountname=toa9902001.body.SPVSN_ACC_NAME.trim();
         toaXml910012001.Body.tradeamt=toa9902001.body.TX_AMT.trim();
-        toaXml910012001.Body.accounttype=toa9902001.body.ACC_TYPE.trim();
         toaXml910012001.Body.fdcserial=toaXml910012001.info.reqsn;
 
         return toaXml910012001.toString();
