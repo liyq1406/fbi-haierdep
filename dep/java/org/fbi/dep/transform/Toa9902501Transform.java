@@ -35,7 +35,7 @@ public class Toa9902501Transform extends AbstractToaTransform {
         String strRtnCode=sourceStrArray[0].substring(6,10);
         toa9902501Para.header.RETURN_CODE = strRtnCode;
         if("0000".equals(strRtnCode)) {
-            toa9902501Para.body.ACT_RSTL = sourceStrArray[1];
+            toa9902501Para.body.SPVSN_ACT_RSTL = sourceStrArray[1];
             toa9902501Para.body.FDC_ACT_SN = sourceStrArray[2];
             toa9902501Para.body.FDC_BANK_ACT_SN = sourceStrArray[3];
             toa9902501Para.header.REQ_SN = sourceStrArray[4];

@@ -7,7 +7,7 @@ import org.fbi.dep.model.base.TIAHeader;
 import java.io.Serializable;
 
 /**
- * 泰安房产资金监管：日间明细对账请求报文（面向SBS发起）
+ * 泰安房产资金监管：到SBS查询当日记账信息
  * User: hanjianlong
  * Date: 2015-07-16
  */

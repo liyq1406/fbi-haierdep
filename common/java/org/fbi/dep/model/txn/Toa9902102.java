@@ -33,5 +33,5 @@ public class Toa9902102 extends TOA implements Serializable {
         /*01	结果	                4   0000表示成功
           02	预售资金监管平台流水	16
         */
-     }
+    }
 }

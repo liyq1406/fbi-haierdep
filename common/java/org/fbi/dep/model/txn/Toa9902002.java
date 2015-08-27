@@ -7,7 +7,7 @@ import org.fbi.dep.model.base.TOAHeader;
 import java.io.Serializable;
 
 /**
- * 泰安房产资金监管：交存记账
+ * 泰安房产资金监管：交存记账到泰安房产中心
  * User: hanjianlong
  * Date: 2015-07-16
  */

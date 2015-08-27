@@ -38,8 +38,8 @@ public class Toa9902201Transform extends AbstractToaTransform {
         String strRtnCode=sourceStrArray[0].substring(6,10);
         toa9902201Para.header.RETURN_CODE = strRtnCode;
         if("0000".equals(strRtnCode)) {
-            toa9902201Para.body.ACC_ID = sourceStrArray[1];
-            toa9902201Para.body.ACC_NAME = sourceStrArray[2];
+            toa9902201Para.body.SPVSN_ACC_ID = sourceStrArray[1];
+            toa9902201Para.body.SPVSN_ACC_NAME = sourceStrArray[2];
             toa9902201Para.body.TX_AMT = sourceStrArray[3];
             toa9902201Para.body.OWNER_NAME = sourceStrArray[4];
             toa9902201Para.body.CTFIC_TYPE = sourceStrArray[5];

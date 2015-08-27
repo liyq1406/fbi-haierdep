@@ -1,6 +1,8 @@
 package org.fbi.dep.model.txn;
 
-import org.fbi.dep.model.base.*;
+import org.fbi.dep.model.base.TIA;
+import org.fbi.dep.model.base.TIABody;
+import org.fbi.dep.model.base.TIAHeader;
 
 import java.io.Serializable;
 import java.util.List;

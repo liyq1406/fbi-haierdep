@@ -29,7 +29,7 @@ public class Toa900012602 extends TOA {
     public static class Header extends TOAHeader {
     }
 
-    public static class Body extends TOABody{
+    public static class Body extends TOABody {
         /*01	外围系统流水号
           02	交易金额
         */
