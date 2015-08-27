@@ -28,6 +28,22 @@ public class Mock910012002 {
         try {
             String xmlmsg = "<?xml version=\"1.0\" encoding=\"GBK\"?>" +
                     "<root>" +
+                    "  <info>" +
+                    "    <reqsn>d3626bbc6b7c452196c86530251e2065</reqsn>" +
+                    "    <userid>HFNBAPP001</userid>" +
+                    "    <txntime>152205</txntime>" +
+                    "    <txndate>20150827</txndate>" +
+                    "    <txncode>910012002</txncode>" +
+                    "    <version>1.0</version>" +
+                    "  </info>" +
+                    "  <body>" +
+                    "    <accountoutcode>801000250902012001</accountoutcode>" +
+                    "    <tradeamt>30000000</tradeamt>" +
+                    "    <accountcode>801000023102011001</accountcode>" +
+                    "    <originid>03150827042887</originid>" +
+                    "  </body>" +
+                    "</root>";
+                    /*"<root>" +
                     "<info>" +
                     "<reqsn>afa0462b2fc946cfadcce8dc2debc9fe</reqsn>" +
                     "<userid>HFNBAPP001</userid>" +
@@ -42,7 +58,7 @@ public class Mock910012002 {
                     "<accountcode>801000016502013</accountcode>" +
                     "<originid>03150825042882</originid>" +
                     "</body>" +
-                    "</root>";
+                    "</root>";*/
             // crypt-MD5:e9baa4c4d7787f4c752a0b05122d15e
             String mac = helper.MD5Helper.getMD5String("HFNBAPP001HFNB20150623001" + xmlmsg);
             String reqmsg = "Encrypt-MD5:" + mac + "\n" + xmlmsg;

@@ -16,7 +16,7 @@ public class Tia900010002Transform extends AbstractTiaTransform{
         String termID = PropertyManager.getProperty("sbs.termid.TAFDCAPP001");
         Tia900010002 tia900010002Para=(Tia900010002)tiaPara;
         byte[] bytes = SbsTxnDataTransform.convertToTxnAa41(tia900010002Para.header.REQ_SN,
-                tia900010002Para.body.SPVSN_ACC_ID, tia900010002Para.body.GERL_ACC_ID,
+                tia900010002Para.body.GERL_ACC_ID,tia900010002Para.body.SPVSN_ACC_ID,
                 tia900010002Para.body.TX_AMT, termID, "");
         return bytes;
     }
