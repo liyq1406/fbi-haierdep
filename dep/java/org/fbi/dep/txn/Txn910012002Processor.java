@@ -29,6 +29,7 @@ public class Txn910012002Processor extends AbstractTxnProcessor  {
             tia900010002.body.SPVSN_ACC_ID=tia.body.accountcode;
             tia900010002.header.USER_ID=tia.info.bankoperid;
             tia900010002.header.REQ_SN=tia.info.reqsn;
+            tia900010002.body.BANK_BRANCH_ID=tia.info.bankbranchid;
             Object toa = new JmsObjMsgClient().sendRecivMsg("91001", "910012002", "fcdep",
                     "queue.dep.in.fcdep.object", "queue.dep.out.fcdep.object", tia900010002);
             toa900010002=(Toa900010002)toa;

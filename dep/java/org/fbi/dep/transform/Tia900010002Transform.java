@@ -15,9 +15,16 @@ public class Tia900010002Transform extends AbstractTiaTransform{
     public byte[] transform(TIA tiaPara) {
         String termID = PropertyManager.getProperty("sbs.termid.TAFDCAPP001");
         Tia900010002 tia900010002Para=(Tia900010002)tiaPara;
-        byte[] bytes = SbsTxnDataTransform.convertToTxnAa41(tia900010002Para.header.REQ_SN,
-                tia900010002Para.body.GERL_ACC_ID,tia900010002Para.body.SPVSN_ACC_ID,
-                tia900010002Para.body.TX_AMT, termID, "");
+        byte[] bytes=null;
+        if(tia900010002Para.header.TX_CODE.endsWith("002")) {
+            bytes = SbsTxnDataTransform.convertToTxnAa41(tia900010002Para.header.REQ_SN,
+                    tia900010002Para.body.GERL_ACC_ID, tia900010002Para.body.SPVSN_ACC_ID,
+                    tia900010002Para.body.TX_AMT, termID, "");
+        }else{
+            bytes = SbsTxnDataTransform.convertToTxnAa41(tia900010002Para.header.REQ_SN,
+                    tia900010002Para.body.SPVSN_ACC_ID, tia900010002Para.body.GERL_ACC_ID,
+                    tia900010002Para.body.TX_AMT, termID, "");
+        }
         return bytes;
     }
 }

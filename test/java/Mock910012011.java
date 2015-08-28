@@ -13,36 +13,38 @@ import org.apache.http.impl.client.DefaultHttpClient;
 import org.apache.http.params.CoreConnectionPNames;
 import org.apache.http.util.EntityUtils;
 
-import java.io.*;
+import java.io.IOException;
+import java.io.InputStream;
+import java.io.UnsupportedEncodingException;
 
 /**
  * Created by XIANGYANG on 2015-7-3.
  */
-public class Mock910012002 {
+public class Mock910012011 {
     private Log logger = LogFactory.getLog(this.getClass());
 
     private String serverUrl;
-    private org.apache.http.client.HttpClient httpclient = null;
+    private HttpClient httpclient = null;
     private HttpPost httppost = null;
     public static void main(String[] args) {
         try {
             String xmlmsg = "<?xml version=\"1.0\" encoding=\"GBK\"?>" +
                     "<root>" +
-                    "  <info>" +
-                    "    <reqsn>d3626bbc6b7c452196c86530251e2065</reqsn>" +
-                    "    <userid>HFNBAPP001</userid>" +
-                    "    <txntime>152205</txntime>" +
-                    "    <txndate>20150827</txndate>" +
-                    "    <txncode>910012002</txncode>" +
-                    "    <version>1.0</version>" +
-                    "  </info>" +
-                    "  <body>" +
-                    "    <accountoutcode>801000250902012001</accountoutcode>" +
-                    "    <tradeamt>300</tradeamt>" +
-                    "    <accountcode>801000023102011001</accountcode>" +
-                    "    <originid>03150827042887</originid>" +
-                    "  </body>" +
+                    "<info>" +
+                    "<txncode>910012011</txncode>" +
+                    "<userid>HFNBAPP001</userid>" +
+                    "<reqsn>HFNB115011500000207</reqsn>" +
+                    "<version>1.0</version>" +
+                    "<txndate>20150609</txndate>" +
+                    "<txntime>142626</txntime>" +
+                    "<bankbranchid>142626</bankbranchid>" +
+                    "<bankoperid>142626</bankoperid>" +
+                    "</info>" +
+                    "<body>" +
+                    "<originid>12345678901234</originid>" +
+                    "</body>" +
                     "</root>";
+            // crypt-MD5:e9baa4c4d7787f4
                     /*"<root>" +
                     "<info>" +
                     "<reqsn>afa0462b2fc946cfadcce8dc2debc9fe</reqsn>" +
