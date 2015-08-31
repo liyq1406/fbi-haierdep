@@ -35,20 +35,20 @@ public class Txn910012011Processor extends AbstractTxnProcessor  {
             throw new RuntimeException(e);
         }
 
-        ToaXml910012002 toaXml910012002=new ToaXml910012002();
-        toaXml910012002.info.rtncode=toa900010002.header.RETURN_CODE.trim();
+        ToaXml910012011 toaXml910012011=new ToaXml910012011();
+        toaXml910012011.info.rtncode=toa900010002.header.RETURN_CODE.trim();
         if(toa900010002.header.RETURN_MSG!=null) {
-            toaXml910012002.info.rtnmsg = toa900010002.header.RETURN_MSG.trim();
+            toaXml910012011.info.rtnmsg = toa900010002.header.RETURN_MSG.trim();
         }else{
-            toaXml910012002.info.rtnmsg="";
+            toaXml910012011.info.rtnmsg="";
         }
-        toaXml910012002.info.reqsn=toa900010002.header.REQ_SN.trim();
+        toaXml910012011.info.reqsn=toa900010002.header.REQ_SN.trim();
 
-        toaXml910012002.Body.rtncode=toaXml910012002.info.rtncode;
-        toaXml910012002.Body.rtnmsg=toaXml910012002.info.rtnmsg;
-        toaXml910012002.Body.fdcserial=toaXml910012002.info.reqsn;
+        toaXml910012011.Body.rtncode=toaXml910012011.info.rtncode;
+        toaXml910012011.Body.rtnmsg=toaXml910012011.info.rtnmsg;
+        toaXml910012011.Body.fdcserial=toaXml910012011.info.reqsn;
 
-        return toaXml910012002.toString();
+        return toaXml910012011.toString();
     }
 }
 

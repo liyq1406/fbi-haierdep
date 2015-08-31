@@ -64,7 +64,7 @@ public class Mock910012011 {
             // crypt-MD5:e9baa4c4d7787f4c752a0b05122d15e
             String mac = helper.MD5Helper.getMD5String("HFNBAPP001HFNB20150623001" + xmlmsg);
             String reqmsg = "Encrypt-MD5:" + mac + "\n" + xmlmsg;
-            Mock910012002 client = new Mock910012002();
+            Mock910012011 client = new Mock910012011();
             String serverUrl = "http://localhost:62080/depService";
             String rtnDatagram = client.doPost(serverUrl, reqmsg, "GBK");
         } catch (Exception e) {
