@@ -40,7 +40,7 @@ public class Mock910012002 {
                     "    <accountoutcode>801000250902012001</accountoutcode>" +
                     "    <tradeamt>300</tradeamt>" +
                     "    <accountcode>801000023102011001</accountcode>" +
-                    "    <originid>03150827042887</originid>" +
+                    "    <originid>12345678901234</originid>" +
                     "  </body>" +
                     "</root>";
                     /*"<root>" +
