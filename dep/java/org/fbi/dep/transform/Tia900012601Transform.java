@@ -1,7 +1,6 @@
 package org.fbi.dep.transform;
 
 import org.fbi.dep.model.base.TIA;
-import org.fbi.dep.model.txn.Tia900010002;
 import org.fbi.dep.model.txn.Tia900012601;
 import org.fbi.dep.util.PropertyManager;
 import org.slf4j.Logger;

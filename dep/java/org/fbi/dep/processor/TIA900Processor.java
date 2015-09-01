@@ -48,13 +48,13 @@ public class TIA900Processor implements Processor {
             if(tiaTemp.getHeader().TX_CODE.equals("0002")) {
                 Tia900010002Transform tia900010002TransformTemp = new Tia900010002Transform();
                 sbsReqMsg = tia900010002TransformTemp.transform(tiaTemp);
-            }else if(tiaTemp.getHeader().TX_CODE.equals("2601")) {
+            }else if(tiaTemp.getHeader().TX_CODE.equals("2601")) { // 日终对账总数
                 Tia900012601Transform tia900012601TransformTemp = new Tia900012601Transform();
                 sbsReqMsg = tia900012601TransformTemp.transform(tiaTemp);
-            }else if(tiaTemp.getHeader().TX_CODE.equals("2602")) {
+            }else if(tiaTemp.getHeader().TX_CODE.equals("2602")) { // 日终对账明细
                 Tia900012602Transform tia900012602TransformTemp = new Tia900012602Transform();
                 sbsReqMsg = tia900012602TransformTemp.transform(tiaTemp);
-            }else if(tiaTemp.getHeader().TX_CODE.equals("2701")) {
+            }else if(tiaTemp.getHeader().TX_CODE.equals("2701")) { // 余额对账
                 Tia900012701Transform tia900012701TransformTemp = new Tia900012701Transform();
                 sbsReqMsg = tia900012701TransformTemp.transform(tiaTemp);
             }
