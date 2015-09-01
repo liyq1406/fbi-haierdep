@@ -42,7 +42,9 @@ public class Txn910012011Processor extends AbstractTxnProcessor  {
         }else{
             toaXml910012011.info.rtnmsg="";
         }
-        toaXml910012011.info.reqsn=toa900010002.header.REQ_SN.trim();
+        if(toa900010002.header.REQ_SN!=null) {
+            toaXml910012011.info.reqsn = toa900010002.header.REQ_SN.trim();
+        }
 
         toaXml910012011.Body.rtncode=toaXml910012011.info.rtncode;
         toaXml910012011.Body.rtnmsg=toaXml910012011.info.rtnmsg;

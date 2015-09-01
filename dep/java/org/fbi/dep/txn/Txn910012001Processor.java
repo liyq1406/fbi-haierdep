@@ -41,15 +41,25 @@ public class Txn910012001Processor extends AbstractTxnProcessor  {
         }else{
             toaXml910012001.info.rtnmsg="";
         }
-        toaXml910012001.info.reqsn=toa9902001.header.REQ_SN.trim();
+        if(toa9902001.header.REQ_SN!=null) {
+            toaXml910012001.info.reqsn = toa9902001.header.REQ_SN.trim();
+        }
         toaXml910012001.info.txncode=tia.info.txncode;
 
         toaXml910012001.Body.rtncode=toaXml910012001.info.rtncode;
         toaXml910012001.Body.rtnmsg=toaXml910012001.info.rtnmsg;
-        toaXml910012001.Body.accounttype=toa9902001.body.SPVSN_ACC_TYPE.trim();
-        toaXml910012001.Body.accountcode=toa9902001.body.SPVSN_ACC_ID.trim();
-        toaXml910012001.Body.accountname=toa9902001.body.SPVSN_ACC_NAME.trim();
-        toaXml910012001.Body.tradeamt=toa9902001.body.TX_AMT.trim();
+        if(toa9902001.body.SPVSN_ACC_TYPE!=null) {
+            toaXml910012001.Body.accounttype = toa9902001.body.SPVSN_ACC_TYPE.trim();
+        }
+        if(toa9902001.body.SPVSN_ACC_ID!=null) {
+            toaXml910012001.Body.accountcode = toa9902001.body.SPVSN_ACC_ID.trim();
+        }
+        if(toa9902001.body.SPVSN_ACC_NAME!=null) {
+            toaXml910012001.Body.accountname = toa9902001.body.SPVSN_ACC_NAME.trim();
+        }
+        if(toa9902001.body.TX_AMT !=null) {
+            toaXml910012001.Body.tradeamt = toa9902001.body.TX_AMT.trim();
+        }
         toaXml910012001.Body.fdcserial=toaXml910012001.info.reqsn;
 
         return toaXml910012001.toString();
