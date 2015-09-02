@@ -29,18 +29,18 @@ public class Mock910012002 {
             String xmlmsg = "<?xml version=\"1.0\" encoding=\"GBK\"?>" +
                     "<root>" +
                     "  <info>" +
-                    "    <reqsn>d3626bbc6b7c452196c86530251e2065</reqsn>" +
+                    "    <reqsn>bae490b3c1404b1e8e3a0febca3feb7b</reqsn>" +
                     "    <userid>HFNBAPP001</userid>" +
-                    "    <txntime>152205</txntime>" +
-                    "    <txndate>20150827</txndate>" +
+                    "    <txntime>095954</txntime>" +
+                    "    <txndate>20150902</txndate>" +
                     "    <txncode>910012002</txncode>" +
                     "    <version>1.0</version>" +
                     "  </info>" +
                     "  <body>" +
                     "    <accountoutcode>801000250902012001</accountoutcode>" +
-                    "    <tradeamt>300</tradeamt>" +
-                    "    <accountcode>801000023102011001</accountcode>" +
-                    "    <originid>12345678901234</originid>" +
+                    "    <tradeamt>1000000</tradeamt>" +
+                    "    <accountcode>801000001102012001</accountcode>" +
+                    "    <originid>03150902042894</originid>" +
                     "  </body>" +
                     "</root>";
                     /*"<root>" +
