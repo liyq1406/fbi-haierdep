@@ -41,7 +41,7 @@ public class Mock910012011 {
                     "<bankoperid>142626</bankoperid>" +
                     "</info>" +
                     "<body>" +
-                    "<originid>12345678901234</originid>" +
+                    "<originid>03150902042894</originid>" +
                     "</body>" +
                     "</root>";
             // crypt-MD5:e9baa4c4d7787f4
