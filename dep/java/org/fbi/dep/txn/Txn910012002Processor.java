@@ -30,11 +30,12 @@ public class Txn910012002Processor extends AbstractTxnProcessor  {
             tia900010002.header.USER_ID=tia.info.bankoperid;
             tia900010002.header.REQ_SN=tia.info.reqsn;
             tia900010002.body.BANK_BRANCH_ID=tia.info.bankbranchid;
+            logger.error("接收网银端发送过来的交存记账交易,通过核心队列转发到RFM系统");
             Object toa = new JmsObjMsgClient().sendRecivMsg("91001", "910012002", "fcdep",
                     "queue.dep.in.fcdep.object", "queue.dep.out.fcdep.object", tia900010002);
             toa900010002=(Toa900010002)toa;
         } catch (Exception e) {
-            logger.error("rfm-ta交易异常.", e);
+            logger.error("接收网银端发送过来的交存记账交易异常.", e);
             throw new RuntimeException(e);
         }
         ToaXml910012002 toaXml910012002=new ToaXml910012002();

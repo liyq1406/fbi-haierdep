@@ -60,7 +60,7 @@ public class TIA900Processor implements Processor {
             }
             exchange.getOut().setBody(sbsReqMsg);
             if(sbsReqMsg!=null) {
-                logger.info("往SBS发送报文 : " + new String(sbsReqMsg));
+                logger.info("往Core900Processor核心层发送报文 : " + new String(sbsReqMsg).trim());
             }
         }
     }

@@ -48,7 +48,7 @@ public class TOA900Processor implements Processor {
             exchange.getOut().setHeader("JMSX_CHANNELID", inMessage.getHeader("JMSX_CHANNELID"));
             exchange.getOut().setHeader("JMSX_SRCMSGFLAG", inMessage.getHeader("JMSX_SRCMSGFLAG"));
             String strReqTxnCode=inMessage.getHeader("REQ_TXN_CODE").toString();
-            logger.info("从[RFM] 应答报文内容： " + new String(datagram));
+            logger.info("来自【SBS】的应答报文(之后传给RFM系统)：" + new String(datagram).trim());
             if (strReqTxnCode.equals("0002")) {
                 // 报文体填充
                 Toa900010002Transform toa900010002TransformTemp = new Toa900010002Transform();

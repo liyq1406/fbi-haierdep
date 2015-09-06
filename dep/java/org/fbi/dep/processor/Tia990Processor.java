@@ -36,7 +36,7 @@ public class Tia990Processor implements Processor {
         exchange.getOut().setHeader("JMSX_SRCMSGFLAG", inMessage.getHeader("JMSX_SRCMSGFLAG"));
 
         String  msg = inMessage.getBody(String.class);
-        logger.info("[RFM] 请求报文内容： " + msg);
+        logger.info("[RFM] 请求报文内容： " + msg.trim());
         String strMsgContent="";
         String strTxCode;
         TIA tiaTemp=(TIA) inMessage.getBody();
