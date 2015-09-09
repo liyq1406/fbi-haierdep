@@ -46,7 +46,7 @@ public class SbsHttpRouteBuilder extends RouteBuilder {
     @Override
     public void configure() throws Exception {
         from("netty-http:http://" + SERVER_IP + ":" + server_port + "/depService?matchOnUriPrefix=false").
-                process(new Processor() {
+            process(new Processor() {
                             public void process(Exchange exchange) throws Exception {
                                 String rtnmac = null;
                                 String txnCode = null;
@@ -204,6 +204,6 @@ public class SbsHttpRouteBuilder extends RouteBuilder {
                                 }
                             }
                         }
-                );
+            );
     }
 }

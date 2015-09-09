@@ -66,7 +66,7 @@ public class RfmServerTest {
                 rtnmsg = "0000220000|1000000000000009|";
             }else if("2001".equals(strSBstrSB)){
                 rtnmsg = "0002270000|0|"+
-                        StringUtils.rightPad("10000000", 20, " ")+"|" +
+                        StringUtils.rightPad("1023", 20, " ")+"|" +
                         StringUtils.rightPad("801000016502013", 30, " ")+"|" +
                         StringUtils.rightPad("青岛海尔空调器有限总公司职工技术协会", 150, " ")+"|"+
                         "1440560429911369|";

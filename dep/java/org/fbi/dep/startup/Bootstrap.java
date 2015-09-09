@@ -34,6 +34,7 @@ public class Bootstrap {
     //private static String RFM_SOCKET_PORT = PropertyManager.getProperty("socket.rfm.port");
     private static String SMS_SOCKET_PORT = PropertyManager.getProperty("dep.localhost.sms.port");
     private static String SBS_HTTP_PORT = PropertyManager.getProperty("dep.localhost.sbs.http.port");
+    private static String FEB_HTTP_PORT = PropertyManager.getProperty("dep.localhost.feb.http.port");
 
 
     public static void main(String[] args) throws Exception {
@@ -66,6 +67,7 @@ public class Bootstrap {
         //RouteBuilder rfmSktRouteBuilder = new RfmSktRouteBuilder(RFM_SOCKET_PORT);
         RouteBuilder smsSktRouteBuilder = new SmsSktRouteBuilder(SMS_SOCKET_PORT);
         RouteBuilder sbsHttpRouteBuilder = new SbsHttpRouteBuilder(SBS_HTTP_PORT);
+        RouteBuilder febHttpRouteBuilder = new FebHttpRouteBuilder(FEB_HTTP_PORT);
         try {
             logger.info("CamelContext开始添加路由...");
             context.addRoutes(coreRouteBuilder);
@@ -79,6 +81,7 @@ public class Bootstrap {
             //context.addRoutes(rfmSktRouteBuilder);
             context.addRoutes(smsSktRouteBuilder);
             context.addRoutes(sbsHttpRouteBuilder);
+            context.addRoutes(febHttpRouteBuilder);
             logger.info("CamelContext开始启动...");
             context.start();
             logger.info("CamelContext已成功启动...");
