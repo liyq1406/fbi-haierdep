@@ -9,7 +9,7 @@ public class M000 extends SOFFormBody {
 
     {
         fieldTypes = new int[]{1};
-        fieldLengths = new int[]{99};
+        //fieldLengths = new int[]{99};
     }
 
     public String getRTNMSG() {
