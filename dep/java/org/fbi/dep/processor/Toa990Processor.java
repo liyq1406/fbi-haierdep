@@ -26,14 +26,16 @@ public class Toa990Processor implements Processor {
         Message inMessage = exchange.getIn();
         String strMsg= (String) inMessage.getBody();
         String strRtnTxCode=strMsg.substring(6,10);
-        // 发送到泰安房地产中心查询所求数据（利用Socket协议）
-        logger.info("往[RFM] 请求报文内容： " + strMsg.trim());
+
+        logger.info("往[泰安房产中心] 请求的报文内容： " + strMsg.trim());
+
+        // 数据发送到泰安房地产中心（利用Socket协议）
         String rtnmsg = new JmsRfmSktClient().processTxn(strMsg);
         exchange.getOut().setHeader("JMSCorrelationID", inMessage.getHeader("JMSCorrelationID"));
         exchange.getOut().setHeader("JMSX_APPID", inMessage.getHeader("JMSX_APPID"));
         exchange.getOut().setHeader("JMSX_CHANNELID", inMessage.getHeader("JMSX_CHANNELID"));
         exchange.getOut().setHeader("JMSX_SRCMSGFLAG", inMessage.getHeader("JMSX_SRCMSGFLAG"));
-        logger.info("从[RFM] 应答报文内容： " + rtnmsg.trim());
+        logger.info("从[泰安房产中心] 应答的报文内容： " + rtnmsg.trim());
         if(EnuTaTxCode.TRADE_1001.getCode().equals(strRtnTxCode)){
             Toa9901001Transform toa9901001TransformTemp =new Toa9901001Transform();
             Toa9901001 toa9901001= toa9901001TransformTemp.transform(rtnmsg,"");
