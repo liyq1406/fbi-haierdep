@@ -56,13 +56,13 @@ public class JmsRfmSktClient {
             }
             String strHead=new String(recvbuf);
             int msgLen = Integer.parseInt(strHead);
-            recvbuf = new byte[msgLen - 6];
+            recvbuf = new byte[msgLen];
 
             //TODO
             Thread.sleep(500);
 
             readNum = is.read(recvbuf);   //阻塞读
-            if (readNum != msgLen - 6) {
+            if (readNum != msgLen) {
                 strMsg = "报文长度错误,报文头指示长度:[" + msgLen + "], 实际获取长度:[" + readNum + "]";
                 logger.info(strMsg);
                 throw new RuntimeException(strMsg);
