@@ -34,7 +34,7 @@ public class Toa9901002Transform extends AbstractToaTransform {
              “.”和“|”都是转义字符，必须得加"\\";
            3、如果在一个字符串中有多个分隔符，可以用“|”作为连字符，比如：“a=1 and b =2 or c=3”,把三个都分隔出来，可以用String.split("and|or");
         */
-        String strRtnCode=sourceStrArray[0].substring(6,10);
+        String strRtnCode=sourceStrArray[0];
         Toa9901002Para.header.RETURN_CODE = strRtnCode;
         if("0000".equals(strRtnCode)) {
             Toa9901002Para.header.REQ_SN=sourceStrArray[1];

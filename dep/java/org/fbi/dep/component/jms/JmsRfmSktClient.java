@@ -19,29 +19,65 @@ public class JmsRfmSktClient {
     public static final int TIMEOUT = PropertyManager.getIntProperty("socket.rfm.timeout");
 
     public String processTxn(String datagram) throws Exception {
-        // 开始执行时间
-        long startTime = System.currentTimeMillis();
+
+        String strMsg;
+
+        byte[] recvbuf = null;
         // 定义SOCKET
-        Socket socket = new Socket(HOSTIP, HOSTPORT);
-        socket.setKeepAlive(true);
-        socket.setSoTimeout(TIMEOUT);
+        Socket socket=null;
+        try{
+            socket = new Socket(HOSTIP, HOSTPORT);
+            socket.setKeepAlive(true);
+            socket.setSoTimeout(TIMEOUT);
+        }catch (Exception e){
+            strMsg = "服务器连接失败!";
+            logger.info(strMsg);
+            throw new RuntimeException(strMsg);
+        }
+
         OutputStream os = socket.getOutputStream();
         // 发送数据包
         os.write(datagram.getBytes("GB2312"));
         os.flush();
 
-        // 接收返回的数据
         InputStream is = socket.getInputStream();
-        BufferedInputStream bis = new BufferedInputStream(is);
-        // 输入流读取字节
-        byte[] msgBytes = new byte[5000];
-        bis.read(msgBytes);
-        String resDatagram = new String(msgBytes);
-        is.close();
-        bis.close();
-        socket.close();
-        long endTime = System.currentTimeMillis();
-        logger.info("耗时：" + (endTime - startTime)+"ms");
+        try {
+            recvbuf = new byte[6];
+            int readNum = is.read(recvbuf);
+            if (readNum == -1) {
+                strMsg = "服务器连接已关闭!";
+                logger.info(strMsg);
+                throw new RuntimeException(strMsg);
+            }
+            if (readNum < 6) {
+                strMsg = "读取报文头长度部分错误...";
+                logger.info(strMsg);
+                throw new RuntimeException(strMsg);
+            }
+            String strHead=new String(recvbuf);
+            int msgLen = Integer.parseInt(strHead);
+            recvbuf = new byte[msgLen - 6];
+
+            //TODO
+            Thread.sleep(500);
+
+            readNum = is.read(recvbuf);   //阻塞读
+            if (readNum != msgLen - 6) {
+                strMsg = "报文长度错误,报文头指示长度:[" + msgLen + "], 实际获取长度:[" + readNum + "]";
+                logger.info(strMsg);
+                throw new RuntimeException(strMsg);
+            }
+        }finally {
+            try {
+                is.close();
+                socket.close();
+            } catch (IOException e) {
+                logger.info(e.getMessage());
+                throw new RuntimeException(e);
+            }
+        }
+        // 接收返回的数据
+        String resDatagram = new String(recvbuf);
         return resDatagram;
     }
 

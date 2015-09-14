@@ -29,7 +29,7 @@ public class Toa9902211Transform extends AbstractToaTransform {
           02    ¥ÌŒÛ‘≠“Ú√Ë ˆ	        60
         */
         String[] sourceStrArray = strPara.split("\\|");
-        String strRtnCode=sourceStrArray[0].substring(6,10);
+        String strRtnCode=sourceStrArray[0];
         toa9902211Para.header.RETURN_CODE = strRtnCode;
         if("0000".equals(strRtnCode)) {
             toa9902211Para.header.REQ_SN = sourceStrArray[1];

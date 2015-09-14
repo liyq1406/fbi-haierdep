@@ -27,7 +27,7 @@ public class Toa9901001Transform extends AbstractToaTransform {
           05    预售项目名称            128
         */
         String[] sourceStrArray = strPara.split("\\|");
-        String strRtnCode=sourceStrArray[0].substring(6,10);
+        String strRtnCode=sourceStrArray[0];
         toa9901001Para.header.RETURN_CODE = strRtnCode;
         if("0000".equals(strRtnCode)) {
             toa9901001Para.header.REQ_SN = sourceStrArray[1];
