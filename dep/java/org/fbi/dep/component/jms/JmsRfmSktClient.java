@@ -41,9 +41,11 @@ public class JmsRfmSktClient {
         os.flush();
 
         InputStream is = socket.getInputStream();
+        BufferedInputStream bis = new BufferedInputStream(is);
         try {
             recvbuf = new byte[6];
-            int readNum = is.read(recvbuf);
+            int readNum = bis.read(recvbuf);
+
             if (readNum == -1) {
                 strMsg = "服务器连接已关闭!";
                 logger.info(strMsg);
@@ -54,6 +56,7 @@ public class JmsRfmSktClient {
                 logger.info(strMsg);
                 throw new RuntimeException(strMsg);
             }
+
             String strHead=new String(recvbuf);
             int msgLen = Integer.parseInt(strHead);
             recvbuf = new byte[msgLen];
@@ -61,15 +64,21 @@ public class JmsRfmSktClient {
             //TODO
             Thread.sleep(500);
 
-            readNum = is.read(recvbuf);   //阻塞读
+            readNum = 0;//阻塞读
+            while (readNum < msgLen) {
+                readNum += bis.read(recvbuf, readNum, msgLen - readNum);
+            }
+            is.close();
+            bis.close();
             if (readNum != msgLen) {
                 strMsg = "报文长度错误,报文头指示长度:[" + msgLen + "], 实际获取长度:[" + readNum + "]";
                 logger.info(strMsg);
                 throw new RuntimeException(strMsg);
             }
-        }finally {
+        }catch (Exception e){
+            logger.info("接收异常：",e);
+        } finally{
             try {
-                is.close();
                 socket.close();
             } catch (IOException e) {
                 logger.info(e.getMessage());
@@ -78,6 +87,7 @@ public class JmsRfmSktClient {
         }
         // 接收返回的数据
         String resDatagram = new String(recvbuf);
+        logger.info("收到的房产中心数据："+resDatagram);
         return resDatagram;
     }
 
