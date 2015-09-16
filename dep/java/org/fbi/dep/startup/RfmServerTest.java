@@ -1,6 +1,7 @@
 package org.fbi.dep.startup;
 
 import org.apache.commons.lang.StringUtils;
+import org.fbi.dep.util.ToolUtil;
 
 import java.io.*;
 import java.net.ServerSocket;
@@ -83,17 +84,17 @@ public class RfmServerTest {
             String rtnmsg;
             if("1001".equals(strSBstrSB)){
                 rtnmsg = "0005360000|1000000000000009|"+
-                        StringUtils.rightPad("prePerName", 255, " ")+"|" +
-                        StringUtils.rightPad("preProAddr", 128, " ")+"|" +
-                        StringUtils.rightPad("preProName", 128, " ")+"|";
+                        ToolUtil.rightPad("prePerName", 255, " ")+"|" +
+                        ToolUtil.rightPad("preProAddr", 128, " ")+"|" +
+                        ToolUtil.rightPad("preProName", 128, " ")+"|";
             }else if("1002".equals(strSBstrSB)){
                 rtnmsg = "0000220000|1000000000000009|";
             }else if("2001".equals(strSBstrSB)){
                 String accountname = "青岛海尔空调器有限总公司职工技术协会";
                 rtnmsg = "0002270000|0|"+
-                        StringUtils.rightPad("1023", 20, " ")+"|" +
-                        StringUtils.rightPad("801000016502013", 30, " ")+"|" +
-                        StringUtils.rightPad(accountname, 150+accountname.length()-length(accountname), " ")+"|"+
+                        ToolUtil.rightPad("1023", 20, " ")+"|" +
+                        ToolUtil.rightPad("801000016502013", 30, " ")+"|" +
+                        ToolUtil.rightPad(accountname, 150+accountname.length()-length(accountname), " ")+"|"+
                         "1440560429911369|";
             }else if("2002".equals(strSBstrSB)){
                 rtnmsg = "0000220000|1000000000000009|";
@@ -101,23 +102,23 @@ public class RfmServerTest {
                 rtnmsg = "0000220000|1000000000000009|";
             }else if("2101".equals(strSBstrSB)){
                 rtnmsg = "0008830000|" +
-                        StringUtils.rightPad("801000241502012001",30," ") +"|"+
-                        StringUtils.rightPad("jianguanzhanghao12345678900014huming", 150, " ")+"|" +
-                        StringUtils.rightPad("21", 20, " ")+"|" +
-                        StringUtils.rightPad("shoukuanyinhang", 90, " ")+"|" +
-                        StringUtils.rightPad("801000593102027001",30," ") +"|"+
-                        StringUtils.rightPad("shoukuanzhanghao12345678900014huming", 150, " ")+"|" +
-                        StringUtils.rightPad("xiangmumingcheng", 128, " ")+"|" +
-                        StringUtils.rightPad("kaifaqiyemingcheng", 255, " ")+"|" +
+                        ToolUtil.rightPad("801000241502012001",30," ") +"|"+
+                        ToolUtil.rightPad("jianguanzhanghao12345678900014huming", 150, " ")+"|" +
+                        ToolUtil.rightPad("21", 20, " ")+"|" +
+                        ToolUtil.rightPad("shoukuanyinhang", 90, " ")+"|" +
+                        ToolUtil.rightPad("801000593102027001",30," ") +"|"+
+                        ToolUtil.rightPad("shoukuanzhanghao12345678900014huming", 150, " ")+"|" +
+                        ToolUtil.rightPad("xiangmumingcheng", 128, " ")+"|" +
+                        ToolUtil.rightPad("kaifaqiyemingcheng", 255, " ")+"|" +
                         "1000000000000009|";
                 /*rtnmsg = "000873|0000|jianguanzhanghao12345678900014|"+
-                        StringUtils.rightPad("jianguanzhanghao12345678900014户名", 150, " ")+"|" +
-                        StringUtils.rightPad("20800001", 20, " ")+"|" +
-                        StringUtils.rightPad("shoukuanyinhang", 90, " ")+"|" +
+                        ToolUtil.rightPad("jianguanzhanghao12345678900014户名", 150, " ")+"|" +
+                        ToolUtil.rightPad("20800001", 20, " ")+"|" +
+                        ToolUtil.rightPad("shoukuanyinhang", 90, " ")+"|" +
                         "shoukuanzhanghao12345678900014|" +
-                        StringUtils.rightPad("shoukuanzhanghao12345678900014户名", 150, " ")+"|" +
-                        StringUtils.rightPad("项目名称", 128, " ")+"|" +
-                        StringUtils.rightPad("开发企业名称", 255, " ")+"|" +
+                        ToolUtil.rightPad("shoukuanzhanghao12345678900014户名", 150, " ")+"|" +
+                        ToolUtil.rightPad("项目名称", 128, " ")+"|" +
+                        ToolUtil.rightPad("开发企业名称", 255, " ")+"|" +
                         "1000000000000009";*/
             }else if("2102".equals(strSBstrSB)){
                 rtnmsg = "0000220000|1000000000000009|";
@@ -125,12 +126,12 @@ public class RfmServerTest {
                 rtnmsg = "0000220000|1000000000000009|";
             }else if("2201".equals(strSBstrSB)){
                 rtnmsg = "0005930000|"+
-                        StringUtils.rightPad("801000241502012001",30," ") +"|"+
-                        StringUtils.rightPad("jianguanzhanghao12345678900014huming", 150, " ")+"|" +
-                        StringUtils.rightPad("20", 20, " ")+"|" +
-                        StringUtils.rightPad("yezhuxingming", 80, " ")+"|" +
-                        StringUtils.rightPad("zhengjianleixing", 30, " ")+"|" +
-                        StringUtils.rightPad("kaifaqiyemingcheng", 255, " ")+"|" +
+                        ToolUtil.rightPad("801000241502012001",30," ") +"|"+
+                        ToolUtil.rightPad("jianguanzhanghao12345678900014huming", 150, " ")+"|" +
+                        ToolUtil.rightPad("20", 20, " ")+"|" +
+                        ToolUtil.rightPad("yezhuxingming", 80, " ")+"|" +
+                        ToolUtil.rightPad("zhengjianleixing", 30, " ")+"|" +
+                        ToolUtil.rightPad("kaifaqiyemingcheng", 255, " ")+"|" +
                         "1000000000000009|";
             }else if("2202".equals(strSBstrSB)){
                 rtnmsg = "0000220000|1000000000000009|";

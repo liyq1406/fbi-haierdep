@@ -3,6 +3,7 @@ package org.fbi.dep.transform;
 import org.apache.commons.lang.StringUtils;
 import org.fbi.dep.model.base.TIA;
 import org.fbi.dep.model.txn.Tia9901002;
+import org.fbi.dep.util.ToolUtil;
 
 /**
  * 泰安房产中心资金监管系统—撤销监管
@@ -33,17 +34,17 @@ public class Tia9901002Transform extends AbstractTiaTransform {
           10	柜员号	        30
           11	发起方	        1	1_监管银行*/
         String strRtn=
-                StringUtils.rightPad(tia9901002Para.header.TX_CODE, 4, ' ')+"|"+
-                StringUtils.rightPad(tia9901002Para.body.SPVSN_BANK_ID,   2, ' ')+"|"+
-                StringUtils.rightPad(tia9901002Para.body.CITY_ID,   6, ' ')+"|"+
-                StringUtils.rightPad(tia9901002Para.header.BIZ_ID,  14, ' ')+"|"+
-                StringUtils.rightPad(tia9901002Para.body.SPVSN_ACC_ID,    30, ' ')+"|"+
-                StringUtils.rightPad(tia9901002Para.body.SPVSN_ACC_NAME,  150, ' ')+"|"+
-                StringUtils.rightPad(tia9901002Para.header.REQ_SN,  30, ' ')+"|"+
-                StringUtils.rightPad(tia9901002Para.body.TX_DATE,   10, ' ')+"|"+
-                StringUtils.rightPad(tia9901002Para.body.BRANCH_ID, 30, ' ')+"|"+
-                StringUtils.rightPad(tia9901002Para.header.USER_ID, 30, ' ')+"|"+
-                StringUtils.rightPad(tia9901002Para.body.INITIATOR, 1, ' ')+"|";
+                ToolUtil.rightPad(tia9901002Para.header.TX_CODE, 4, ' ')+"|"+
+                ToolUtil.rightPad(tia9901002Para.body.SPVSN_BANK_ID,   2, ' ')+"|"+
+                ToolUtil.rightPad(tia9901002Para.body.CITY_ID,   6, ' ')+"|"+
+                ToolUtil.rightPad(tia9901002Para.header.BIZ_ID,  14, ' ')+"|"+
+                ToolUtil.rightPad(tia9901002Para.body.SPVSN_ACC_ID,    30, ' ')+"|"+
+                ToolUtil.rightPad(tia9901002Para.body.SPVSN_ACC_NAME,  150, ' ')+"|"+
+                ToolUtil.rightPad(tia9901002Para.header.REQ_SN,  30, ' ')+"|"+
+                ToolUtil.rightPad(tia9901002Para.body.TX_DATE,   10, ' ')+"|"+
+                ToolUtil.rightPad(tia9901002Para.body.BRANCH_ID, 30, ' ')+"|"+
+                ToolUtil.rightPad(tia9901002Para.header.USER_ID, 30, ' ')+"|"+
+                ToolUtil.rightPad(tia9901002Para.body.INITIATOR, 1, ' ')+"|";
         Integer intStrRtnLength=strRtn.length();
         strRtn= StringUtils.leftPad(intStrRtnLength.toString(),6, '0')+strRtn;
         return strRtn;

@@ -3,6 +3,7 @@ package org.fbi.dep.transform;
 import org.apache.commons.lang.StringUtils;
 import org.fbi.dep.model.base.TIA;
 import org.fbi.dep.model.txn.Tia9902101;
+import org.fbi.dep.util.ToolUtil;
 
 /**
  * 泰安房产中心资金监管系统—划拨验证
@@ -32,16 +33,16 @@ public class Tia9902101Transform extends AbstractTiaTransform {
           09	验证人员	    30
           10	发起方	        1	1_监管银行*/
         String strRtn=
-                StringUtils.rightPad(tia9902101Para.header.TX_CODE, 4, ' ')+"|"+
-                StringUtils.rightPad(tia9902101Para.body.SPVSN_BANK_ID,   2, ' ')+"|"+
-                StringUtils.rightPad(tia9902101Para.body.CITY_ID,   6, ' ')+"|"+
-                StringUtils.rightPad(tia9902101Para.header.BIZ_ID,  14, ' ')+"|"+
-                StringUtils.rightPad(tia9902101Para.header.PASSWORD,32, ' ')+"|"+
-                StringUtils.rightPad(tia9902101Para.header.REQ_SN,  30, ' ')+"|"+
-                StringUtils.rightPad(tia9902101Para.body.TX_DATE,   10, ' ')+"|"+
-                StringUtils.rightPad(tia9902101Para.body.BRANCH_ID, 30, ' ')+"|"+
-                StringUtils.rightPad(tia9902101Para.header.USER_ID, 30, ' ')+"|"+
-                StringUtils.rightPad(tia9902101Para.body.INITIATOR, 1, ' ')+"|";
+                ToolUtil.rightPad(tia9902101Para.header.TX_CODE, 4, ' ')+"|"+
+                ToolUtil.rightPad(tia9902101Para.body.SPVSN_BANK_ID,   2, ' ')+"|"+
+                ToolUtil.rightPad(tia9902101Para.body.CITY_ID,   6, ' ')+"|"+
+                ToolUtil.rightPad(tia9902101Para.header.BIZ_ID,  14, ' ')+"|"+
+                ToolUtil.rightPad(tia9902101Para.header.PASSWORD,32, ' ')+"|"+
+                ToolUtil.rightPad(tia9902101Para.header.REQ_SN, 30, ' ')+"|"+
+                ToolUtil.rightPad(tia9902101Para.body.TX_DATE,   10, ' ')+"|"+
+                ToolUtil.rightPad(tia9902101Para.body.BRANCH_ID, 30, ' ')+"|"+
+                ToolUtil.rightPad(tia9902101Para.header.USER_ID, 30, ' ')+"|"+
+                ToolUtil.rightPad(tia9902101Para.body.INITIATOR, 1, ' ')+"|";
         Integer intStrRtnLength=strRtn.length();
         strRtn= StringUtils.leftPad(intStrRtnLength.toString(),6, '0')+strRtn;
         return strRtn;
