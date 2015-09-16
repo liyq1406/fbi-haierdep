@@ -47,7 +47,7 @@ public class Tia9902202Transform extends AbstractTiaTransform {
                 ToolUtil.rightPad(tia9902202Para.body.BRANCH_ID, 30, ' ')+"|"+
                 ToolUtil.rightPad(tia9902202Para.header.USER_ID, 30, ' ')+"|"+
                 ToolUtil.rightPad(tia9902202Para.body.INITIATOR, 1, ' ')+"|";
-        Integer intStrRtnLength=strRtn.length();
+        Integer intStrRtnLength=ToolUtil.length(strRtn);
         strRtn= StringUtils.leftPad(intStrRtnLength.toString(),6, '0')+strRtn;
         return strRtn;
     }
