@@ -9,7 +9,6 @@ import java.net.Socket;
 
 /**
  * Created by hanjianlong.At 2015/7/22 11:44
- * wanglichao@163.com
  */
 public class JmsRfmSktClient {
     private static Logger logger = LoggerFactory.getLogger(JmsRfmSktClient.class);
@@ -21,8 +20,8 @@ public class JmsRfmSktClient {
     public String processTxn(String datagram) throws Exception {
 
         String strMsg;
-
         byte[] recvbuf = null;
+
         // 定义SOCKET
         Socket socket=null;
         try{
@@ -44,6 +43,7 @@ public class JmsRfmSktClient {
         BufferedInputStream bis = new BufferedInputStream(is);
         try {
             recvbuf = new byte[6];
+            //int readNum = is.read(recvbuf);
             int readNum = bis.read(recvbuf);
 
             if (readNum == -1) {
@@ -66,10 +66,10 @@ public class JmsRfmSktClient {
 
             readNum = 0;//阻塞读
             while (readNum < msgLen) {
+                //readNum += is.read(recvbuf, readNum, msgLen - readNum);
                 readNum += bis.read(recvbuf, readNum, msgLen - readNum);
             }
-            is.close();
-            bis.close();
+
             if (readNum != msgLen) {
                 strMsg = "报文长度错误,报文头指示长度:[" + msgLen + "], 实际获取长度:[" + readNum + "]";
                 logger.info(strMsg);
@@ -79,14 +79,30 @@ public class JmsRfmSktClient {
             logger.info("接收异常：",e);
         } finally{
             try {
+                is.close();
+            } catch (IOException e) {
+                logger.info(e.getMessage());
+                throw new RuntimeException(e);
+            }
+            try {
+                bis.close();
+            } catch (IOException e) {
+                logger.info(e.getMessage());
+                throw new RuntimeException(e);
+            }
+
+            try {
                 socket.close();
             } catch (IOException e) {
                 logger.info(e.getMessage());
                 throw new RuntimeException(e);
             }
         }
+        String resDatagram="";
         // 接收返回的数据
-        String resDatagram = new String(recvbuf);
+        if(recvbuf!=null) {
+            resDatagram = new String(recvbuf);
+        }
         logger.info("收到的房产中心数据："+resDatagram);
         return resDatagram;
     }
