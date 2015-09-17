@@ -8,7 +8,7 @@ import java.io.*;
 import java.net.Socket;
 
 /**
- * Created by Lichao.W At 2015/7/22 11:44
+ * Created by hanjianlong.At 2015/7/22 11:44
  * wanglichao@163.com
  */
 public class JmsRfmSktClient {
