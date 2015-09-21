@@ -37,7 +37,7 @@ public class ToaXml9100001 extends ToaXml {
         this.BODY = BODY;
     }
 
-    public static class Info{
+    public static class Info implements Serializable{
         private String TXNCODE;
         private String VERSION;
         private String REQSN;
@@ -85,7 +85,7 @@ public class ToaXml9100001 extends ToaXml {
         }
     }
 
-    public static class Body{
+    public static class Body implements Serializable{
 
     }
 
