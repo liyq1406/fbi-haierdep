@@ -42,6 +42,30 @@ public class RfmServerTest {
         }
 
         /**
+         * 得到一个字符串的长度,显示的长度,一个汉字或日韩文长度为2,英文字符长度为1
+         * @param  s 需要得到长度的字符串
+         * @return int 得到的字符串长度
+         */
+        public int length(String s) {
+            if (s == null)
+                return 0;
+            char[] c = s.toCharArray();
+            int len = 0;
+            for (int i = 0; i < c.length; i++) {
+                len++;
+                if (!isLetter(c[i])) {
+                    len++;
+                }
+            }
+            return len;
+        }
+
+        public boolean isLetter(char c) {
+            int k = 0x80;
+            return c / k == 0 ? true : false;
+        }
+
+        /**
          * 跟客户端Socket进行通信
          * @throws Exception
          */
@@ -69,10 +93,11 @@ public class RfmServerTest {
 //                String msg = "监管账号还未申请撤销监管";
 //                rtnmsg = "0000642003|" + ToolUtil.rightPad(msg, 58, ' ') + "|";
             }else if("2001".equals(strSBstrSB)){
+                String accountname = "青岛海尔空调器有限总公司职工技术协会";
                 rtnmsg = "0002270000|0|"+
                         ToolUtil.rightPad("1023", 20, " ")+"|" +
                         ToolUtil.rightPad("801000016502013", 30, " ")+"|" +
-                        ToolUtil.rightPad("青岛海尔空调器有限总公司职工技术协会", 150, " ")+"|"+
+                        ToolUtil.rightPad(accountname, 150+accountname.length()-length(accountname), " ")+"|"+
                         "1440560429911369|";
             }else if("2002".equals(strSBstrSB)){
                 rtnmsg = "0000220000|1000000000000009|";

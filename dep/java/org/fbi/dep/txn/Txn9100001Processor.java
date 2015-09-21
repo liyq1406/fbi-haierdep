@@ -18,14 +18,14 @@ public class Txn9100001Processor extends AbstractTxnProcessor  {
     private static Logger logger = LoggerFactory.getLogger(Txn9100001Processor.class);
 
     public String process(String userid, String msgData) throws ClassNotFoundException,ConversionException, InstantiationException, IllegalAccessException, IOException {
-        TiaXml9100001 tia = (TiaXml9100001) new TiaXml9100001().getTia(msgData);
-
+        logger.error("接收FEB端发送过来的报文："+msgData);
+        TiaXml9100001 tia = (TiaXml9100001) new TiaXml9100001().toBean(msgData);
+        logger.error("通过核心队列转发到RFM系统");
         try {
-            logger.error("接收FEB端发送过来的对账执行命令,通过核心队列转发到RFM系统");
             Object toa = new JmsObjMsgClient().sendRecivMsg("91001", tia.INFO.getTXNCODE(),"febdep",
                     "queue.dep.in.fcdep.object", "queue.dep.out.fcdep.object", tia);
-            TiaXml9100001 tiaXml9100001 = (TiaXml9100001) toa;
-            return tiaXml9100001.toString();
+            ToaXml9100001 toaXml9100001 = (ToaXml9100001) toa;
+            return toaXml9100001.toString();
         } catch (Exception e) {
             logger.error("接收FEB端发送过来的对账执行命令异常.", e);
             throw new RuntimeException(e);

@@ -29,22 +29,22 @@ public class Mock9100001 {
     public static void main(String[] args) {
         try {
             String xmlmsg = "<?xml version=\"1.0\" encoding=\"GBK\"?>" +
-                    "<ROOT>" +
-                    "<INFO>" +
-                    "<TXNCODE>1001</TXNCODE>" +
-                    "<VERSION>01</VERSION>" +
-                    "<REQSN>20140929041611001</REQSN>" +
-                    "</INFO>" +
-                    "<BODY>" +
-                    "<TXNDATE>20150908</TXNDATE>" +
-                    "<TXNTIME>111826</TXNTIME>" +
-                    "<ACTION>1</ACTION>" +
-                    "<CHNCODE>EMS2</CHNCODE>" +
-                    "<REMARK>142626</REMARK>" +
-                    "</BODY>" +
+            "<ROOT>" +
+                    "  <INFO>" +
+                    "    <TXNCODE>1001</TXNCODE>" +
+                    "    <VERSION>01</VERSION>" +
+                    "    <REQSN>20150918190151656</REQSN>" +
+                    "  </INFO>" +
+                    "  <BODY>" +
+                    "    <TXNDATE>20150918</TXNDATE>" +
+                    "    <TXNTIME>190151</TXNTIME>" +
+                    "    <CHNCODE>EMS2</CHNCODE>" +
+                    "    <ACTION>1</ACTION>" +
+                    "    <REMARK>start txn : 1001</REMARK>" +
+                    "  </BODY>" +
                     "</ROOT>";
             Mock9100001 client = new Mock9100001();
-            String serverUrl = "http://localhost:62060/depService";
+            String serverUrl = "http://localhost:62070/depService";
             String rtnDatagram = client.doPost(serverUrl, xmlmsg, "GBK");
         } catch (Exception e) {
             e.printStackTrace();
