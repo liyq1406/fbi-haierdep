@@ -35,6 +35,8 @@ public class CoreRouteBuilder extends RouteBuilder {
                 .to("jms:queue:queue.dep.core.ccbvips.in")
                 .when(simple("${header.JMSX_CHANNELID} == '300'"))
                 .to("jms:queue:queue.dep.core.eai.in")
+                .when(simple("${header.JMSX_CHANNELID} == '400'"))
+                .to("jms:queue:queue.dep.core.tcs.in")
                 .when(simple("${header.JMSX_CHANNELID} == '920'"))
                 .to("jms:queue:queue.dep.core.mbp.in")
                 .otherwise()
@@ -69,6 +71,12 @@ public class CoreRouteBuilder extends RouteBuilder {
                 .process(new Core300Processor())
                 .to("jms:queue:queue.dep.core.eai.out").doCatch(RuntimeCamelException.class);
         from("jms:queue:queue.dep.core.eai.out").to("jms:queue:queue.dep.core.out");
+
+        // tcs
+        from("jms:queue:queue.dep.core.tcs.in?concurrentConsumers=20").doTry()
+                .process(new Core400Processor())
+                .to("jms:queue:queue.dep.core.tcs.out").doCatch(RuntimeCamelException.class);
+        from("jms:queue:queue.dep.core.tcs.out").to("jms:queue:queue.dep.core.out");
 
         // mbp
         from("jms:queue:queue.dep.core.mbp.in?concurrentConsumers=20")
