@@ -18,7 +18,7 @@ public class Txn9100002Processor extends AbstractTxnProcessor  {
 
     public String process(String userid, String msgData) throws ClassNotFoundException,ConversionException, InstantiationException, IllegalAccessException, IOException {
         logger.error("接收FEB端发送过来的报文："+msgData);
-        TiaXml9100002 tia = (TiaXml9100002)(new TiaXml9100002().toBean(msgData));
+        TiaXml9100002 tia = (TiaXml9100002)(new TiaXml9100002().getTia(msgData));
         logger.error("通过核心队列转发到RFM系统");
         try {
             Object toa = new JmsObjMsgClient().sendRecivMsg("91001",tia.INFO.getTXNCODE(), "febdep",

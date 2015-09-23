@@ -7,7 +7,6 @@ import com.thoughtworks.xstream.io.xml.DomDriver;
 import com.thoughtworks.xstream.io.xml.XmlFriendlyReplacer;
 import com.thoughtworks.xstream.io.xml.XppDriver;
 import org.fbi.dep.model.base.ToaXml;
-import org.fbi.dep.model.base.ToaXmlHttpInfo;
 
 import java.io.Serializable;
 
@@ -37,7 +36,7 @@ public class ToaXml9100001 extends ToaXml {
         this.BODY = BODY;
     }
 
-    public static class Info implements Serializable{
+    public static class Info implements Serializable {
         private String TXNCODE;
         private String VERSION;
         private String REQSN;
@@ -91,6 +90,7 @@ public class ToaXml9100001 extends ToaXml {
 
     @Override
     public String toString() {
+        this.INFO.setTXNCODE("1001");
         XmlFriendlyReplacer replacer = new XmlFriendlyReplacer("$", "_");
         HierarchicalStreamDriver hierarchicalStreamDriver = new XppDriver(replacer);
         XStream xs = new XStream(hierarchicalStreamDriver);
