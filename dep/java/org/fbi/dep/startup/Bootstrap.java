@@ -81,7 +81,6 @@ public class Bootstrap {
             logger.info("CamelContext开始启动...");
             context.start();
             logger.info("CamelContext已成功启动...");
-
         } catch (Exception e) {
             e.printStackTrace();
         }
