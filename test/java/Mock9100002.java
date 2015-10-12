@@ -40,7 +40,7 @@ public class Mock9100002 {
                     "  </BODY>" +
                     "</ROOT>";
             Mock9100001 client = new Mock9100001();
-            String serverUrl = "http://localhost:62070/depService";
+            String serverUrl = "http://localhost:62060/depService";
             String rtnDatagram = client.doPost(serverUrl, xmlmsg, "GBK");
         } catch (Exception e) {
             e.printStackTrace();
