@@ -32,7 +32,7 @@ public abstract class AbstractToaBytesTransform {
         return rtnmsg;
     }
 
-    abstract String transform(byte[] bytes);
+    protected abstract String transform(byte[] bytes);
 
     protected void copyFormBodyToToa(SOFFormBody formBody, ToaXml toa) {
         try {
