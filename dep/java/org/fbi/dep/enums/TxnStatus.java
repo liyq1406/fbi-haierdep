@@ -10,9 +10,9 @@ import java.util.Hashtable;
  * To change this template use File | Settings | File Templates.
  */
 public enum TxnStatus implements EnumApp {
-    TXN_QRY_PEND("2000", "交易结果不明"),
+    TXN_SUCCESS("0000", "交易成功"),
     TXN_FAILED("1000", "交易失败"),
-    TXN_SUCCESS("0000", "交易成功");
+    TXN_QRY_PEND("2000", "交易结果不明");
 
     private String code = null;
     private String title = null;

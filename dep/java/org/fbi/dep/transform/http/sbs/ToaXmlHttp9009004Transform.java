@@ -1,0 +1,57 @@
+package org.fbi.dep.transform.http.sbs;
+
+import org.apache.commons.lang.StringUtils;
+import org.fbi.dep.com.ToolUtil;
+import org.fbi.dep.enums.SBSFormCode;
+import org.fbi.dep.enums.TxnStatus;
+import org.fbi.dep.model.txn.ToaXml9009004;
+import org.fbi.dep.transform.AbstractToaBytesTransform;
+import org.fbi.endpoint.sbs.core.FebResponse;
+import org.fbi.endpoint.sbs.domain.SOFForm;
+import org.fbi.endpoint.sbs.model.form.re.T531;
+import org.fbi.endpoint.sbs.model.form.re.T999;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
+/**
+ * Created with IntelliJ IDEA.
+ * User: zhangxiaobo
+ * Date: 13-4-2
+ * Time: 下午11:04
+ * To change this template use File | Settings | File Templates.
+ */
+/*
+sbs-内转再内转aa4b
+ */
+public class ToaXmlHttp9009004Transform extends AbstractToaBytesTransform {
+    private static Logger logger = LoggerFactory.getLogger(ToaXmlHttp9009004Transform.class);
+
+    public String transform(byte[] bytes) {
+        FebResponse response = new FebResponse();
+        response.init(bytes);
+        String formCode = ToolUtil.SbsRtnCodeToDepRtnCode("9009004", response.getFormCodes().get(0));
+        // bean -> txn bean
+        ToaXml9009004 toa = new ToaXml9009004();
+        toa.INFO.RET_CODE = formCode;
+        if (TxnStatus.TXN_SUCCESS.getCode().equalsIgnoreCase(formCode)) {
+            toa.INFO.RET_MSG = TxnStatus.TXN_SUCCESS.getTitle();
+            SOFForm form = response.getSofForms().get(0);
+            String strSbsRtnCodeTmp=response.getFormCodes().get(0);
+            if("T531".equalsIgnoreCase(strSbsRtnCodeTmp)) {
+                T531 t531 = (T531) form.getFormBody();
+                copyFormBodyToToa(t531, toa);
+                toa.INFO.REQ_SN = t531.getSECNUM();
+            }
+            else if ("T999".equalsIgnoreCase(strSbsRtnCodeTmp)) {
+                T999 t999 = (T999) form.getFormBody();
+                copyFormBodyToToa(t999, toa);
+            }
+        }else {
+            toa.INFO.RET_MSG = SBSFormCode.valueOfAlias(formCode).getTitle();
+            if (StringUtils.isEmpty(toa.INFO.RET_MSG)) {
+                toa.INFO.RET_MSG = TxnStatus.TXN_FAILED.getTitle();
+            }
+        }
+        return toa.toString();
+    }
+}
