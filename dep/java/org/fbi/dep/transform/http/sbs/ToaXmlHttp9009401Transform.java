@@ -34,7 +34,8 @@ public class ToaXmlHttp9009401Transform extends AbstractToaBytesTransform {
             toa.BODY.OPNDAT = t.getOPNDAT();
             toa.BODY.AMDTLR = t.getAMDTLR();
         } else {
-            SBSFormCode sbsFormCode = SBSFormCode.valueOfAlias(formCode);
+//            SBSFormCode sbsFormCode = SBSFormCode.valueOfAlias(formCode);
+            SBSFormCode sbsFormCode = SBSFormCode.valueOfAlias(response.getFormCodes().get(0));
             if (form == null || StringUtils.isEmpty(toa.INFO.RET_MSG)) {
                 toa.INFO.RET_MSG = TxnStatus.TXN_FAILED.getTitle();
             } else {

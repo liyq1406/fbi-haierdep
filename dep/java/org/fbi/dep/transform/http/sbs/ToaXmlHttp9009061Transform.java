@@ -12,6 +12,7 @@ import org.fbi.endpoint.sbs.model.form.ac.T928;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import java.io.UnsupportedEncodingException;
 import java.util.ArrayList;
 
 /**
@@ -44,9 +45,16 @@ public class ToaXmlHttp9009061Transform extends AbstractToaBytesTransform {
                 toa.BODY.DETAILS.add(detail);
             }
         } else {
-            toa.INFO.RET_MSG = SBSFormCode.valueOfAlias(formCode).getTitle();
-            if (StringUtils.isEmpty(toa.INFO.RET_MSG)) {
+//            toa.INFO.RET_MSG = SBSFormCode.valueOfAlias(formCode).getTitle();
+            try {
+                toa.INFO.RET_MSG = new String(SBSFormCode.valueOfAlias(response.getFormCodes().get(0)).getTitle().getBytes(), "GBK");
+                if (StringUtils.isEmpty(toa.INFO.RET_MSG)) {
+                    toa.INFO.RET_MSG = TxnStatus.TXN_FAILED.getTitle();
+                }
+            }catch (NullPointerException e) {
                 toa.INFO.RET_MSG = TxnStatus.TXN_FAILED.getTitle();
+            } catch (UnsupportedEncodingException e) {
+                logger.error("×Ö·û¼¯´íÎó", e);
             }
         }
         return toa.toString();

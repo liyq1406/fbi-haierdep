@@ -12,6 +12,8 @@ import org.fbi.endpoint.sbs.model.form.ac.T001;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import java.io.UnsupportedEncodingException;
+
 /**
  * 建立个人客户信息 8011 -> 9009301
  */
@@ -37,9 +39,15 @@ public class ToaXmlHttp9009301Transform extends AbstractToaBytesTransform {
             toa.BODY.CLSDAT = t.getCLSDAT();
             toa.BODY.AMDTLR = t.getAMDTLR();
         } else {
-            toa.INFO.RET_MSG = SBSFormCode.valueOfAlias(formCode).getTitle();
-            if (StringUtils.isEmpty(toa.INFO.RET_MSG)) {
+            try {
+                toa.INFO.RET_MSG = new String(SBSFormCode.valueOfAlias(response.getFormCodes().get(0)).getTitle().getBytes(), "GBK");
+                if (StringUtils.isEmpty(toa.INFO.RET_MSG)) {
+                    toa.INFO.RET_MSG = TxnStatus.TXN_FAILED.getTitle();
+                }
+            }catch (NullPointerException e) {
                 toa.INFO.RET_MSG = TxnStatus.TXN_FAILED.getTitle();
+            } catch (UnsupportedEncodingException e) {
+                logger.error("字符集错误", e);
             }
         }
         return toa.toString();

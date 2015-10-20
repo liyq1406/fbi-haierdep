@@ -13,6 +13,8 @@ import org.fbi.endpoint.sbs.model.form.re.T999;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import java.io.UnsupportedEncodingException;
+
 /**
  * Created with IntelliJ IDEA.
  * User: zhangxiaobo
@@ -47,9 +49,15 @@ public class ToaXmlHttp9009004Transform extends AbstractToaBytesTransform {
                 copyFormBodyToToa(t999, toa);
             }
         }else {
-            toa.INFO.RET_MSG = SBSFormCode.valueOfAlias(formCode).getTitle();
-            if (StringUtils.isEmpty(toa.INFO.RET_MSG)) {
+            try {
+                toa.INFO.RET_MSG = new String(SBSFormCode.valueOfAlias(response.getFormCodes().get(0)).getTitle().getBytes(), "GBK");
+                if (StringUtils.isEmpty(toa.INFO.RET_MSG)) {
+                    toa.INFO.RET_MSG = TxnStatus.TXN_FAILED.getTitle();
+                }
+            }catch (NullPointerException e) {
                 toa.INFO.RET_MSG = TxnStatus.TXN_FAILED.getTitle();
+            } catch (UnsupportedEncodingException e) {
+                logger.error("×Ö·û¼¯´íÎó", e);
             }
         }
         return toa.toString();

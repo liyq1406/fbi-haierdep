@@ -12,6 +12,8 @@ import org.fbi.endpoint.sbs.model.form.ac.T108;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import java.io.UnsupportedEncodingException;
+
 /**
  * Created by XIANGYANG on 2015-5-11.
  * sbs 9009062 -> 8118 根据账号查询账户信息
@@ -99,9 +101,16 @@ public class ToaXmlHttp9009062Transform extends AbstractToaBytesTransform {
             toa.BODY.UPDDAT=t108.UPDDAT;
             toa.BODY.RECSTS=t108.RECSTS;
         } else {
-            toa.INFO.RET_MSG = SBSFormCode.valueOfAlias(formCode).getTitle();
-            if (StringUtils.isEmpty(toa.INFO.RET_MSG)) {
+//            toa.INFO.RET_MSG = SBSFormCode.valueOfAlias(formCode).getTitle();
+            try {
+                toa.INFO.RET_MSG = new String(SBSFormCode.valueOfAlias(response.getFormCodes().get(0)).getTitle().getBytes(), "GBK");
+                if (StringUtils.isEmpty(toa.INFO.RET_MSG)) {
+                    toa.INFO.RET_MSG = TxnStatus.TXN_FAILED.getTitle();
+                }
+            }catch (NullPointerException e) {
                 toa.INFO.RET_MSG = TxnStatus.TXN_FAILED.getTitle();
+            } catch (UnsupportedEncodingException e) {
+                logger.error("字符集错误", e);
             }
         }
         return toa.toString();
