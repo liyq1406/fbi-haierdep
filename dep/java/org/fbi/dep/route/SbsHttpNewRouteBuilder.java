@@ -58,8 +58,8 @@ public class SbsHttpNewRouteBuilder extends RouteBuilder {
                                 byte[] bytes = new byte[bytesTemp.length-8];
                                 System.arraycopy(bytesTemp, 0, lengthBytes, 0, lengthBytes.length);
                                 System.arraycopy(bytesTemp, 8, bytes, 0, bytes.length);
-                                logger.info("【SbsHttpRouteBuilder 接收报文长度】" + new String(lengthBytes));
-                                logger.info("【SbsHttpRouteBuilder 接收到报文】" + new String(bytes));
+                                logger.info("【SbsHttpNewRouteBuilder 接收报文长度】" + new String(lengthBytes));
+                                logger.info("【SbsHttpNewRouteBuilder 接收到报文】" + new String(bytes));
 
                                 String rtnMsgHeader = null;
                                 String rtnMsgData = null;
@@ -136,14 +136,13 @@ public class SbsHttpNewRouteBuilder extends RouteBuilder {
                                     rtnMsgHeader = rtnMsgHeader + TxnRtnCode.TXN_PROCESSED.getCode()
                                             + StringPad.rightPad4ChineseToByteLength(TxnRtnCode.TXN_PROCESSED.getTitle(), 20, " ")
                                             + rtnmac;
-//                                    exchange.getOut().setBody((rtnMsgHeader + rtnXml).getBytes());
 
                                     byte[] msgbuf = (rtnMsgHeader + rtnXml).getBytes();
                                     byte[] msglen = (StringPad.rightPad4ChineseToByteLength("" + (msgbuf.length + 8), 8, " ")).getBytes();
                                     byte[] bytesResData = new byte[msgbuf.length + 8];
                                     System.arraycopy(msglen, 0, bytesResData, 0, msglen.length);
                                     System.arraycopy(msgbuf, 0, bytesResData, msglen.length, msgbuf.length);
-                                    logger.info("【SbsHttpRouteBuilder 发送报文】" + new String(bytesResData));
+                                    logger.info("【SbsHttpNewRouteBuilder 发送报文】" + new String(bytesResData));
                                     exchange.getOut().setBody(bytesResData);
                                 } catch (Exception e) {
                                     //  返回异常信息
@@ -169,14 +168,13 @@ public class SbsHttpNewRouteBuilder extends RouteBuilder {
                                         rtnMsgHeader = rtnMsgHeader + errmsg[0]
                                                 + StringPad.rightPad4ChineseToByteLength(errmsg[1], 20, " ")
                                                 + rtnmac;
-//                                        exchange.getOut().setBody((rtnMsgHeader + rtnmsg).getBytes());
 
                                         byte[] msgbuf = (rtnMsgHeader + rtnmsg).getBytes();
                                         byte[] msglen = (StringPad.rightPad4ChineseToByteLength("" + (msgbuf.length + 8), 8, " ")).getBytes();
                                         byte[] bytesResData = new byte[msgbuf.length + 8];
                                         System.arraycopy(msglen, 0, bytesResData, 0, msglen.length);
                                         System.arraycopy(msgbuf, 0, bytesResData, msglen.length, msgbuf.length);
-                                        logger.info("【SbsHttpRouteBuilder 发送报文】" + new String(bytesResData));
+                                        logger.info("【SbsHttpNewRouteBuilder 发送报文】" + new String(bytesResData));
                                         exchange.getOut().setBody(bytesResData);
                                     }
                                 }

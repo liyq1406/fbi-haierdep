@@ -104,9 +104,7 @@ public class ToolUtil {
                 strDepRtnCodeTmp = TxnStatus.TXN_QRY_PEND.getCode();
             }
         }
-        //logger.info("通联业务处理报文：" + strDepRtnCodeTmp);
         return strDepRtnCodeTmp;
     }
-
 }
 

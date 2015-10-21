@@ -67,6 +67,7 @@ public class Mock910012011 {
             Mock910012011 client = new Mock910012011();
             String serverUrl = "http://localhost:62080/depService";
             String rtnDatagram = client.doPost(serverUrl, reqmsg, "GBK");
+            String rtnDatagram1 = client.doGet();
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -127,8 +128,7 @@ public class Mock910012011 {
         return responseBody;
     }
 
-
-    private void doGet() {
+    private String doGet() {
         HttpClient httpClient = new DefaultHttpClient();
         httpClient.getParams().setParameter(CoreConnectionPNames.CONNECTION_TIMEOUT,2000);//连接超时时间设置
         HttpGet httpget = new HttpGet("http://localhost:62003/nettyHttp");
@@ -146,11 +146,13 @@ public class Mock910012011 {
                     sb.append(new String(tmp, 0, l));
                 }
                 System.out.println(sb.toString());
+                return  (sb.toString());
             }
         } catch (IOException e) {
             e.printStackTrace();
         }finally{
             httpClient.getConnectionManager().shutdown();
         }
+        return null;
     }
 }
