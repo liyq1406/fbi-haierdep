@@ -6,7 +6,7 @@ import org.fbi.dep.model.base.TOA;
 import org.fbi.dep.model.txn.Toa900012701;
 import org.fbi.endpoint.sbs.core.FebResponse;
 import org.fbi.endpoint.sbs.domain.SOFForm;
-import org.fbi.endpoint.sbs.model.form.ac.M000;
+import org.fbi.endpoint.sbs.model.form.re.M000;
 import org.fbi.endpoint.sbs.model.form.ac.T106;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;

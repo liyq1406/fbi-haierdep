@@ -1,7 +1,7 @@
 package org.fbi.endpoint.sbs.domain;
 
 import org.apache.commons.lang.StringUtils;
-import org.fbi.endpoint.sbs.model.form.ac.M000;
+import org.fbi.endpoint.sbs.model.form.re.M000;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -59,7 +59,7 @@ public class SOFForm {
                     if(formHeader.getFormCode().startsWith("M")){
                         // 实例化Form体
                         // 新增系统别判断
-                        //Class clazz = Class.forName("org.fbi.endpoint.sbs.model.form.ac.M000");
+                        //Class clazz = Class.forName("org.fbi.endpoint.sbs.model.form.re.M000");
                         //formBody = (SOFFormBody) clazz.newInstance();
                         M000 m000=new M000();
                         m000.fieldLengths = new int[]{formBodyLength};
