@@ -27,7 +27,8 @@ public class TiaXml9009002 extends TiaXml {
         public String TXNAMT;	  // 交易金额
         public String RMTTYP;	  // 汇款类型
         public String CUSTYP;	  // 汇款帐户类型
-        public String CUSACT;	  // 汇款帐户
+        public String CUSACT;	  // 汇款帐号
+        public String CUSNAM;	  // 汇款户名
         public String FEETYP;	  // 是否见单
         public String FEEACT;	  // 费用帐户
         public String BENACT;	  // 收款人帐号
