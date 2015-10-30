@@ -81,11 +81,11 @@ public class SbsHttpNewRouteBuilder extends RouteBuilder {
                                     String msgData = new String(bodyBytes, "GBK");
                                     rtnMsgData = msgData;
                                     // 外围系统用户ID、交易码、交易日期、mac
-                                    userid = msgHeader.substring(4, 14).trim();
-                                    userkey = PropertyManager.getProperty("wsys.userkey." + userid);
+                                    userid = msgHeader.substring(4, 14);
+                                    userkey = PropertyManager.getProperty("wsys.userkey." + userid.trim());
                                     txnCode = msgHeader.substring(14, 24).trim();
-                                    txnDate = msgHeader.substring(24, 32).trim();
-                                    String txnTime = msgHeader.substring(32, 38).trim();
+                                    txnDate = msgHeader.substring(24, 32);
+                                    String txnTime = msgHeader.substring(32, 38);
                                     String mac = new String(headerBytes, 62, 32);
                                     // MD5校验
                                     // MAC	32	以（Message Data部分 + TXN_DATE + USER_ID + USER_KEY）为依据产生的用ASC字符表示的16进制MD5值。其中USER_KEY由财务公司针对每个用户单独下发。
@@ -103,7 +103,7 @@ public class SbsHttpNewRouteBuilder extends RouteBuilder {
                                     String checkerClass = PropertyManager.getProperty("check." + userid + "." + txnCode);
                                     CheckResult checkResult = new CheckResult(userid, txnCode);
                                     // 用户交易权限闸口
-                                    new TxnUseridChecker().check(userid, txnCode, checkResult);
+                                    new TxnUseridChecker().check(userid.trim(), txnCode, checkResult);
                                     // 业务数据闸口
                                     if (!StringUtils.isEmpty(checkerClass)) {
                                         logger.info(txnCode + "交易启动闸口：" + checkerClass);
@@ -124,7 +124,7 @@ public class SbsHttpNewRouteBuilder extends RouteBuilder {
                                     } else {
                                         // 直连SBS
                                         AbstractTiaBytesTransform bytesTransform = (AbstractTiaBytesTransform) Class.forName("org.fbi.dep.transform.TiaXml" + txnCode + "Transform").newInstance();
-                                        byte[] sbsReqMsg = bytesTransform.run(msgData, userid);
+                                        byte[] sbsReqMsg = bytesTransform.run(msgData, userid.trim());
                                         // SBS
                                         byte[] sbsResBytes = new JmsBytesClient().sendRecivMsg("900", "fcdep", "fcdep", txnCode, userid,
                                                 "queue.dep.core.fcdep.sbs", "queue.dep.core.sbs.fcdep", sbsReqMsg);

@@ -2,6 +2,7 @@ package org.fbi.dep.transform;
 
 import org.apache.commons.lang.StringUtils;
 import org.fbi.dep.model.txn.*;
+import org.fbi.dep.model.txn.sbs.*;
 import org.fbi.dep.util.StringPad;
 import org.fbi.endpoint.eai.transCreditInfoFromSBStoJDE.ObjectFactory;
 import org.slf4j.Logger;
@@ -92,6 +93,30 @@ public class SbsTxnDataTransform {
 
     public static byte[] convertToTxn8854For9009051(TiaXml9009051 tia, String termId) {
         return convert("8854", termId, assembleT8854ParamFor9009051(tia));
+    }
+
+    public static byte[] convertToTxn8126For9009501(TiaXml9009501 tia, String termId) {
+        return convert("8126", termId, assembleT8126ParamFor9009501(tia));
+    }
+
+    public static byte[] convertToTxn8014For9009502(TiaXml9009502 tia, String termId) {
+        return convert("8014", termId, assembleT8014ParamFor9009502(tia));
+    }
+
+    public static byte[] convertToTxna111For9009504(TiaXml9009504 tia, String termId) {
+        return convert("a111", termId, assembleTa111ParamFor9009504(tia));
+    }
+
+    public static byte[] convertToTxna121For9009505(TiaXml9009505 tia, String termId) {
+        return convert("a121", termId, assembleTa121ParamFor9009505(tia));
+    }
+
+    public static byte[] convertToTxna13aFor9009506(TiaXml9009506 tia, String termId) {
+        return convert("a13a", termId, assembleTa13aParamFor9009506(tia));
+    }
+
+    public static byte[] convertToTxna113For9009507(TiaXml9009507 tia, String termId) {
+        return convert("a113", termId, assembleTa113ParamFor9009507(tia));
     }
 
     public static byte[] convertToTxn8854For9009052(TiaXml9009052 tia, String termId) {
@@ -204,6 +229,91 @@ public class SbsTxnDataTransform {
         paramList.add(sdf.format(new Date()));
         paramList.add(StringPad.leftPad4ChineseToByteLength(tia.BODY.START_NUM,6,"0"));
         return paramList;
+    }
+
+    private static List<String> assembleT8126ParamFor9009501(TiaXml9009501 tia) {
+        List<String> paramList = new ArrayList<String>();
+        paramList.add(tia.getBODY().getACTNUM()); // 帐号
+        paramList.add(tia.getBODY().getCUSNAM()); // 客户名
+        paramList.add(tia.getBODY().getPAYTYP()); // 开通网银标志（0-关闭，1-开通）
+        return paramList;
+    }
+
+    private static List<String> assembleT8014ParamFor9009502(TiaXml9009502 tia) {
+        List<String> paramList = new ArrayList<String>();
+        paramList.add(tia.getBODY().getPASTYP()); // 证件种类
+        paramList.add(tia.getBODY().getPASSNO()); // 证件号码
+        paramList.add(tia.getBODY().getINTNET()); // 开通网银标志（0-关闭，1-开通）
+        return paramList;
+    }
+
+    private static List<String> assembleTa111ParamFor9009504(TiaXml9009504 tia) {
+        List<String> paramList = new ArrayList<String>();
+        paramList.add(tia.getBODY().getACTTY2()); // 账户类别
+        paramList.add(tia.getBODY().getIPTAC2()); // 账户号
+        paramList.add(tia.getBODY().getDRAMD2()); // 取款方式
+        paramList.add(tia.getBODY().getCUSPW2()); // 客户密码
+        paramList.add(tia.getBODY().getADVNUM()); // 通知单号
+        paramList.add(tia.getBODY().getTXNDAT()); // 交易日期
+        paramList.add(tia.getBODY().getADVAMT()); // 支取金额
+        paramList.add(tia.getBODY().getADVDAT()); // 支取日期
+        paramList.add(tia.getBODY().getPASTYP()); // 证件种类
+        paramList.add(tia.getBODY().getPASSNO()); // 证件号
+        paramList.add(tia.getBODY().getREMARK()); // 备注（地址）
+        paramList.add(tia.getBODY().getMAGFL2()); // 账号输入方式
+        return paramList;
+    }
+
+    private static List<String> assembleTa121ParamFor9009505(TiaXml9009505 tia) {
+        List<String> paramList = new ArrayList<String>();
+        paramList.add(tia.getBODY().getACTTY2()); // 账户类别
+        paramList.add(tia.getBODY().getIPTAC2()); // 账户号
+        paramList.add(tia.getBODY().getDRAMD2()); // 取款方式
+        paramList.add(tia.getBODY().getCUSPW2()); // 客户密码
+        paramList.add(tia.getBODY().getADVNUM()); // 通知单号
+        paramList.add(tia.getBODY().getTXNDAT()); // 交易日期
+        paramList.add(tia.getBODY().getPASTYP()); // 证件种类
+        paramList.add(tia.getBODY().getPASSNO()); // 证件号
+        paramList.add(tia.getBODY().getREMARK()); // 备注（地址）
+        paramList.add(tia.getBODY().getMAGFL2()); // 账号输入方式
+        return paramList;
+    }
+
+    private static List<String> assembleTa13aParamFor9009506(TiaXml9009506 tia) {
+        List<String> paramList = new ArrayList<String>();
+        paramList.add(tia.getBODY().getACTTY1()); // 账号类型
+        paramList.add(tia.getBODY().getIPTAC1()); // 账户号
+        paramList.add(tia.getBODY().getDRAMD1()); // 取款方式
+        paramList.add(tia.getBODY().getCUSPW1()); // 客户密码
+        paramList.add(tia.getBODY().getTXNDAT()); // 交易日期
+        paramList.add(tia.getBODY().getADVNUM()); // 通知单号
+        paramList.add(tia.getBODY().getTXNAMT()); // 交易金额
+        paramList.add(tia.getBODY().getACTTY2()); // 转入帐号类型
+        paramList.add(tia.getBODY().getIPTAC2()); // 转入帐号
+        paramList.add(tia.getBODY().getPASTYP()); // 证件种类
+        paramList.add(tia.getBODY().getPASSNO()); // 证件号码
+        paramList.add(tia.getBODY().getREMARK()); // 摘要
+        paramList.add(tia.getBODY().getANACDE()); // 分类统计码
+        paramList.add(tia.getBODY().getMAGFL1()); // 刷磁条读入帐号标志
+        paramList.add(tia.getBODY().getMAGFL2()); // 备用字段
+        paramList.add(tia.getBODY().getBOKNUM()); // 外围系统流水号
+        return paramList;
+    }
+
+    private static List<String> assembleTa113ParamFor9009507(TiaXml9009507 tia) {
+        List<String> paramList = new ArrayList<String>();
+        paramList.add(getStrIgnoreNull(tia.getBODY().getBOKNUM())); // 账户号
+        paramList.add(getStrIgnoreNull(tia.getBODY().getADVFLG())); // 通知状态（1-通知,2-取款,3-撤销）
+        paramList.add(getStrIgnoreNull(tia.getBODY().getVALDAT())); // 通知日期
+        paramList.add(getStrIgnoreNull(tia.getBODY().getSGNDAT())); // 协定取款日
+        paramList.add(getStrIgnoreNull(tia.getBODY().getCUSPW1())); // 起始序号
+        paramList.add(getStrIgnoreNull(tia.getBODY().getPASTYP())); // 证件种类
+        paramList.add(getStrIgnoreNull(tia.getBODY().getPASSNO())); // 证件号
+        return paramList;
+    }
+
+    public static String getStrIgnoreNull(String strValue){
+        return strValue==null?"":strValue;
     }
 
     private static List<String> assembleT8854ParamFor9009052(TiaXml9009052 tia) {
