@@ -22,7 +22,7 @@ public class TiaXml9009001 extends TiaXml {
         public String OUT_ACTNO;
         public String OUT_ACTNAME;
         public String IN_ACTNO;
-        public String IN_ACTNONAME;
+        public String IN_ACTNAME;
         public String TXN_AMT;
         public String REMARK;
         public String RESERVE;
